@@ -1,9 +1,13 @@
 package com.bree.springproject.bursaryapplication.Entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import org.springframework.stereotype.Component;
 
 @Entity
 @Table()
+@Data
+@Component
 public class UserRegistrationTable {
 
     @Id
@@ -19,5 +23,8 @@ public class UserRegistrationTable {
 
     @Column(nullable = false)
     private String password;
+
+    @Column()
+    private Boolean status = false;
 
 }
