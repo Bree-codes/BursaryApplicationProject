@@ -29,7 +29,7 @@ public class RegisterUserController {
 
     }
 
-    @PutMapping
+    @PutMapping("/change-password")
     public ResponseEntity<String> changePassword(@RequestParam String userPassword)
     {
         log.info("Received a request to change the password");
@@ -39,13 +39,13 @@ public class RegisterUserController {
         return registerUserService.updatePassword(userPassword);
     }
 
-    @GetMapping("/forgotten-password/")
-    public ResponseEntity<String> forgottenPassword(@RequestParam Long userId)
+    @GetMapping("/forgotten-password")
+    public ResponseEntity<String> forgottenPassword(@RequestParam String userEmail)
     {
         log.info("User forgotten password");
 
         //forward the request to send the email to the user for changing the password.
-        return registerUserService.changePassword(userId);
+        return registerUserService.changePassword(userEmail);
 
     }
 

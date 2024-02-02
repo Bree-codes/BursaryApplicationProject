@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import lombok.AllArgsConstructor;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -44,18 +43,19 @@ public class RegisterUserService {
         return new ResponseEntity<>("Password update successful", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> changePassword(Long userId) {
+    public ResponseEntity<String> changePassword(String userEmail) throws  UserDoesNotExistException{
         log.info("Forwarded the forgot password request");
 
         //will first get the user email
         UserRegistrationTable userRegistrationTable;
 
 
-        userRegistrationTable = userRegistrationRepository.findById(userId).get();
+        userRegistrationTable = userRegistrationRepository.findByEmail(userEmail);
 
-
-        //getting the user email
-        String userEmail = userRegistrationTable.getUsername();
+        if(userRegistrationTable == null)
+        {
+            throw new UserDoesNotExistException("The Email Entered Does Not Much Any User.");
+        }
 
         //will send the email to this user to change their password.
         //an error may occur at this point , so we should remember to handle the exceptions.
@@ -63,7 +63,7 @@ public class RegisterUserService {
 
 
         //after the email is sent we return.
-        return new ResponseEntity<>("User create successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Email Sent successfully", HttpStatus.OK);
     }
 
 }
