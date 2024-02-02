@@ -37,7 +37,20 @@ public class RegisterUserService {
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
-    public ResponseEntity<String> updatePassword(String userPassword) {
+    public ResponseEntity<String> updatePassword(String userPassword, String userEmail) {
+        log.info("Forwarding the password update.");
+
+        //validate the password strength here.
+
+        //update the password
+            //first we get the user by email.
+        UserRegistrationTable userRegistrationTable = userRegistrationRepository.findByEmail(userEmail);
+
+        //update the password
+        userRegistrationTable.setPassword(userPassword);
+
+        //merge back the user.
+        userRegistrationRepository.save(userRegistrationTable);
 
 
         return new ResponseEntity<>("Password update successful", HttpStatus.OK);
