@@ -17,11 +17,14 @@ public class  UserRegistrationTable {
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String phoneNumber;
 
     @Column()
     private Boolean status = false;
