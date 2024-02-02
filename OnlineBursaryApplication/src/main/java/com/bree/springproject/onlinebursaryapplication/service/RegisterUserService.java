@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -42,14 +44,18 @@ public class RegisterUserService {
         return new ResponseEntity<>("Password update successful", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> changePassword(String userName) {
+    public ResponseEntity<String> changePassword(Long userId) {
         log.info("Forwarded the forgot password request");
 
         //will first get the user email
-        UserRegistrationTable userRegistrationTable = userRegistrationRepository.findEmailBy(userName);
+        UserRegistrationTable userRegistrationTable;
+
+
+        userRegistrationTable = userRegistrationRepository.findById(userId).get();
+
 
         //getting the user email
-        String userEmail = userRegistrationTable.getEmail();
+        String userEmail = userRegistrationTable.getUsername();
 
         //will send the email to this user to change their password.
         //an error may occur at this point , so we should remember to handle the exceptions.
@@ -59,4 +65,5 @@ public class RegisterUserService {
         //after the email is sent we return.
         return new ResponseEntity<>("User create successfully", HttpStatus.OK);
     }
+
 }

@@ -40,12 +40,12 @@ public class RegisterUserController {
     }
 
     @GetMapping("/forgotten-password/")
-    public ResponseEntity<String> forgottenPassword(@RequestParam String userName)
+    public ResponseEntity<String> forgottenPassword(@RequestParam Long userId)
     {
         log.info("User forgotten password");
 
         //forward the request to send the email to the user for changing the password.
-        return registerUserService.changePassword(userName);
+        return registerUserService.changePassword(userId);
 
     }
 
