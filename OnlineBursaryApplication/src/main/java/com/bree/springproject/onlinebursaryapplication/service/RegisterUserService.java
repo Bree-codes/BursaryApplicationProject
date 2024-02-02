@@ -1,7 +1,7 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
-import com.bree.springproject.onlinebursaryapplication.Model.UserRegistrationModel;
+import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,18 +23,28 @@ public class RegisterUserService {
     Verify(Emailing the user)and Validate correct email
     * */
     @Autowired
-    UserRegistrationTable userRegistrationTable;
+    UserRegistrationRepository userRegistrationRepository;
 
-    public ResponseEntity<String> registrationValidation(UserRegistrationModel userRegistrationModel){
 
-        userRegistrationTable.setUsername(userRegistrationModel.getUsername());
-        userRegistrationTable.setPassword(userRegistrationModel.getPassword());
-        userRegistrationTable.setEmail(userRegistrationModel.getEmail());
+    public ResponseEntity<String> registrationValidation(UserRegistrationTable userRegistrationModel){
 
-        //many computation.
-        userRegistrationTable.setStatus(true);
+
+        userRegistrationRepository.save(userRegistrationModel);
+
+
         log.error("Validated the user");
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
+    public ResponseEntity<String> updatePassword(String userPassword) {
+
+
+        return new ResponseEntity<>("Password update successful", HttpStatus.OK);
+    }
+
+    public void changePassword(String userName) {
+        log.info("Forwarded the forgot password request");
+
+
+    }
 }
