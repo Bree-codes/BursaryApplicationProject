@@ -29,14 +29,17 @@ public class RegisterUserController {
 
     }
 
+
+    //the API will be bound to the email for password changing.
     @PutMapping("/change-password")
-    public ResponseEntity<String> changePassword(@RequestParam String userPassword)
+    public ResponseEntity<String> changePassword
+    (@RequestParam String userPassword, @RequestParam String userEmail)
     {
         log.info("Received a request to change the password");
 
         //
 
-        return registerUserService.updatePassword(userPassword);
+        return registerUserService.updatePassword(userPassword, userEmail);
     }
 
     @GetMapping("/forgotten-password")

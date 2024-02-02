@@ -17,7 +17,7 @@ class OnlineBursaryApplicationTests {
     {
         RegisterUserService registerUserService = new RegisterUserService();
 
-        registerUserService.changePassword("stephen");
+        registerUserService.changePassword("steve");
     }
 
 }
