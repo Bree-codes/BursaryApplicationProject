@@ -43,16 +43,11 @@ public class RegisterUserService {
         return new ResponseEntity<>("Password update successful", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> changePassword(String userEmail) throws  UserDoesNotExistException{
+    public ResponseEntity<String> changePassword(String userEmail) {
         log.info("Forwarded the forgot password request");
 
-        //will first get the user email
-        UserRegistrationTable userRegistrationTable;
-
-
-        userRegistrationTable = userRegistrationRepository.findByEmail(userEmail);
-
-        if(userRegistrationTable == null)
+        //check if the email exist in the database.
+        if(userRegistrationRepository.findByEmail(userEmail) == null)
         {
             throw new UserDoesNotExistException("The Email Entered Does Not Much Any User.");
         }
