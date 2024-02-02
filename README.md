@@ -22,8 +22,7 @@ FUNCTIONALITIES OF THE ONLINE BURSARY APPLICATION SYSTEM
         Upload and storage of required documents (transcripts, recommendation letters, etc.)
         Document verification and validation
 
-5.Financial Aid Calculation:
-        Bursary eligibility criteria
+5.Bursary eligibility criteria
 
 6.Communication:
         Internal messaging system for communication between applicants, reviewers, and          administrators
