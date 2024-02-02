@@ -42,9 +42,21 @@ public class RegisterUserService {
         return new ResponseEntity<>("Password update successful", HttpStatus.OK);
     }
 
-    public void changePassword(String userName) {
+    public ResponseEntity<String> changePassword(String userName) {
         log.info("Forwarded the forgot password request");
 
+        //will first get the user email
+        UserRegistrationTable userRegistrationTable = userRegistrationRepository.findEmailBy(userName);
 
+        //getting the user email
+        String userEmail = userRegistrationTable.getEmail();
+
+        //will send the email to this user to change their password.
+        //an error may occur at this point , so we should remember to handle the exceptions.
+
+
+
+        //after the email is sent we return.
+        return new ResponseEntity<>("User create successfully", HttpStatus.OK);
     }
 }
