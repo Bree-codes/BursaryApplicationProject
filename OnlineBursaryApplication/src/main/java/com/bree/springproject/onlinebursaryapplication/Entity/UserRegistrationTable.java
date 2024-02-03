@@ -1,6 +1,7 @@
 package com.bree.springproject.onlinebursaryapplication.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Entity
@@ -17,11 +18,14 @@ public class  UserRegistrationTable {
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String phoneNumber;
 
     @Column()
     private Boolean status = false;
