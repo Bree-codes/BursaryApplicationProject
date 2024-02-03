@@ -1,7 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
-import com.bree.springproject.onlinebursaryapplication.Model.UserRegistrationModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

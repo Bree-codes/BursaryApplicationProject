@@ -1,7 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.controller;
 
 
-import com.bree.springproject.onlinebursaryapplication.Model.UserRegistrationModel;
 import com.bree.springproject.onlinebursaryapplication.service.RegisterUserService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
