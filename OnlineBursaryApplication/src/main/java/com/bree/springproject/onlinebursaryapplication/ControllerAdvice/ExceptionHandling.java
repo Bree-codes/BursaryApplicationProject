@@ -1,6 +1,7 @@
 package com.bree.springproject.onlinebursaryapplication.ControllerAdvice;
 
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserExistException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.WeakPasswordException;
 import com.bree.springproject.onlinebursaryapplication.models.ExceptionModel;
 import lombok.Setter;
@@ -57,6 +58,18 @@ public class ExceptionHandling {
         exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
         exceptionModel.setMessage(passwordException.getMessage());
         exceptionModel.setDate(new Date());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = UserExistException.class)
+    public ResponseEntity<ExceptionModel> handleUserExistException(UserExistException existException)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(existException.getMessage());
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }

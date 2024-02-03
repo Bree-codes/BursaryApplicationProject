@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserExistException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.WeakPasswordException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
@@ -38,7 +39,15 @@ public class RegisterUserService {
 
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
 
+        //check validity of the phone number entered.
+
+
+
         //checking if the user exist
+        if(userRegistrationRepository.findByPhoneNumber(registerUserDTO.getUserPhoneNumber()) != null)
+        {
+            throw new UserExistException("The Phone Number is Already Taken.");
+        }
 
         //check if the password is strong enough.
         if(!checkPasswordStrength(registerUserDTO.getUserPassword()))
@@ -46,6 +55,7 @@ public class RegisterUserService {
             throw new WeakPasswordException("The Password Entered Does Not Meet The Required Criteria");
         }
 
+        //filling the new user to the entity for inserting.
         userRegistrationTable.setUsername(registerUserDTO.getUserName());
         userRegistrationTable.setEmail(registerUserDTO.getUserEmail());
         userRegistrationTable.setPhoneNumber(registerUserDTO.getUserPhoneNumber());
