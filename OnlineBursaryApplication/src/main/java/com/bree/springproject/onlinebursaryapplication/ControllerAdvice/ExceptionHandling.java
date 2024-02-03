@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.ControllerAdvice;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidPhoneNumberException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserExistException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.WeakPasswordException;
@@ -68,6 +69,18 @@ public class ExceptionHandling {
         ExceptionModel exceptionModel = new ExceptionModel();
 
         exceptionModel.setMessage(existException.getMessage());
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = InvalidPhoneNumberException.class)
+    public ResponseEntity<ExceptionModel> handleInvalidPhoneNumberException(InvalidPhoneNumberException e)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(e.getMessage());
         exceptionModel.setDate(new Date());
         exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
 
