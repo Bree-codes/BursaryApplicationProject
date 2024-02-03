@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.WeakPasswordException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Slf4j
@@ -33,6 +37,14 @@ public class RegisterUserService {
         log.info("Forwarded the request to register a new user.");
 
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
+
+        //checking if the user exist
+
+        //check if the password is strong enough.
+        if(!checkPasswordStrength(registerUserDTO.getUserPassword()))
+        {
+            throw new WeakPasswordException("The Password Entered Does Not Meet The Required Criteria");
+        }
 
         userRegistrationTable.setUsername(registerUserDTO.getUserName());
         userRegistrationTable.setEmail(registerUserDTO.getUserEmail());
@@ -82,6 +94,17 @@ public class RegisterUserService {
 
         //after the email is sent we return.
         return new ResponseEntity<>("Email Sent successfully", HttpStatus.OK);
+    }
+
+    public Boolean checkPasswordStrength(String password)
+    {
+        Pattern passwordPattern = Pattern.
+                compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z](?=.*[`~!@#$%^&*)(_+=}{:\"'?><,./|;]))");
+
+        //check if the password matches the specifications.
+        Matcher matchPassword = passwordPattern.matcher(password);
+
+        return matchPassword.matches();
     }
 
 }
