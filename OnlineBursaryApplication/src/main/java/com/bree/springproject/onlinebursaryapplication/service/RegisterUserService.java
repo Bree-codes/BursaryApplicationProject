@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidPhoneNumberException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserExistException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.WeakPasswordException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
@@ -40,7 +41,10 @@ public class RegisterUserService {
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
 
         //check validity of the phone number entered.
-
+        if(!checkValidityOfPhoneNumber(registerUserDTO.getUserPhoneNumber()))
+        {
+            throw new InvalidPhoneNumberException("The Phone Number Enter Is Invalid");
+        }
 
 
         //checking if the user exist
@@ -55,6 +59,16 @@ public class RegisterUserService {
             throw new WeakPasswordException("The Password Entered Does Not Meet The Required Criteria");
         }
 
+        //check if the user has an email
+        if(registerUserDTO.getUserEmail() == null)
+        {
+            //Here we should send a message to the phone number.
+        }
+        else {
+            //Here we should email users to verify their emails.
+        }
+
+        log.info("Moving forward to insert the user.");
         //filling the new user to the entity for inserting.
         userRegistrationTable.setUsername(registerUserDTO.getUserName());
         userRegistrationTable.setEmail(registerUserDTO.getUserEmail());
@@ -109,12 +123,23 @@ public class RegisterUserService {
     public Boolean checkPasswordStrength(String password)
     {
         Pattern passwordPattern = Pattern.
-                compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z](?=.*[`~!@#$%^&*)(_+=}{:\"'?><,./|;]))");
+                compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z](?=.*[`~!@#$%^&*)(_+=}{:'?><,./|;]))");
 
         //check if the password matches the specifications.
         Matcher matchPassword = passwordPattern.matcher(password);
 
         return matchPassword.matches();
+    }
+
+    public Boolean checkValidityOfPhoneNumber(String phoneNumber)
+    {
+
+        //check where the patter has digits only.
+       Pattern phoneNumberPattern = Pattern.compile("(^\\d+$)");
+
+       Matcher testResults = phoneNumberPattern.matcher(phoneNumber);
+
+        return testResults.matches();
     }
 
 }
