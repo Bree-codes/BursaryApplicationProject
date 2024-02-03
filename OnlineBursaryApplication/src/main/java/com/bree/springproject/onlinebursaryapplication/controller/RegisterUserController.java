@@ -3,6 +3,8 @@ package com.bree.springproject.onlinebursaryapplication.controller;
 
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.service.RegisterUserService;
+import com.bree.springproject.onlinebursaryapplication.userDTO.RegisterUserDTO;
+import jakarta.validation.Valid;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,14 @@ public class RegisterUserController {
     private RegisterUserService registerUserService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserRegistrationTable userRegistrationTable){
-        log.info("Receive a request to create a user.");
+    public ResponseEntity<String> registerUser(@Valid @RequestBody
+                                               RegisterUserDTO registerUserDTO){
+        log.info("Received a request to create a user.");
 
         //verify the user-email
 
 
-        return  registerUserService.registrationValidation(userRegistrationTable);
+        return  registerUserService.registrationValidation(registerUserDTO);
 
     }
 
