@@ -3,6 +3,7 @@ package com.bree.springproject.onlinebursaryapplication.service;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
+import com.bree.springproject.onlinebursaryapplication.userDTO.RegisterUserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,19 +22,28 @@ public class RegisterUserService {
     /*
     Encrypt the passwords
     Strength of the password
-    Verify(Emailing the user)and Validate correct email
+    Verify(Emailing the user)and Validate email
     * */
     @Autowired
-    UserRegistrationRepository userRegistrationRepository;
+    private UserRegistrationRepository userRegistrationRepository;
 
 
-    public ResponseEntity<String> registrationValidation(UserRegistrationTable userRegistrationModel){
+
+    public ResponseEntity<String> registrationValidation(RegisterUserDTO registerUserDTO){
+        log.info("Forwarded the request to register a new user.");
+
+        UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
+
+        userRegistrationTable.setUsername(registerUserDTO.getUserName());
+        userRegistrationTable.setEmail(registerUserDTO.getUserEmail());
+        userRegistrationTable.setPhoneNumber(registerUserDTO.getUserPhoneNumber());
+        userRegistrationTable.setPassword(registerUserDTO.getUserPassword());
 
 
-        userRegistrationRepository.save(userRegistrationModel);
+        //saving the user to the database.
+        userRegistrationRepository.save(userRegistrationTable);
 
 
-        log.error("Validated the user");
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 

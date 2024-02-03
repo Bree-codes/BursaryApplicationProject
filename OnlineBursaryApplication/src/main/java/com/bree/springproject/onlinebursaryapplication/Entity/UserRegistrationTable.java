@@ -1,6 +1,7 @@
 package com.bree.springproject.onlinebursaryapplication.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Entity
