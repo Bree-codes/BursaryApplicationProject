@@ -7,6 +7,7 @@ import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoe
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import com.bree.springproject.onlinebursaryapplication.userDTO.RegisterUserDTO;
+import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,30 +35,42 @@ public class RegisterUserService {
     private UserRegistrationRepository userRegistrationRepository;
 
 
+    @Autowired
+    CommunicationService communicationService;
 
-    public ResponseEntity<String> registrationValidation(RegisterUserDTO registerUserDTO){
+    public ResponseEntity<String> registrationValidation(RegisterUserDTO registerUserDTO) throws MessagingException {
         log.info("Forwarded the request to register a new user.");
-
+        //instance of a new user.
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
 
+        log.info("validating user phone number");
         //check the validity of the phone number entered.
         if(!checkValidityOfPhoneNumber(registerUserDTO.getUserPhoneNumber()))
         {
+            log.error("Invalid phone number entered.");
             throw new InvalidPhoneNumberException("The Phone Number Enter Is Invalid");
         }
 
-
+        log.info("Check user existence by phone number.");
         //checking if the user exists
         if(userRegistrationRepository.findByPhoneNumber(registerUserDTO.getUserPhoneNumber()) != null)
         {
+            log.error("User exist.");
             throw new UserExistException("The Phone Number is Already Taken.");
         }
 
+        log.info("Checking password strength");
         //check if the password is strong enough.
         if(!checkPasswordStrength(registerUserDTO.getUserPassword()))
         {
+            log.error("Weak password entered");
             throw new WeakPasswordException("The Password Entered Does Not Meet The Required Criteria");
         }
+
+        /*If the user has both emails and phone number entered, we prefer using email verification
+        * to verify their account to reduce on the cost.
+        * Else if the user does not have the email, we fall back to using the phone number for verifications
+        * as it is a mandatory field as opposed to the email field*/
 
         //check if the user has an email
         if(registerUserDTO.getUserEmail() == null)
@@ -73,8 +86,10 @@ public class RegisterUserService {
                 throw new UserExistException("The Email You Entered is Already Taken");
             }
 
+            log.info("Sending the verification email");
             //send the email for verifications.
-
+            communicationService.sendVerificationEmails("https://github.com/Red-stevo",
+                    registerUserDTO.getUserEmail());
         }
 
         log.info("Moving forward to insert the user.");
@@ -88,7 +103,7 @@ public class RegisterUserService {
         //saving the user to the database.
         userRegistrationRepository.save(userRegistrationTable);
 
-
+        log.info("New User Added successfully");
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
@@ -135,12 +150,14 @@ public class RegisterUserService {
 
     public Boolean checkPasswordStrength(String password)
     {
+
+        log.info("Check password pattern");
         Pattern passwordPattern = Pattern.
-                compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z](?=.*[`~!@#$%^&*)(_+=}{:'?><,./|;]))");
+                compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()_+.,?=])\\S{8,}(?!.*(\\w)\\1{2,})$");
 
         //check if the password matches the specifications.
         Matcher matchPassword = passwordPattern.matcher(password);
-
+        System.out.println(matchPassword.matches());
         return matchPassword.matches();
     }
 
