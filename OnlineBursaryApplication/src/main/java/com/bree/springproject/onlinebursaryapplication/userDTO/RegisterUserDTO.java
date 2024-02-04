@@ -19,7 +19,7 @@ public class RegisterUserDTO {
 
     @NotNull(message = "The userPhoneNumber Can Not Be null")
     @NotBlank(message = "The userPhoneNumber can Not Be Blank")
-    @Size(min = 10, max=13, message = "The Phone Number Should Range From 10 to 13 numbers")
+    @Size(min = 10, max=10, message = "The Phone Number Should Have 10 digits")
     private String userPhoneNumber;
 
     @NotNull(message = "The userPassword Can Not Be null")
