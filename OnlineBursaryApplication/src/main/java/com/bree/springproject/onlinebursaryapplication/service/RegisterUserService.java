@@ -135,12 +135,14 @@ public class RegisterUserService {
 
     public Boolean checkPasswordStrength(String password)
     {
+
+        log.info("Check password pattern");
         Pattern passwordPattern = Pattern.
-                compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z](?=.*[`~!@#$%^&*)(_+=}{:'?><,./|;]))");
+                compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()_+.,?=])\\S{8,}(?!.*(\\w)\\1{2,})$");
 
         //check if the password matches the specifications.
         Matcher matchPassword = passwordPattern.matcher(password);
-
+        System.out.println(matchPassword.matches());
         return matchPassword.matches();
     }
 
