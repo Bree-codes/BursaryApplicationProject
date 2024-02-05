@@ -18,13 +18,13 @@ public class BursaryFormCreationController {
     @Autowired
     CreateFormService createFormService;
 
-    @PostMapping("section-a")
-    public ResponseEntity<String> createSectionA(
+    @PostMapping("form/{section}")
+    public ResponseEntity<String> createSectionA( @PathVariable String section,
             @RequestBody Map<String, String> formSectionA,
             @RequestParam String month, @RequestParam Long userId)
     {
         //here the administrator will fill the field names required for section A.
-        return createFormService.createSectionA(formSectionA, month, userId);
+        return createFormService.createSectionA(formSectionA, month, userId, section);
     }
 
 

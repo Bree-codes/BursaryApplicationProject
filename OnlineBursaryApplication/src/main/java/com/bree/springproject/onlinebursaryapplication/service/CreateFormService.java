@@ -21,7 +21,8 @@ public class CreateFormService {
     @Autowired
     FormCreateRepository formCreateRepository;
 
-    public ResponseEntity<String> createSectionA(Map<String, String> sectionA, String month, Long userId) {
+    public ResponseEntity<String> createSectionA(Map<String,
+            String> sectionA, String month, Long userId, String section) {
 
         List<String> fields = new ArrayList<>(sectionA.keySet());
         List<ApplicationFormCreateTable> sectionAColumns = new ArrayList<>();
@@ -34,7 +35,7 @@ public class CreateFormService {
             sectionAColumn.setBursaryMonth(month);
             sectionAColumn.setField(field);
             sectionAColumn.setType(sectionA.get(field));
-
+            sectionAColumn.setSection(section);
             sectionAColumns.add(sectionAColumn);
         }
 

@@ -21,4 +21,7 @@ public class ApplicationFormCreateTable {
     @NotNull
     private Long userId;
 
+    @NotNull
+    private String section;
+
 }
