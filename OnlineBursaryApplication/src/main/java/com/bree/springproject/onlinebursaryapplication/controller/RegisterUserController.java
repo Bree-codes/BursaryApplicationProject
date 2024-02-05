@@ -1,7 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.controller;
 
 
-import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.service.RegisterUserService;
 import com.bree.springproject.onlinebursaryapplication.userDTO.RegisterUserDTO;
 import jakarta.mail.MessagingException;
@@ -16,7 +15,7 @@ import java.net.UnknownHostException;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/home")
+@RequestMapping("/api/v0/users")
 @Setter
 public class RegisterUserController {
 
@@ -61,7 +60,7 @@ public class RegisterUserController {
     public ResponseEntity<String> changePasswordByPhoneNumber
             (@RequestParam @Valid String userPassword, @RequestParam String phoneNUmber)
     {
-        return null;
+        return registerUserService.updatePassword(userPassword,phoneNUmber);
     }
 
 
