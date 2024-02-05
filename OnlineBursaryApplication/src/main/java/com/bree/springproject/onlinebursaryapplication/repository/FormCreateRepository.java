@@ -4,7 +4,10 @@ import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCre
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface FormCreateRepository extends JpaRepository<ApplicationFormCreateTable, String> {
+import java.util.List;
 
+@Repository
+public interface FormCreateRepository extends JpaRepository<ApplicationFormCreateTable, Long> {
+
+    List<ApplicationFormCreateTable> findAllByBursaryMonthAndSection(String bursaryMonth, String section);
 }

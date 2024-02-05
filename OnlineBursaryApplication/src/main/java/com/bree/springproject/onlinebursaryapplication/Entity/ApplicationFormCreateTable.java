@@ -4,12 +4,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Generated;
 
 @Data
 @Entity
 public class ApplicationFormCreateTable {
 
     @Id
+    @Generated
+    private Long formId;
+
     private String bursaryMonth;
 
     @NotNull

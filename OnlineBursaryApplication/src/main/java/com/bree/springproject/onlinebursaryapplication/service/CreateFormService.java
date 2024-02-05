@@ -1,6 +1,7 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
+import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -44,4 +45,17 @@ public class CreateFormService {
 
         return new ResponseEntity<>("Save Successfully", HttpStatus.CREATED);
     }
+
+    public ResponseEntity<String> updateForm(List<ApplicationFormCreateTable> updatedSection) {
+        List<ApplicationFormCreateTable> newSection = new ArrayList<>();
+
+        //get the section that was updated.
+        List<ApplicationFormCreateTable> oldRecord = formCreateRepository.findAllByBursaryMonthAndSection(
+                updatedSection.get(1).getBursaryMonth(), updatedSection.get(1).getSection());
+
+
+
+        return null;
+    }
 }
+
