@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.net.UnknownHostException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +39,7 @@ public class RegisterUserService {
     @Autowired
     CommunicationService communicationService;
 
-    public ResponseEntity<String> registrationValidation(RegisterUserDTO registerUserDTO) throws MessagingException {
+    public ResponseEntity<String> registrationValidation(RegisterUserDTO registerUserDTO) throws MessagingException, UnknownHostException {
         log.info("Forwarded the request to register a new user.");
         //instance of a new user.
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
@@ -107,7 +108,10 @@ public class RegisterUserService {
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
-    public ResponseEntity<String> updatePassword(String userPassword, String userEmail) {
+    public ResponseEntity<String> updatePassword(String userPassword, String userEmailOrPhoneNumber) {
+
+        UserRegistrationTable userRegistrationTable = null;
+
         log.info("Forwarding the password update.");
 
         //validate the password strength here.
@@ -116,36 +120,46 @@ public class RegisterUserService {
             throw new WeakPasswordException("The Password Entered Does Not Meet The Required Criteria");
         }
 
-        //update the password
-            //first we get the user by email.
-        UserRegistrationTable userRegistrationTable = userRegistrationRepository.findByEmail(userEmail);
+        //check whether it is an email or a phone number.
+        if(!checkValidityOfPhoneNumber(userEmailOrPhoneNumber))
+        {
+            userRegistrationTable = userRegistrationRepository.findByEmail(userEmailOrPhoneNumber);
+        }
+        else {
+            userRegistrationTable = userRegistrationRepository.findByPhoneNumber(userEmailOrPhoneNumber);
+        }
+
+        if(userRegistrationTable == null)
+        {
+            throw new UserDoesNotExistException("Invalid password update attempt, User does not exist");
+        }
 
         //update the password
         userRegistrationTable.setPassword(userPassword);
 
         //merge back the user.
         userRegistrationRepository.save(userRegistrationTable);
-
+        log.info("Password updated successfully");
 
         return new ResponseEntity<>("Password update successful", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> changePassword(String userEmail) {
+    public ResponseEntity<String> changePassword(String userEmailOrPassword) throws MessagingException {
         log.info("Forwarded the forgot password request");
 
-        //check if the email exists in the database.
-        if(userRegistrationRepository.findByEmail(userEmail) == null)
+        //check whether it is an email or a password.
+        if(!checkValidityOfPhoneNumber(userEmailOrPassword))
         {
-            throw new UserDoesNotExistException("The Email Entered Does Not Much Any User.");
+            //the string is an email
+            communicationService.sendChangePasswordEmail(userEmailOrPassword);
+            return new ResponseEntity<>("Check your Email.",HttpStatus.CONTINUE);
         }
 
-        //will send the email to this user to change their password.
-        //an error may occur at this point, so we should remember to handle the exceptions.
-
+        //here we send the message to the phone number.
 
 
         //after the email is sent, we return.
-        return new ResponseEntity<>("Email Sent successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Check Your messages ", HttpStatus.OK);
     }
 
     public Boolean checkPasswordStrength(String password)
@@ -172,4 +186,23 @@ public class RegisterUserService {
         return testResults.matches();
     }
 
+
+    public ResponseEntity<String> verifyEmail(Boolean verify, String userEmail) {
+
+        log.info("Verifying user Email.");
+
+        UserRegistrationTable userRegistrationTable = userRegistrationRepository.findByEmail(userEmail);
+
+        //confirming the email exists in the database.
+        if(userRegistrationTable == null) {
+            log.error("Invalid verification email.");
+            throw new UserDoesNotExistException("User Verification failed, User does Not exist");
+        }
+        userRegistrationTable.setStatus(verify);
+
+        //saving back the user.
+        userRegistrationRepository.save(userRegistrationTable);
+
+        return new ResponseEntity<>("verification passed.", HttpStatus.OK);
+    }
 }

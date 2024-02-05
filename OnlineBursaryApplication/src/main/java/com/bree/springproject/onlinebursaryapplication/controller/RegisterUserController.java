@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.UnknownHostException;
+
 @RestController
 @Slf4j
 @RequestMapping("/api/home")
@@ -23,13 +25,22 @@ public class RegisterUserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody
-                                               RegisterUserDTO registerUserDTO) throws MessagingException {
+                                               RegisterUserDTO registerUserDTO) throws MessagingException, UnknownHostException {
         log.info("Received a request to create a user.");
 
         //verify the user-email
 
         return  registerUserService.registrationValidation(registerUserDTO);
 
+    }
+
+    @PutMapping("/verify-email")
+    public ResponseEntity<String> verifyPassword(
+            @RequestParam  Boolean verify, @RequestParam String userEmail)
+    {
+        log.info("User verified their email.");
+
+        return registerUserService.verifyEmail(verify, userEmail);
     }
 
 
@@ -40,7 +51,7 @@ public class RegisterUserController {
     {
         log.info("Received a request to change the password");
 
-        //
+        //forward the password for validation and update.
 
         return registerUserService.updatePassword(userPassword, userEmail);
     }
@@ -55,12 +66,11 @@ public class RegisterUserController {
 
 
     @GetMapping("/forgotten-password")
-    public ResponseEntity<String> forgottenPassword(@RequestParam String userEmail)
-    {
+    public ResponseEntity<String> forgottenPassword(@RequestParam String userEmailOrPassword) throws MessagingException {
         log.info("User forgotten password");
 
         //forward the request to send the email to the user for changing the password.
-        return registerUserService.changePassword(userEmail);
+        return registerUserService.changePassword(userEmailOrPassword);
 
     }
 

@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.net.UnknownHostException;
+
 @SpringBootTest
 class OnlineBursaryApplicationTests {
 
@@ -20,7 +22,7 @@ class OnlineBursaryApplicationTests {
 
 
     @Test
-    public void test() throws MessagingException {
+    public void test() throws MessagingException, UnknownHostException {
         service.sendVerificationEmails("https://github.com/Red-stevo", "stevenmuish@gmail.com");
     }
 
