@@ -1,6 +1,5 @@
 package com.bree.springproject.onlinebursaryapplication.Entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class SectionATable {
+public class ApplicationFormCreateTable {
 
     @Id
     private String bursaryMonth;

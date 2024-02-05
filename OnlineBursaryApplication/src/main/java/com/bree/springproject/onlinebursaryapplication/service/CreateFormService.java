@@ -1,7 +1,7 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
-import com.bree.springproject.onlinebursaryapplication.Entity.SectionATable;
-import com.bree.springproject.onlinebursaryapplication.repository.SectionATableRepository;
+import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
+import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +19,16 @@ import java.util.Map;
 public class CreateFormService {
 
     @Autowired
-    SectionATableRepository sectionATableRepository;
+    FormCreateRepository formCreateRepository;
 
     public ResponseEntity<String> createSectionA(Map<String, String> sectionA, String month, Long userId) {
 
         List<String> fields = new ArrayList<>(sectionA.keySet());
-        List<SectionATable> sectionAColumns = new ArrayList<>();
+        List<ApplicationFormCreateTable> sectionAColumns = new ArrayList<>();
 
         for(String field : fields)
         {
-            SectionATable sectionAColumn = new SectionATable();
+            ApplicationFormCreateTable sectionAColumn = new ApplicationFormCreateTable();
 
             sectionAColumn.setUserId(userId);
             sectionAColumn.setBursaryMonth(month);
@@ -39,7 +39,7 @@ public class CreateFormService {
         }
 
         //batch update.
-        sectionATableRepository.saveAll(sectionAColumns);
+        formCreateRepository.saveAll(sectionAColumns);
 
         return new ResponseEntity<>("Save Successfully", HttpStatus.CREATED);
     }
