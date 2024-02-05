@@ -6,13 +6,12 @@ import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepo
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -43,17 +42,39 @@ public class CreateFormService {
         //batch update.
         formCreateRepository.saveAll(sectionAColumns);
 
-        return new ResponseEntity<>("Save Successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>("Saved Successfully", HttpStatus.CREATED);
     }
 
+    /*This method is responsible for updating the form */
     public ResponseEntity<String> updateForm(List<ApplicationFormCreateTable> updatedSection) {
-        List<ApplicationFormCreateTable> newSection = new ArrayList<>();
 
-        //get the section that was updated.
-        List<ApplicationFormCreateTable> oldRecord = formCreateRepository.findAllByBursaryMonthAndSection(
-                updatedSection.get(1).getBursaryMonth(), updatedSection.get(1).getSection());
+        log.info("Forwarded the request to update the form");
+
+        //here we batch update the form.
+        formCreateRepository.saveAll(updatedSection);
+
+        log.info("Updated successfully");
+        return new ResponseEntity<>("Update successful", HttpStatus.OK);
+    }
 
 
+    public ResponseEntity<List<List<ApplicationFormCreateTable>>> getForm() {
+        log.info("Forwarded request to get the form");
+
+        //we are going to load the latest form.
+        Date date = new Date();
+
+        String month = String.valueOf(date.getMonth());
+        String year = String.valueOf(date.getYear());
+
+        //field to be searched for.
+        String monthField = month+"_"+year;
+
+        //get the data.
+        List<ApplicationFormCreateTable> form = formCreateRepository.findAllByBursaryMonth(monthField);
+
+
+        //process the form to break it down into sections.
 
         return null;
     }

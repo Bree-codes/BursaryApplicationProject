@@ -20,7 +20,7 @@ public class BursaryFormCreationController {
     @Autowired
     CreateFormService createFormService;
 
-    @PostMapping("create-form/{section}")
+    @PostMapping("/create-form/{section}")
     public ResponseEntity<String> createForm( @PathVariable String section,
             @RequestBody Map<String, String> formSectionA,
             @RequestParam String month, @RequestParam Long userId)
@@ -29,11 +29,23 @@ public class BursaryFormCreationController {
         return createFormService.createSectionA(formSectionA, month, userId, section);
     }
 
-    @PutMapping("update-form/")
+    @PutMapping("/update-form")
     public ResponseEntity<String> updateForm(@RequestBody
                                              List<ApplicationFormCreateTable> updatedSection)
     {
+        log.info("Received a request update the form");
+
         return createFormService.updateForm(updatedSection);
+    }
+
+    @GetMapping("/get-form")
+    public ResponseEntity<List<List<ApplicationFormCreateTable>>> getForm()
+    {
+        //here we will get a list of the list of fields for each section.
+
+        log.info("Received a request to get the form fields");
+
+        return createFormService.getForm();
     }
 
 

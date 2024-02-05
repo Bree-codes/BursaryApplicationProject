@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface FormCreateRepository extends JpaRepository<ApplicationFormCreateTable, Long> {
 
-    List<ApplicationFormCreateTable> findAllByBursaryMonthAndSection(String bursaryMonth, String section);
+    List<ApplicationFormCreateTable> findAllByBursaryMonth(String bursaryMonth);
 }
