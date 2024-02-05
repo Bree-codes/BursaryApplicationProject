@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.UnknownHostException;
+
 @RestController
 @Slf4j
 @RequestMapping("/api/home")
@@ -23,7 +25,7 @@ public class RegisterUserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody
-                                               RegisterUserDTO registerUserDTO) throws MessagingException {
+                                               RegisterUserDTO registerUserDTO) throws MessagingException, UnknownHostException {
         log.info("Received a request to create a user.");
 
         //verify the user-email

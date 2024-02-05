@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.net.UnknownHostException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +39,7 @@ public class RegisterUserService {
     @Autowired
     CommunicationService communicationService;
 
-    public ResponseEntity<String> registrationValidation(RegisterUserDTO registerUserDTO) throws MessagingException {
+    public ResponseEntity<String> registrationValidation(RegisterUserDTO registerUserDTO) throws MessagingException, UnknownHostException {
         log.info("Forwarded the request to register a new user.");
         //instance of a new user.
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
