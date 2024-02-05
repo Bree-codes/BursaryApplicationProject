@@ -116,8 +116,8 @@ public class CommunicationService {
                                             cursor: pointer;
                                             font-weight: bold;
                                             text-align: center;
-                                            height: 8%;
-                                            width:15%;
+                                            height: 12%;
+                                            width:20%;
                                             margin: 10px;
                                             margin-top: 50px;
                                             font-size: 16px;
@@ -146,5 +146,7 @@ public class CommunicationService {
 
         javaMailSender.send(mimeMessage);
         log.info("Forgotten password email sent successfully");
+
+        return;
     }
 }

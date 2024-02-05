@@ -139,7 +139,7 @@ public class RegisterUserService {
 
         //merge back the user.
         userRegistrationRepository.save(userRegistrationTable);
-
+        log.info("Password updated successfully");
 
         return new ResponseEntity<>("Password update successful", HttpStatus.OK);
     }
