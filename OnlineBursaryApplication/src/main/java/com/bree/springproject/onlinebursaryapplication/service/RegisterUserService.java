@@ -173,4 +173,23 @@ public class RegisterUserService {
         return testResults.matches();
     }
 
+
+    public ResponseEntity<String> verifyEmail(Boolean verify, String userEmail) {
+
+        log.info("Verifying user Email.");
+
+        UserRegistrationTable userRegistrationTable = userRegistrationRepository.findByEmail(userEmail);
+
+        //confirming the email exists in the database.
+        if(userRegistrationTable == null) {
+            log.error("Invalid verification email.");
+            throw new UserDoesNotExistException("User Verification failed, User does Not exist");
+        }
+        userRegistrationTable.setStatus(verify);
+
+        //saving back the user.
+        userRegistrationRepository.save(userRegistrationTable);
+
+        return new ResponseEntity<>("verification passed.", HttpStatus.OK);
+    }
 }

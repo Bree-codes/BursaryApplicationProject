@@ -34,6 +34,15 @@ public class RegisterUserController {
 
     }
 
+    @PutMapping("/verify-email")
+    public ResponseEntity<String> verifyPassword(
+            @RequestParam  Boolean verify, @RequestParam String userEmail)
+    {
+        log.info("User verified their email.");
+
+        return registerUserService.verifyEmail(verify, userEmail);
+    }
+
 
     //the API will be bound to the email for password changing.
     @PutMapping("/change-password/email")
