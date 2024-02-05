@@ -108,7 +108,10 @@ public class RegisterUserService {
         return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
     }
 
-    public ResponseEntity<String> updatePassword(String userPassword, String userEmail) {
+    public ResponseEntity<String> updatePassword(String userPassword, String userEmailOrPhoneNumber) {
+
+        UserRegistrationTable userRegistrationTable = null;
+
         log.info("Forwarding the password update.");
 
         //validate the password strength here.
@@ -117,9 +120,19 @@ public class RegisterUserService {
             throw new WeakPasswordException("The Password Entered Does Not Meet The Required Criteria");
         }
 
-        //update the password
-            //first we get the user by email.
-        UserRegistrationTable userRegistrationTable = userRegistrationRepository.findByEmail(userEmail);
+        //check whether it is an email or a phone number.
+        if(!checkValidityOfPhoneNumber(userEmailOrPhoneNumber))
+        {
+            userRegistrationTable = userRegistrationRepository.findByEmail(userEmailOrPhoneNumber);
+        }
+        else {
+            userRegistrationTable = userRegistrationRepository.findByPhoneNumber(userEmailOrPhoneNumber);
+        }
+
+        if(userRegistrationTable == null)
+        {
+            throw new UserDoesNotExistException("Invalid password update attempt, User does not exist");
+        }
 
         //update the password
         userRegistrationTable.setPassword(userPassword);
@@ -131,22 +144,22 @@ public class RegisterUserService {
         return new ResponseEntity<>("Password update successful", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> changePassword(String userEmail) {
+    public ResponseEntity<String> changePassword(String userEmailOrPassword) throws MessagingException {
         log.info("Forwarded the forgot password request");
 
-        //check if the email exists in the database.
-        if(userRegistrationRepository.findByEmail(userEmail) == null)
+        //check whether it is an email or a password.
+        if(!checkValidityOfPhoneNumber(userEmailOrPassword))
         {
-            throw new UserDoesNotExistException("The Email Entered Does Not Much Any User.");
+            //the string is an email
+            communicationService.sendChangePasswordEmail(userEmailOrPassword);
+            return new ResponseEntity<>("Check your Email.",HttpStatus.CONTINUE);
         }
 
-        //will send the email to this user to change their password.
-        //an error may occur at this point, so we should remember to handle the exceptions.
-
+        //here we send the message to the phone number.
 
 
         //after the email is sent, we return.
-        return new ResponseEntity<>("Email Sent successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Check Your messages ", HttpStatus.OK);
     }
 
     public Boolean checkPasswordStrength(String password)

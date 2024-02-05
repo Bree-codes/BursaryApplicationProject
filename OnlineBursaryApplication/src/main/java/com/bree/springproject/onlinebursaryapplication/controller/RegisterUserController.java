@@ -51,7 +51,7 @@ public class RegisterUserController {
     {
         log.info("Received a request to change the password");
 
-        //
+        //forward the password for validation and update.
 
         return registerUserService.updatePassword(userPassword, userEmail);
     }
@@ -66,12 +66,11 @@ public class RegisterUserController {
 
 
     @GetMapping("/forgotten-password")
-    public ResponseEntity<String> forgottenPassword(@RequestParam String userEmail)
-    {
+    public ResponseEntity<String> forgottenPassword(@RequestParam String userEmailOrPassword) throws MessagingException {
         log.info("User forgotten password");
 
         //forward the request to send the email to the user for changing the password.
-        return registerUserService.changePassword(userEmail);
+        return registerUserService.changePassword(userEmailOrPassword);
 
     }
 
