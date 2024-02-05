@@ -1,8 +1,13 @@
 package com.bree.springproject.onlinebursaryapplication;
 
+import com.bree.springproject.onlinebursaryapplication.service.CommunicationService;
 import com.bree.springproject.onlinebursaryapplication.service.RegisterUserService;
+import jakarta.mail.MessagingException;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.net.UnknownHostException;
 
 @SpringBootTest
 class OnlineBursaryApplicationTests {
@@ -12,12 +17,13 @@ class OnlineBursaryApplicationTests {
     }
 
 
-    @Test
-    public void testChangePassword()
-    {
-        RegisterUserService registerUserService = new RegisterUserService();
+    @Autowired
+    CommunicationService service;
 
-        registerUserService.changePassword("steve");
+
+    @Test
+    public void test() throws MessagingException, UnknownHostException {
+        service.sendVerificationEmails("https://github.com/Red-stevo", "stevenmuish@gmail.com");
     }
 
 }
