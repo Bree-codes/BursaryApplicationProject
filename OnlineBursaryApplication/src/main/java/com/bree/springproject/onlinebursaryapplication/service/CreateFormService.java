@@ -36,22 +36,13 @@ public class CreateFormService {
 
         //get the numerical value of the month provided.
         int monthValue = Months.valueOf(month).ordinal();
-        int yearValue = 0;
        //getting the year.
-        String currentYear = String.valueOf(Year.now().getValue());
-
-        char[] yearArray = currentYear.toCharArray();
-
-        //getting the numerical value of the year.
-        for(char value : yearArray)
-        {
-           yearValue += Integer.parseInt(String.valueOf(value));
-        }
+        int currentYear = Year.now().getValue();
 
         //getting the total value of the month-field for the form.
-        String monthFieldValue = String.valueOf((monthValue + yearValue));
+        String monthFieldValue = String.valueOf((monthValue + currentYear));
 
-
+        log.info("Proceeding with insertion.");
         List<String> fields = new ArrayList<>(sectionA.keySet());
         List<ApplicationFormCreateTable> sectionAColumns = new ArrayList<>();
 
@@ -72,6 +63,9 @@ public class CreateFormService {
 
         return new ResponseEntity<>("Saved Successfully", HttpStatus.CREATED);
     }
+
+
+
 
     /*This method is responsible for updating the form */
     public ResponseEntity<String> updateForm(List<ApplicationFormCreateTable> updatedSection) {
