@@ -86,42 +86,7 @@ public class CreateFormService {
 
         log.info("Forwarded request to get the form");
 
-        //we are going to load the latest form.
-        Date date = new Date();
 
-        String month = String.valueOf(date.getMonth());
-        String year = String.valueOf(date.getYear());
-
-        //field to be searched for.
-        String monthField = month+"_"+year;
-
-        //get the data.
-        List<ApplicationFormCreateTable> form = formCreateRepository.findAllByBursaryMonth(monthField);
-
-
-        //process the form to break it down into sections.
-        log.info("Processing the form. ");
-
-        String section = form.get(1).getSection();
-
-        List<ApplicationFormCreateTable> sectionColumns = null;
-
-        String previousSection = null;
-
-        for(ApplicationFormCreateTable row : form)
-        {
-            String currentSection = row.getSection();
-
-            if(!currentSection.equals(previousSection))
-            {
-                sortedForm.add(sectionColumns);
-                sectionColumns = new ArrayList<>();
-                previousSection = currentSection;
-            }
-            else {
-                sectionColumns.add(row);
-            }
-        }
         return new ResponseEntity<>(sortedForm, HttpStatus.OK);
     }
 }
