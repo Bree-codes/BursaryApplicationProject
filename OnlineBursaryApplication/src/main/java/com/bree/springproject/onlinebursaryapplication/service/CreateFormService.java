@@ -110,23 +110,27 @@ public class CreateFormService {
 
     private List<List<ApplicationFormCreateTable>> sortingForm(
             List<ApplicationFormCreateTable> applicationForm) {
-
+       ;
         //list to hold the sorted form.
         List<List<ApplicationFormCreateTable>> sortedForm = new ArrayList<>();
         List<ApplicationFormCreateTable> section = new ArrayList<>();
         log.info("Breaking down the form into sections");
 
-        String currentSection = applicationForm.get(1).getSection();
+
+
         String previousSection = null;
 
         for(ApplicationFormCreateTable row : applicationForm) {
-            if (!currentSection.equals(previousSection)) {
+
+            String currentSection = row.getSection();
+
+            if (currentSection.equals(previousSection)) {
+                section.add(row);
+            } else {
                 sortedForm.add(section);
                 section = new ArrayList<>();
                 section.add(row);
                 previousSection = currentSection;
-            } else {
-                section.add(row);
             }
         }
 
