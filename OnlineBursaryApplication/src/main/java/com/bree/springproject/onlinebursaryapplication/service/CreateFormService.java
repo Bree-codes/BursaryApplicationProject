@@ -84,8 +84,6 @@ public class CreateFormService {
 
     public ResponseEntity<List<List<ApplicationFormCreateTable>>> getForm() {
 
-        List<List<ApplicationFormCreateTable>> sortedForm = new ArrayList<>();
-
         log.info("Forwarded request to get the form");
 
         int year = Year.now().getValue();
@@ -104,7 +102,36 @@ public class CreateFormService {
 
         }while(applicationForm.isEmpty());
 
-        return new ResponseEntity<>(sortedForm, HttpStatus.OK);
+
+        //where we need to break down the form into sections.
+
+        return new ResponseEntity<>( sortingForm(applicationForm), HttpStatus.OK);
+    }
+
+    private List<List<ApplicationFormCreateTable>> sortingForm(
+            List<ApplicationFormCreateTable> applicationForm) {
+
+        //list to hold the sorted form.
+        List<List<ApplicationFormCreateTable>> sortedForm = new ArrayList<>();
+        List<ApplicationFormCreateTable> section = new ArrayList<>();
+        log.info("Breaking down the form into sections");
+
+        String currentSection = applicationForm.get(1).getSection();
+        String previousSection = null;
+
+        for(ApplicationFormCreateTable row : applicationForm) {
+            if (!currentSection.equals(previousSection)) {
+                sortedForm.add(section);
+                section = new ArrayList<>();
+                section.add(row);
+                previousSection = currentSection;
+            } else {
+                section.add(row);
+            }
+        }
+
+        log.info("Grouping of the form done.");
+        return sortedForm;
     }
 }
 
