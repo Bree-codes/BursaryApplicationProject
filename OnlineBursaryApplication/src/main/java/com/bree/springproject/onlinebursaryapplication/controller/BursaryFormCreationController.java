@@ -3,6 +3,7 @@ package com.bree.springproject.onlinebursaryapplication.controller;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.service.CreateFormService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,11 @@ public class BursaryFormCreationController {
     CreateFormService createFormService;
 
     @PostMapping("/create-form/{section}")
-    public ResponseEntity<String> createForm( @PathVariable String section,
-            @RequestBody Map<String, String> formSectionA,
-            @RequestParam String month, @RequestParam Long userId)
+    public ResponseEntity<String> createForm(@PathVariable String section,
+                                             @RequestBody Map<String, String> formSectionA,
+                                             @RequestParam String month, @RequestParam Long userId)
     {
+        log.info("Receive a request to create a form");
         //here the administrator will fill the field names required for section A.
         return createFormService.createSectionA(formSectionA, month, userId, section);
     }
