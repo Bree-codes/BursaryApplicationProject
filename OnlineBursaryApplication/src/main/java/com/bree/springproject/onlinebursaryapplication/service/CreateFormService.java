@@ -29,19 +29,8 @@ public class CreateFormService {
 
         log.info("Forwarded the request to create the form");
 
-
-        //validate the month format.
-        log.info("Validating the month format.");
-
-        month = month.toLowerCase();
-
-        //get the numerical value of the month provided.
-        int monthValue = Months.valueOf(month).ordinal();
-       //getting the year.
-        int currentYear = Year.now().getValue();
-
-        //getting the total value of the month-field for the form.
-        String monthFieldValue = String.valueOf((monthValue + currentYear));
+        //encoding the month
+        String monthFieldValue = encoder(month);
 
         log.info("Proceeding with insertion.");
         List<String> fields = new ArrayList<>(sectionA.keySet());
@@ -65,6 +54,19 @@ public class CreateFormService {
         return new ResponseEntity<>("Saved Successfully", HttpStatus.CREATED);
     }
 
+    public String encoder(String month)
+    {
+        month = month.toLowerCase();
+
+        //get the numerical value of the month provided.
+        int monthValue = Months.valueOf(month).ordinal();
+        //getting the year.
+        int currentYear = Year.now().getValue();
+
+        //getting the total value of the month-field for the form.
+        return String.valueOf((monthValue + currentYear));
+    }
+
 
 
 
@@ -72,6 +74,10 @@ public class CreateFormService {
     public ResponseEntity<String> updateForm(List<ApplicationFormCreateTable> updatedSection) {
 
         log.info("Forwarded the request to update the form");
+
+        String monthYear = encoder(updatedSection.get(1).getBursaryMonth());
+
+
 
         //here we batch update the form.
         formCreateRepository.saveAll(updatedSection);
@@ -109,6 +115,10 @@ public class CreateFormService {
 
     private List<List<ApplicationFormCreateTable>> sortingForm(
             List<ApplicationFormCreateTable> applicationForm, int year) {
+
+        System.out.println(applicationForm);
+
+
         //list to hold the sorted form.
         List<List<ApplicationFormCreateTable>> sortedForm = new ArrayList<>();
         List<ApplicationFormCreateTable> section = new ArrayList<>();
@@ -116,7 +126,6 @@ public class CreateFormService {
 
         /*In the for loop below, I am grouping form in sections as provided from the database.
         * We will also decode the month from the given integer*/
-
         String previousSection = null;
 
         for(ApplicationFormCreateTable row : applicationForm) {
@@ -143,6 +152,11 @@ public class CreateFormService {
 
             log.info("Moving to grouping of the form");
 
+            /*ApplicationFormCreateTable applicationFormCreateTable = new ApplicationFormCreateTable();
+            applicationFormCreateTable.setSection("end");
+
+            applicationForm.add(applicationFormCreateTable);
+*/
             String currentSection = row.getSection();
 
             if (currentSection.equals(previousSection)) {
