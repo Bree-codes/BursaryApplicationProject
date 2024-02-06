@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
 import java.util.*;
 
@@ -86,6 +88,21 @@ public class CreateFormService {
 
         log.info("Forwarded request to get the form");
 
+        int year = Year.now().getValue();
+
+        int month = LocalDate.now().getMonthValue();
+
+        int searchValue = month + year;
+
+        List<ApplicationFormCreateTable> applicationForm;
+
+
+        //getting the complete form.
+        do{
+            applicationForm = formCreateRepository.findAllByBursaryMonth(String.valueOf(searchValue));
+            searchValue = searchValue - 1;
+
+        }while(applicationForm.isEmpty());
 
         return new ResponseEntity<>(sortedForm, HttpStatus.OK);
     }
