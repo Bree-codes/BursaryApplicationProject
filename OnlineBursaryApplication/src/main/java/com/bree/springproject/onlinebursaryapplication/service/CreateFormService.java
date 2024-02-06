@@ -153,10 +153,9 @@ public class CreateFormService {
                 section.add(row);
                 previousSection = currentSection;
             }
-
         }
 
-        log.info("Grouping of the form done.");
+        log.info("Decoding and Grouping of the form done.");
         return sortedForm;
     }
 }
