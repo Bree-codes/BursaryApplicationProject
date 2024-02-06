@@ -2,6 +2,7 @@ package com.bree.springproject.onlinebursaryapplication.service;
 
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
+import com.bree.springproject.onlinebursaryapplication.models.Months;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
 import java.util.*;
 
 @Service
@@ -24,6 +26,32 @@ public class CreateFormService {
     public ResponseEntity<String> createSectionA(Map<String,
             String> sectionA, String month, Long userId, String section) {
 
+        log.info("Forwarded the request to create the form");
+
+
+        //validate the month format.
+        log.info("Validating the month format.");
+
+        month = month.toLowerCase();
+
+        //get the numerical value of the month provided.
+        int monthValue = Months.valueOf(month).ordinal();
+        int yearValue = 0;
+       //getting the year.
+        String currentYear = String.valueOf(Year.now().getValue());
+
+        char[] yearArray = currentYear.toCharArray();
+
+        //getting the numerical value of the year.
+        for(char value : yearArray)
+        {
+           yearValue += Integer.parseInt(String.valueOf(value));
+        }
+
+        //getting the total value of the month-field for the form.
+        String monthFieldValue = String.valueOf((monthValue + yearValue));
+
+
         List<String> fields = new ArrayList<>(sectionA.keySet());
         List<ApplicationFormCreateTable> sectionAColumns = new ArrayList<>();
 
@@ -32,7 +60,7 @@ public class CreateFormService {
             ApplicationFormCreateTable sectionAColumn = new ApplicationFormCreateTable();
 
             sectionAColumn.setUserId(userId);
-            sectionAColumn.setBursaryMonth(month);
+            sectionAColumn.setBursaryMonth(monthFieldValue);
             sectionAColumn.setField(field);
             sectionAColumn.setType(sectionA.get(field));
             sectionAColumn.setSection(section);
@@ -59,6 +87,9 @@ public class CreateFormService {
 
 
     public ResponseEntity<List<List<ApplicationFormCreateTable>>> getForm() {
+
+        List<List<ApplicationFormCreateTable>> sortedForm = new ArrayList<>();
+
         log.info("Forwarded request to get the form");
 
         //we are going to load the latest form.
@@ -75,8 +106,29 @@ public class CreateFormService {
 
 
         //process the form to break it down into sections.
+        log.info("Processing the form. ");
 
-        return null;
+        String section = form.get(1).getSection();
+
+        List<ApplicationFormCreateTable> sectionColumns = null;
+
+        String previousSection = null;
+
+        for(ApplicationFormCreateTable row : form)
+        {
+            String currentSection = row.getSection();
+
+            if(!currentSection.equals(previousSection))
+            {
+                sortedForm.add(sectionColumns);
+                sectionColumns = new ArrayList<>();
+                previousSection = currentSection;
+            }
+            else {
+                sectionColumns.add(row);
+            }
+        }
+        return new ResponseEntity<>(sortedForm, HttpStatus.OK);
     }
 }
 
