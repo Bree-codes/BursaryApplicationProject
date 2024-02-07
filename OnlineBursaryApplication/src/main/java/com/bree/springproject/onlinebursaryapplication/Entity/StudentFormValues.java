@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -14,11 +15,15 @@ public class StudentFormValues {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long valueId;
 
-    private Long StudentId;
+    @NotNull
+    private Long userId;
 
+    @NotNull
     private Long fieldId;
 
+    @NotNull
     private String fieldValue;
 
-    private String formIdentify;
+    @NotNull
+    private String bursaryMonth;
 }
