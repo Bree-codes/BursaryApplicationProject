@@ -75,7 +75,7 @@ public class CreateFormService {
 
         log.info("Forwarded the request to update the form");
 
-        String monthYear = encoder(updatedSection.get(1).getBursaryMonth());
+        //String monthYear = encoder(updatedSection.get(1).getBursaryMonth());
 
 
 
@@ -122,7 +122,8 @@ public class CreateFormService {
         //list to hold the sorted form.
         List<List<ApplicationFormCreateTable>> sortedForm = new ArrayList<>();
         List<ApplicationFormCreateTable> section = new ArrayList<>();
-        log.info("Breaking down the form into sections");
+        ApplicationFormCreateTable lastRow = applicationForm.get(applicationForm.size()-1);
+
 
         /*In the for loop below, I am grouping form in sections as provided from the database.
         * We will also decode the month from the given integer*/
@@ -138,10 +139,10 @@ public class CreateFormService {
             log.info("decoding the months");
             int currentYear = year;
 
-            if(year == 0)
-            {
-                currentYear = Year.now().getValue();
-            }
+
+            //handle the default get method
+            if(year == 0) currentYear = Year.now().getValue();
+
 
             int month = Integer.parseInt(row.getBursaryMonth()) - currentYear;
 
@@ -152,23 +153,20 @@ public class CreateFormService {
 
             log.info("Moving to grouping of the form");
 
-            /*ApplicationFormCreateTable applicationFormCreateTable = new ApplicationFormCreateTable();
-            applicationFormCreateTable.setSection("end");
-
-            applicationForm.add(applicationFormCreateTable);
-*/
             String currentSection = row.getSection();
 
-            if (currentSection.equals(previousSection)) {
-                section.add(row);
-            } else {
+            if (currentSection.equals(previousSection)) section.add(row);
+            else {
                 sortedForm.add(section);
                 section = new ArrayList<>();
                 section.add(row);
                 previousSection = currentSection;
             }
+
+            if(row == lastRow) sortedForm.add(section);
         }
 
+        sortedForm.remove(0);
         log.info("Decoding and Grouping of the form done.");
         return sortedForm;
     }
