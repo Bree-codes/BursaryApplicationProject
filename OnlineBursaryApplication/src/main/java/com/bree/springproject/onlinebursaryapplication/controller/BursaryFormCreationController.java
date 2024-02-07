@@ -1,7 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.controller;
 
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
-import com.bree.springproject.onlinebursaryapplication.models.UpdateFormModel;
 import com.bree.springproject.onlinebursaryapplication.service.CreateFormService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +45,18 @@ public class BursaryFormCreationController {
         log.info("Received a request to get the form fields");
 
         return createFormService.getForm();
+    }
+
+
+    @GetMapping("/get-form")
+    public  ResponseEntity<List<ApplicationFormCreateTable>> getForm(
+            @RequestParam String month,
+            @RequestParam String year)
+    {
+
+        log.info("Received a request to get a form by year.");
+
+        return createFormService.getForm(month, year);
     }
 
 

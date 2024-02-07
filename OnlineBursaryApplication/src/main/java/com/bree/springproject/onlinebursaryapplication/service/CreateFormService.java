@@ -3,12 +3,10 @@ package com.bree.springproject.onlinebursaryapplication.service;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidUpdateException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.models.Months;
-import com.bree.springproject.onlinebursaryapplication.models.UpdateFormModel;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -57,14 +55,16 @@ public class CreateFormService {
         return new ResponseEntity<>("Saved Successfully", HttpStatus.CREATED);
     }
 
-    public String encoder(String month)
+    public String encoder(String month, int year)
     {
         month = month.toLowerCase();
 
         //get the numerical value of the month provided.
         int monthValue = Months.valueOf(month).ordinal();
         //getting the year.
-        int currentYear = Year.now().getValue();
+        int currentYear = year;
+
+        if(currentYear == 0) currentYear = Year.now().getValue();
 
         //getting the total value of the month-field for the form.
         return String.valueOf((monthValue + currentYear));
@@ -183,6 +183,17 @@ public class CreateFormService {
         sortedForm.remove(0);
         log.info("Decoding and Grouping of the form done.");
         return sortedForm;
+    }
+
+    public ResponseEntity<List<ApplicationFormCreateTable>> getForm(String month, String year) {
+
+        String monthValue = encoder(month, Integer.parseInt(year));
+
+
+
+        List<ApplicationFormCreateTable> getList = formCreateRepository.findAllByBursaryMonthOrderBySectionAsc()
+
+        return null;
     }
 }
 

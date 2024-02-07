@@ -140,4 +140,18 @@ public class ExceptionHandling {
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<ExceptionModel> handleNumberFormatException(NumberFormatException numberFormatException)
+    {
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(numberFormatException.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
+        exceptionModel.setDate(new Date());
+
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
 }
