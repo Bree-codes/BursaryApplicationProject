@@ -3,11 +3,13 @@ package com.bree.springproject.onlinebursaryapplication.controller;
 
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
 import com.bree.springproject.onlinebursaryapplication.service.HandleStudentRequestsService;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -43,7 +45,11 @@ public class StudentRequestsController {
         return handleStudentRequestsService.saveFormValues(userId, fieldIdAndValue, bursaryMonth);
     }
 
-
+    @GetMapping("/get-user-values")
+    public ResponseEntity<List<StudentFormValues>> getLatestFormValues()
+    {
+        return null;
+    }
 
 
 }
