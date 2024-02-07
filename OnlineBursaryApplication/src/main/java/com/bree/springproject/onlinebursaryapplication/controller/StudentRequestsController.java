@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @Slf4j
 @RequestMapping("/api/v0/student")
@@ -17,20 +19,28 @@ public class StudentRequestsController {
     HandleStudentRequestsService handleStudentRequestsService;
 
 
-
-    /*
-    * NOTE
-    * This API will handle both first time storage, additional storage */
-
-    @PostMapping("/submit-form")
-    public ResponseEntity<String> storeValue(
+    @PutMapping("/update-form-field")
+    public ResponseEntity<String> updateFieldValue(
             @RequestBody StudentFormValues studentFormValues
             ){
 
-        log.info("Received a request to store student data o the backend");
+        log.info("Received a request to update a form field");
 
         //forwarding the values to the backend.
-        return handleStudentRequestsService.saveValues(studentFormValues);
+        return handleStudentRequestsService.updateValues(studentFormValues);
+    }
+
+    @PostMapping("/save-form/{userId}")
+    public ResponseEntity<String> storeFormFields(
+            @PathVariable Long userId,
+            @RequestBody Map<Long, String> fieldIdAndValue,
+            @RequestParam String bursaryMonth
+    )
+    {
+        log.info("Received a request to save for to the database");
+
+        //moving forward to format and store the form.
+        return handleStudentRequestsService.saveFormValues(userId, fieldIdAndValue, bursaryMonth);
     }
 
 
