@@ -1,9 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.ControllerAdvice;
 
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidPhoneNumberException;
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserExistException;
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.WeakPasswordException;
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.*;
 import com.bree.springproject.onlinebursaryapplication.models.ExceptionModel;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
@@ -114,9 +111,17 @@ public class ExceptionHandling {
         return new ResponseEntity<>(exceptionModel, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
-    public  ResponseEntity<ExceptionModel> handleInvalidUpdate()
+    @ExceptionHandler(InvalidUpdateException.class)
+    public  ResponseEntity<ExceptionModel> handleInvalidUpdate(InvalidUpdateException exception)
     {
-        return null;
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
+        exceptionModel.setDate(new Date());
+        exceptionModel.setMessage(exception.getMessage());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 
 }
