@@ -7,26 +7,23 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-@Data
 @Entity
-public class ApplicationFormCreateTable {
+@Data
+public class StudentFormValues {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE )
-    private Long fieldId;
-
-    private String bursaryMonth;
-
-    @NotNull
-    private String fieldName;
-
-    @NotNull
-    private String fieldInputType;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long valueId;
 
     @NotNull
     private Long userId;
 
     @NotNull
-    private String section;
+    private Long fieldId;
 
+    @NotNull
+    private String fieldValue;
+
+    @NotNull
+    private String bursaryMonth;
 }
