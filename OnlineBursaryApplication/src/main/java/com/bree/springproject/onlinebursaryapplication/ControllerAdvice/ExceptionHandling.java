@@ -169,4 +169,16 @@ public class ExceptionHandling {
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(FormNotFoundException.class)
+    public ResponseEntity<ExceptionModel>
+    handleFormNotFoundException(FormNotFoundException formNotFoundException)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(formNotFoundException.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.NOT_FOUND);
+        exceptionModel.setDate(new Date());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.NOT_FOUND);
+    }
 }

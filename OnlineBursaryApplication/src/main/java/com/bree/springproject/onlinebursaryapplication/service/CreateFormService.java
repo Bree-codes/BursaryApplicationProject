@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FormNotFoundException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidUpdateException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.models.Months;
@@ -187,12 +188,19 @@ public class CreateFormService {
 
     public ResponseEntity<List<List<ApplicationFormCreateTable>>> getForm(String month, String year) {
 
+        log.info("Forwarding for encoding");
         //the number format exception is handled
         String monthValue = encoder(month, Integer.parseInt(year));
 
+        log.info("Getting the data");
         List<ApplicationFormCreateTable> getList =
                 formCreateRepository.findAllByBursaryMonthOrderBySectionAsc(monthValue);
 
+
+        if(getList == null || getList.isEmpty())
+            throw new FormNotFoundException("The Requested Form Was Not Found");
+
+        log.info("Forwarding form for sorting");
         List<List<ApplicationFormCreateTable>> form = sortingForm(getList, Integer.parseInt(year));
 
         return new ResponseEntity<>(form,HttpStatus.OK);
