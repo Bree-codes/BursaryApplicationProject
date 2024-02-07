@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -88,6 +89,7 @@ public class ExceptionHandling {
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ConnectException.class)
     public ResponseEntity<ExceptionModel> handleSmtpExceptions(ConnectException connectException)
     {
         //handle smtp time out exception due to failure for connections.
@@ -99,6 +101,22 @@ public class ExceptionHandling {
         exceptionModel.setDate(new Date());
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @ExceptionHandler(UnknownHostException.class)
+    public ResponseEntity<ExceptionModel> handleConnectionFailure(UnknownHostException e)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+        exceptionModel.setMessage(String.valueOf(e.getMessage()));
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.SERVICE_UNAVAILABLE);
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    public  ResponseEntity<ExceptionModel> handleInvalidUpdate()
+    {
+        return null;
     }
 
 }

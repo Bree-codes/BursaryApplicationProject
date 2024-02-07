@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidUpdateException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.models.Months;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
@@ -75,9 +76,21 @@ public class CreateFormService {
 
         log.info("Forwarded the request to update the form");
 
-        //String monthYear = encoder(updatedSection.get(1).getBursaryMonth());
+        //we are encoding the month name back to our numeric encoding.
+        String monthYear = encoder(updatedSection.get(1).getBursaryMonth());
 
+        //check whether the update was invalid.
+        if(formCreateRepository.findAllByBursaryMonth(monthYear) == null)
+        {
+            throw new InvalidUpdateException("The Bursary Month Should Never Be changed after creation, " +
+                    "Alternatively try creating the form.");
+        }
 
+        log.info("Updating the encoding.");
+        for(ApplicationFormCreateTable table : updatedSection)
+        {
+            table.setBursaryMonth(monthYear);
+        }
 
         //here we batch update the form.
         formCreateRepository.saveAll(updatedSection);
@@ -115,8 +128,6 @@ public class CreateFormService {
 
     private List<List<ApplicationFormCreateTable>> sortingForm(
             List<ApplicationFormCreateTable> applicationForm, int year) {
-
-        System.out.println(applicationForm);
 
 
         //list to hold the sorted form.
