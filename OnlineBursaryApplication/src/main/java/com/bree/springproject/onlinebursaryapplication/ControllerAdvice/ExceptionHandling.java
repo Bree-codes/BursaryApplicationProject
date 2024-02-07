@@ -154,4 +154,19 @@ public class ExceptionHandling {
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ExceptionModel> handleIllegalArgumentException
+            (IllegalArgumentException illegalArgumentException)
+    {
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage("Check On The Month Entered => "+illegalArgumentException.getMessage());
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
 }

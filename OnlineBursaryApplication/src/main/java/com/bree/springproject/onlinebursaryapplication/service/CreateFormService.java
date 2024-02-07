@@ -31,7 +31,7 @@ public class CreateFormService {
         log.info("Forwarded the request to create the form");
 
         //encoding the month
-        String monthFieldValue = encoder(month);
+        String monthFieldValue = encoder(month, 0);
 
         log.info("Proceeding with insertion.");
         List<String> fields = new ArrayList<>(sectionA.keySet());
@@ -79,7 +79,7 @@ public class CreateFormService {
         log.info("Forwarded the request to update the form");
 
         //we are encoding the month name back to our numeric encoding.
-        String monthYear = encoder(updatedSection.getBursaryMonth());
+        String monthYear = encoder(updatedSection.getBursaryMonth(), 0);
 
         //check whether the update was invalid.
         if(formCreateRepository.findAllByBursaryMonthOrderBySectionAsc(monthYear) == null
@@ -185,15 +185,17 @@ public class CreateFormService {
         return sortedForm;
     }
 
-    public ResponseEntity<List<ApplicationFormCreateTable>> getForm(String month, String year) {
+    public ResponseEntity<List<List<ApplicationFormCreateTable>>> getForm(String month, String year) {
 
+        //the number format exception is handled
         String monthValue = encoder(month, Integer.parseInt(year));
 
+        List<ApplicationFormCreateTable> getList =
+                formCreateRepository.findAllByBursaryMonthOrderBySectionAsc(monthValue);
 
+        List<List<ApplicationFormCreateTable>> form = sortingForm(getList, Integer.parseInt(year));
 
-        List<ApplicationFormCreateTable> getList = formCreateRepository.findAllByBursaryMonthOrderBySectionAsc()
-
-        return null;
+        return new ResponseEntity<>(form,HttpStatus.OK);
     }
 }
 

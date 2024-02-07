@@ -48,8 +48,8 @@ public class BursaryFormCreationController {
     }
 
 
-    @GetMapping("/get-form")
-    public  ResponseEntity<List<ApplicationFormCreateTable>> getForm(
+    @GetMapping("/get-form/by-year")
+    public  ResponseEntity<List<List<ApplicationFormCreateTable>>> getFormByYear(
             @RequestParam String month,
             @RequestParam String year)
     {
