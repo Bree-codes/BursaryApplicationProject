@@ -3,10 +3,12 @@ package com.bree.springproject.onlinebursaryapplication.service;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidUpdateException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.models.Months;
+import com.bree.springproject.onlinebursaryapplication.models.UpdateFormModel;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -72,28 +74,26 @@ public class CreateFormService {
 
 
     /*This method is responsible for updating the form */
-    public ResponseEntity<String> updateForm(List<ApplicationFormCreateTable> updatedSection) {
+    public ResponseEntity<String> updateForm(ApplicationFormCreateTable updatedSection) {
 
         log.info("Forwarded the request to update the form");
 
         //we are encoding the month name back to our numeric encoding.
-        String monthYear = encoder(updatedSection.get(1).getBursaryMonth());
+        String monthYear = encoder(updatedSection.getBursaryMonth());
 
         //check whether the update was invalid.
-        if(formCreateRepository.findAllByBursaryMonth(monthYear) == null)
+        if(formCreateRepository.findAllByBursaryMonthOrderBySectionAsc(monthYear) == null
+                || formCreateRepository.findAllByBursaryMonthOrderBySectionAsc(monthYear).isEmpty())
         {
             throw new InvalidUpdateException("The Bursary Month Should Never Be changed after creation, " +
                     "Alternatively try creating the form.");
         }
 
-        log.info("Updating the encoding.");
-        for(ApplicationFormCreateTable table : updatedSection)
-        {
-            table.setBursaryMonth(monthYear);
-        }
+        //encoding the update form
+        updatedSection.setBursaryMonth(monthYear);
 
-        //here we batch update the form.
-        formCreateRepository.saveAll(updatedSection);
+        //saving back the updated section
+        formCreateRepository.save(updatedSection);
 
         log.info("Updated successfully");
         return new ResponseEntity<>("Update successful", HttpStatus.OK);
@@ -110,12 +110,15 @@ public class CreateFormService {
 
         int searchValue = month + year;
 
+
         List<ApplicationFormCreateTable> applicationForm;
 
 
         //getting the complete form.
         do{
-            applicationForm = formCreateRepository.findAllByBursaryMonth(String.valueOf(searchValue));
+            applicationForm = formCreateRepository.
+                    findAllByBursaryMonthOrderBySectionAsc(String.valueOf(searchValue));
+
             searchValue = searchValue - 1;
 
         }while(applicationForm.isEmpty());

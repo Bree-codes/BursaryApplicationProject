@@ -5,6 +5,7 @@ import com.bree.springproject.onlinebursaryapplication.models.ExceptionModel;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -120,6 +121,21 @@ public class ExceptionHandling {
         exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
         exceptionModel.setDate(new Date());
         exceptionModel.setMessage(exception.getMessage());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ExceptionModel> handleInvalidJson
+            (HttpMessageNotReadableException httpMessageNotReadableException)
+    {
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage("The JSon Passed is invalid => "+httpMessageNotReadableException.getMessage());
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
+
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
