@@ -140,4 +140,45 @@ public class ExceptionHandling {
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<ExceptionModel> handleNumberFormatException(NumberFormatException numberFormatException)
+    {
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(numberFormatException.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
+        exceptionModel.setDate(new Date());
+
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ExceptionModel> handleIllegalArgumentException
+            (IllegalArgumentException illegalArgumentException)
+    {
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage("Check On The Month Entered => "+illegalArgumentException.getMessage());
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FormNotFoundException.class)
+    public ResponseEntity<ExceptionModel>
+    handleFormNotFoundException(FormNotFoundException formNotFoundException)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(formNotFoundException.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.NOT_FOUND);
+        exceptionModel.setDate(new Date());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.NOT_FOUND);
+    }
 }

@@ -1,14 +1,13 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FormNotFoundException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidUpdateException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.models.Months;
-import com.bree.springproject.onlinebursaryapplication.models.UpdateFormModel;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,7 @@ public class CreateFormService {
         log.info("Forwarded the request to create the form");
 
         //encoding the month
-        String monthFieldValue = encoder(month);
+        String monthFieldValue = encoder(month, 0);
 
         log.info("Proceeding with insertion.");
         List<String> fields = new ArrayList<>(sectionA.keySet());
@@ -57,14 +56,16 @@ public class CreateFormService {
         return new ResponseEntity<>("Saved Successfully", HttpStatus.CREATED);
     }
 
-    public String encoder(String month)
+    public String encoder(String month, int year)
     {
         month = month.toLowerCase();
 
         //get the numerical value of the month provided.
         int monthValue = Months.valueOf(month).ordinal();
         //getting the year.
-        int currentYear = Year.now().getValue();
+        int currentYear = year;
+
+        if(currentYear == 0) currentYear = Year.now().getValue();
 
         //getting the total value of the month-field for the form.
         return String.valueOf((monthValue + currentYear));
@@ -79,7 +80,7 @@ public class CreateFormService {
         log.info("Forwarded the request to update the form");
 
         //we are encoding the month name back to our numeric encoding.
-        String monthYear = encoder(updatedSection.getBursaryMonth());
+        String monthYear = encoder(updatedSection.getBursaryMonth(), 0);
 
         //check whether the update was invalid.
         if(formCreateRepository.findAllByBursaryMonthOrderBySectionAsc(monthYear) == null
@@ -183,6 +184,26 @@ public class CreateFormService {
         sortedForm.remove(0);
         log.info("Decoding and Grouping of the form done.");
         return sortedForm;
+    }
+
+    public ResponseEntity<List<List<ApplicationFormCreateTable>>> getForm(String month, String year) {
+
+        log.info("Forwarding for encoding");
+        //the number format exception is handled
+        String monthValue = encoder(month, Integer.parseInt(year));
+
+        log.info("Getting the data");
+        List<ApplicationFormCreateTable> getList =
+                formCreateRepository.findAllByBursaryMonthOrderBySectionAsc(monthValue);
+
+
+        if(getList == null || getList.isEmpty())
+            throw new FormNotFoundException("The Requested Form Was Not Found");
+
+        log.info("Forwarding form for sorting");
+        List<List<ApplicationFormCreateTable>> form = sortingForm(getList, Integer.parseInt(year));
+
+        return new ResponseEntity<>(form,HttpStatus.OK);
     }
 }
 
