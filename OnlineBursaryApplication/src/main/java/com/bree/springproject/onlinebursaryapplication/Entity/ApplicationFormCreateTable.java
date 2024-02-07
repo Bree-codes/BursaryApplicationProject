@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.Generated;
 
 @Data
 @Entity
@@ -14,15 +13,15 @@ public class ApplicationFormCreateTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE )
-    private Long formId;
+    private Long fieldId;
 
     private String bursaryMonth;
 
     @NotNull
-    private String Field;
+    private String fieldName;
 
     @NotNull
-    private String type;
+    private String fieldInputType;
 
     @NotNull
     private Long userId;

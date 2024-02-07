@@ -44,8 +44,8 @@ public class CreateFormService {
 
             sectionAColumn.setUserId(userId);
             sectionAColumn.setBursaryMonth(monthFieldValue);
-            sectionAColumn.setField(field);
-            sectionAColumn.setType(sectionA.get(field));
+            sectionAColumn.setFieldName(field);
+            sectionAColumn.setFieldInputType(sectionA.get(field));
             sectionAColumn.setSection(section);
             sectionAColumns.add(sectionAColumn);
         }

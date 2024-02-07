@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v0/create-form")
+@RequestMapping("/api/v0/admin/student")
 @Slf4j
 public class BursaryFormCreationController {
 
