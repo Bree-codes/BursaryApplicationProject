@@ -1,11 +1,14 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidUpdateException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.models.Months;
+import com.bree.springproject.onlinebursaryapplication.models.UpdateFormModel;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,19 +32,8 @@ public class CreateFormService {
 
         log.info("Forwarded the request to create the form");
 
-
-        //validate the month format.
-        log.info("Validating the month format.");
-
-        month = month.toLowerCase();
-
-        //get the numerical value of the month provided.
-        int monthValue = Months.valueOf(month).ordinal();
-       //getting the year.
-        int currentYear = Year.now().getValue();
-
-        //getting the total value of the month-field for the form.
-        String monthFieldValue = String.valueOf((monthValue + currentYear));
+        //encoding the month
+        String monthFieldValue = encoder(month);
 
         log.info("Proceeding with insertion.");
         List<String> fields = new ArrayList<>(sectionA.keySet());
@@ -65,16 +57,43 @@ public class CreateFormService {
         return new ResponseEntity<>("Saved Successfully", HttpStatus.CREATED);
     }
 
+    public String encoder(String month)
+    {
+        month = month.toLowerCase();
+
+        //get the numerical value of the month provided.
+        int monthValue = Months.valueOf(month).ordinal();
+        //getting the year.
+        int currentYear = Year.now().getValue();
+
+        //getting the total value of the month-field for the form.
+        return String.valueOf((monthValue + currentYear));
+    }
+
 
 
 
     /*This method is responsible for updating the form */
-    public ResponseEntity<String> updateForm(List<ApplicationFormCreateTable> updatedSection) {
+    public ResponseEntity<String> updateForm(ApplicationFormCreateTable updatedSection) {
 
         log.info("Forwarded the request to update the form");
 
-        //here we batch update the form.
-        formCreateRepository.saveAll(updatedSection);
+        //we are encoding the month name back to our numeric encoding.
+        String monthYear = encoder(updatedSection.getBursaryMonth());
+
+        //check whether the update was invalid.
+        if(formCreateRepository.findAllByBursaryMonthOrderBySectionAsc(monthYear) == null
+                || formCreateRepository.findAllByBursaryMonthOrderBySectionAsc(monthYear).isEmpty())
+        {
+            throw new InvalidUpdateException("The Bursary Month Should Never Be changed after creation, " +
+                    "Alternatively try creating the form.");
+        }
+
+        //encoding the update form
+        updatedSection.setBursaryMonth(monthYear);
+
+        //saving back the updated section
+        formCreateRepository.save(updatedSection);
 
         log.info("Updated successfully");
         return new ResponseEntity<>("Update successful", HttpStatus.OK);
@@ -91,12 +110,15 @@ public class CreateFormService {
 
         int searchValue = month + year;
 
+
         List<ApplicationFormCreateTable> applicationForm;
 
 
         //getting the complete form.
         do{
-            applicationForm = formCreateRepository.findAllByBursaryMonth(String.valueOf(searchValue));
+            applicationForm = formCreateRepository.
+                    findAllByBursaryMonthOrderBySectionAsc(String.valueOf(searchValue));
+
             searchValue = searchValue - 1;
 
         }while(applicationForm.isEmpty());
@@ -109,14 +131,16 @@ public class CreateFormService {
 
     private List<List<ApplicationFormCreateTable>> sortingForm(
             List<ApplicationFormCreateTable> applicationForm, int year) {
+
+
         //list to hold the sorted form.
         List<List<ApplicationFormCreateTable>> sortedForm = new ArrayList<>();
         List<ApplicationFormCreateTable> section = new ArrayList<>();
-        log.info("Breaking down the form into sections");
+        ApplicationFormCreateTable lastRow = applicationForm.get(applicationForm.size()-1);
+
 
         /*In the for loop below, I am grouping form in sections as provided from the database.
         * We will also decode the month from the given integer*/
-
         String previousSection = null;
 
         for(ApplicationFormCreateTable row : applicationForm) {
@@ -129,10 +153,10 @@ public class CreateFormService {
             log.info("decoding the months");
             int currentYear = year;
 
-            if(year == 0)
-            {
-                currentYear = Year.now().getValue();
-            }
+
+            //handle the default get method
+            if(year == 0) currentYear = Year.now().getValue();
+
 
             int month = Integer.parseInt(row.getBursaryMonth()) - currentYear;
 
@@ -145,18 +169,19 @@ public class CreateFormService {
 
             String currentSection = row.getSection();
 
-            if (currentSection.equals(previousSection)) {
-                section.add(row);
-            } else {
+            if (currentSection.equals(previousSection)) section.add(row);
+            else {
                 sortedForm.add(section);
                 section = new ArrayList<>();
                 section.add(row);
                 previousSection = currentSection;
             }
 
+            if(row == lastRow) sortedForm.add(section);
         }
 
-        log.info("Grouping of the form done.");
+        sortedForm.remove(0);
+        log.info("Decoding and Grouping of the form done.");
         return sortedForm;
     }
 }

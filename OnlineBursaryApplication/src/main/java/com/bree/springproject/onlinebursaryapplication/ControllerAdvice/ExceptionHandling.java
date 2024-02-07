@@ -1,19 +1,18 @@
 package com.bree.springproject.onlinebursaryapplication.ControllerAdvice;
 
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidPhoneNumberException;
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserExistException;
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.WeakPasswordException;
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.*;
 import com.bree.springproject.onlinebursaryapplication.models.ExceptionModel;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -88,6 +87,7 @@ public class ExceptionHandling {
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ConnectException.class)
     public ResponseEntity<ExceptionModel> handleSmtpExceptions(ConnectException connectException)
     {
         //handle smtp time out exception due to failure for connections.
@@ -99,6 +99,45 @@ public class ExceptionHandling {
         exceptionModel.setDate(new Date());
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @ExceptionHandler(UnknownHostException.class)
+    public ResponseEntity<ExceptionModel> handleConnectionFailure(UnknownHostException e)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+        exceptionModel.setMessage(String.valueOf(e.getMessage()));
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.SERVICE_UNAVAILABLE);
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @ExceptionHandler(InvalidUpdateException.class)
+    public  ResponseEntity<ExceptionModel> handleInvalidUpdate(InvalidUpdateException exception)
+    {
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
+        exceptionModel.setDate(new Date());
+        exceptionModel.setMessage(exception.getMessage());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ExceptionModel> handleInvalidJson
+            (HttpMessageNotReadableException httpMessageNotReadableException)
+    {
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage("The JSon Passed is invalid => "+httpMessageNotReadableException.getMessage());
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
+
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 
 }
