@@ -94,7 +94,8 @@ public class ExceptionHandling {
 
         ExceptionModel exceptionModel = new ExceptionModel();
 
-        exceptionModel.setMessage("Connection Problem, Please checkout on you internet connection");
+        exceptionModel.setMessage("Connection Problem, Please checkout on you internet connection => "+
+                connectException.getMessage());
         exceptionModel.setHttpStatus(HttpStatus.REQUEST_TIMEOUT);
         exceptionModel.setDate(new Date());
 
@@ -180,5 +181,31 @@ public class ExceptionHandling {
         exceptionModel.setDate(new Date());
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidFieldIdProvidedException.class)
+    public ResponseEntity<ExceptionModel>
+    handleInvalidFieldIdException(InvalidFieldIdProvidedException invalidFieldIdProvidedException){
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.BAD_REQUEST);
+        exceptionModel.setMessage(invalidFieldIdProvidedException.getMessage());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FieldValuesAlreadyExistException.class)
+    public ResponseEntity<ExceptionModel> handleAttemptToStoreDuplicateValues(
+            FieldValuesAlreadyExistException e){
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        exceptionModel.setDate(new Date());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 }

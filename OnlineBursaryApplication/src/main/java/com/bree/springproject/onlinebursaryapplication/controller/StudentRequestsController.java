@@ -35,18 +35,19 @@ public class StudentRequestsController {
     @PostMapping("/save-form/{userId}")
     public ResponseEntity<String> storeFormFields(
             @PathVariable Long userId,
-            @RequestBody Map<Long, String> fieldIdAndValue,
-            @RequestParam String bursaryMonth
+            @RequestBody Map<Long, String> fieldIdAndValue
     )
     {
         log.info("Received a request to save for to the database");
 
         //moving forward to format and store the form.
-        return handleStudentRequestsService.saveFormValues(userId, fieldIdAndValue, bursaryMonth);
+        return handleStudentRequestsService.saveFormValues(userId, fieldIdAndValue);
     }
 
     @GetMapping("/get-user-values")
-    public ResponseEntity<List<StudentFormValues>> getLatestFormValues()
+    public ResponseEntity<List<StudentFormValues>> getLatestFormValues(
+            @RequestParam Long userId
+    )
     {
         return null;
     }

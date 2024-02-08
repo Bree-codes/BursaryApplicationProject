@@ -11,5 +11,7 @@ public interface FormCreateRepository extends JpaRepository<ApplicationFormCreat
 
     List<ApplicationFormCreateTable> findAllByBursaryMonthOrderBySectionAsc(String bursaryMonth);
 
+    ApplicationFormCreateTable findByFieldId(Long fieldId);
+
 
 }
