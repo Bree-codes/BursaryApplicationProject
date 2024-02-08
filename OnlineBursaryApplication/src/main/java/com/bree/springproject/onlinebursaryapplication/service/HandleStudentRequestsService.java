@@ -1,6 +1,9 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidFieldIdProvidedException;
+import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
+import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import com.bree.springproject.onlinebursaryapplication.repository.StudentsValueRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +25,12 @@ public class HandleStudentRequestsService {
     @Autowired
     StudentsValueRepository studentsValueRepository;
 
+    @Autowired
+    CreateFormService createFormService;
+
+    @Autowired
+    FormCreateRepository formCreateRepository;
+
     public ResponseEntity<String> updateValues(StudentFormValues formValues) {
         log.info("Forwarded the request to save the Student values.");
 
@@ -32,13 +41,15 @@ public class HandleStudentRequestsService {
     }
 
     public ResponseEntity<String> saveFormValues
-            (Long userId, Map<Long, String> fieldIdAndValue, String bursaryMonth) {
+            (Long userId, Map<Long, String> fieldIdAndValue) {
         log.info("Forwarded a request to save the submitted form values.");
 
         List<StudentFormValues> studentFormValuesList = new ArrayList<>();
 
         //set of all the fields in the form
         Set<Long> fieldIds = fieldIdAndValue.keySet();
+
+
 
         log.info("Preparing the values for saving.");
         for(Long fieldId : fieldIds)
@@ -48,7 +59,15 @@ public class HandleStudentRequestsService {
             studentFormValues.setFieldId(fieldId);
             studentFormValues.setFieldValue(fieldIdAndValue.get(fieldId));
             studentFormValues.setUserId(userId);
-            studentFormValues.setBursaryMonth(bursaryMonth);
+
+            ApplicationFormCreateTable applicationFormCreateTable =
+                    formCreateRepository.findByFieldId(fieldId);
+            if(applicationFormCreateTable == null)
+            {
+                throw  new InvalidFieldIdProvidedException("The FieldId Entered is invalid");
+            }
+
+            studentFormValues.setBursaryMonth(applicationFormCreateTable.getBursaryMonth());
 
             studentFormValuesList.add(studentFormValues);
         }
