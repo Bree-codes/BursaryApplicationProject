@@ -104,7 +104,7 @@ public class HandleStudentRequestsService {
             for(ApplicationFormCreateTable field : section)
             {
                 StudentFormAndValuesModel formAndValuesModel = new StudentFormAndValuesModel();
-                for()
+
             }
         }
 

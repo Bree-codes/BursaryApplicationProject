@@ -13,5 +13,7 @@ public interface FormCreateRepository extends JpaRepository<ApplicationFormCreat
 
     ApplicationFormCreateTable findByFieldId(Long fieldId);
 
+    ApplicationFormCreateTable findByBursaryMonthAndFieldNameAndSection(String month, String fieldName, String section);
+
 
 }

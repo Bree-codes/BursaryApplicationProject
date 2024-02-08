@@ -208,4 +208,18 @@ public class ExceptionHandling {
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
+
+
+    @ExceptionHandler(DuplicateFormFieldException.class)
+    public ResponseEntity<ExceptionModel> handleDuplicateFieldException(DuplicateFormFieldException e)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setDate(new Date());
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+
+    }
 }
