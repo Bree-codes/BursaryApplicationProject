@@ -1,8 +1,12 @@
 package com.bree.springproject.onlinebursaryapplication.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.grammars.hql.HqlParser;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.support.AbstractPlatformTransactionManager;
+
+import java.util.List;
 
 @Entity
 @Table()
@@ -13,12 +17,12 @@ public class  UserRegistrationTable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column
-    private Long id;
+    private Long userId;
 
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = true)
+    @Column()
     private String email;
 
     @Column(nullable = false)
@@ -29,6 +33,16 @@ public class  UserRegistrationTable {
 
     @Column()
     private Boolean status = false;
+
+
+    @OneToMany(targetEntity = ApplicationFormCreateTable.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_forms", referencedColumnName = "userId")
+    List<ApplicationFormCreateTable> forms;
+
+
+    @OneToMany(targetEntity = StudentFormValues.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_values", referencedColumnName = "userId")
+    List<StudentFormValues> formValues;
 
 }
 
