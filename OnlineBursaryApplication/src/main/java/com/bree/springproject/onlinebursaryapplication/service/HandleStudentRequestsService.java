@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FieldValuesAlreadyExistException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidFieldIdProvidedException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
@@ -54,6 +55,11 @@ public class HandleStudentRequestsService {
         log.info("Preparing the values for saving.");
         for(Long fieldId : fieldIds)
         {
+
+            //check whether the field already exists.
+            if(studentsValueRepository.findByFieldIdAndUserId(fieldId, userId) != null)
+                throw new FieldValuesAlreadyExistException("Attempt to store duplicate values is not allowed");
+
             StudentFormValues studentFormValues = new StudentFormValues();
 
             studentFormValues.setFieldId(fieldId);

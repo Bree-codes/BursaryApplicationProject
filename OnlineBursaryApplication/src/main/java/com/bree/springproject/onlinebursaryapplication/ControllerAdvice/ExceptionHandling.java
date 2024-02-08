@@ -195,4 +195,17 @@ public class ExceptionHandling {
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(FieldValuesAlreadyExistException.class)
+    public ResponseEntity<ExceptionModel> handleAttemptToStoreDuplicateValues(
+            FieldValuesAlreadyExistException e){
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        exceptionModel.setDate(new Date());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
 }
