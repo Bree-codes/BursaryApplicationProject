@@ -95,18 +95,9 @@ public class HandleStudentRequestsService {
             throw new NoFormAvailableException("No Form Available For Application");
         }
 
+        String latestFormValue = form.get(1).get(1).getBursaryMonth();
 
-        //here w will find the values by the provided month.
-        form.get(1).get(1).getBursaryMonth();
-
-        for(List<ApplicationFormCreateTable> section : form)
-        {
-            for(ApplicationFormCreateTable field : section)
-            {
-                StudentFormAndValuesModel formAndValuesModel = new StudentFormAndValuesModel();
-
-            }
-        }
+        studentsValueRepository.getFormAndValues(userId, latestFormValue);
 
         return null;
     }
