@@ -1,11 +1,10 @@
 package com.bree.springproject.onlinebursaryapplication.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -28,5 +27,9 @@ public class ApplicationFormCreateTable {
 
     @NotNull
     private String section;
+
+    @OneToMany(targetEntity = StudentFormValues.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="fk_f_id", referencedColumnName = "fieldId")
+    List<StudentFormValues> values;
 
 }

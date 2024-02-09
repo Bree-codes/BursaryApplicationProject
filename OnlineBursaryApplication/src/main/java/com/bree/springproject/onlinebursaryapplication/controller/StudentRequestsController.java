@@ -2,8 +2,8 @@ package com.bree.springproject.onlinebursaryapplication.controller;
 
 
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
+import com.bree.springproject.onlinebursaryapplication.models.StudentFormAndValuesModel;
 import com.bree.springproject.onlinebursaryapplication.service.HandleStudentRequestsService;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,11 +45,11 @@ public class StudentRequestsController {
     }
 
     @GetMapping("/get-user-values")
-    public ResponseEntity<List<StudentFormValues>> getLatestFormValues(
+    public ResponseEntity<List<List<StudentFormAndValuesModel>>> getLatestFormValues(
             @RequestParam Long userId
     )
     {
-        return null;
+        return handleStudentRequestsService.getBindLatestFormAndValues(userId);
     }
 
 

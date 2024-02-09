@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.DuplicateFormFieldException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FormNotFoundException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidUpdateException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
@@ -31,6 +32,7 @@ public class CreateFormService {
 
         log.info("Forwarded the request to create the form");
 
+
         //encoding the month
         String monthFieldValue = encoder(month, 0);
 
@@ -38,6 +40,7 @@ public class CreateFormService {
         List<String> fields = new ArrayList<>(sectionA.keySet());
         List<ApplicationFormCreateTable> sectionAColumns = new ArrayList<>();
 
+        log.info("Checking for any duplicates.");
         for(String field : fields)
         {
             ApplicationFormCreateTable sectionAColumn = new ApplicationFormCreateTable();
@@ -47,6 +50,13 @@ public class CreateFormService {
             sectionAColumn.setFieldName(field);
             sectionAColumn.setFieldInputType(sectionA.get(field));
             sectionAColumn.setSection(section);
+
+            if(formCreateRepository.
+                    findByBursaryMonthAndFieldNameAndSection(monthFieldValue, field, section) != null)
+            {
+                throw new DuplicateFormFieldException("Duplicate Fields In The Same Section Id Not Allowed.");
+            }
+
             sectionAColumns.add(sectionAColumn);
         }
 

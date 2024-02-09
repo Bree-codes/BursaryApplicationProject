@@ -2,8 +2,10 @@ package com.bree.springproject.onlinebursaryapplication.service;
 
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FieldValuesAlreadyExistException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidFieldIdProvidedException;
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.NoFormAvailableException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
+import com.bree.springproject.onlinebursaryapplication.models.StudentFormAndValuesModel;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import com.bree.springproject.onlinebursaryapplication.repository.StudentsValueRepository;
 import lombok.Data;
@@ -82,5 +84,21 @@ public class HandleStudentRequestsService {
         studentsValueRepository.saveAll(studentFormValuesList);
 
         return new ResponseEntity<>("Form Values Saved Successfully", HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<List<StudentFormAndValuesModel>>> getBindLatestFormAndValues(Long userId) {
+
+        List<List<ApplicationFormCreateTable>> form = createFormService.getForm().getBody();
+
+        if(form == null)
+        {
+            throw new NoFormAvailableException("No Form Available For Application");
+        }
+
+        String latestFormValue = form.get(1).get(1).getBursaryMonth();
+
+        studentsValueRepository.getFormAndValues(userId, latestFormValue);
+
+        return null;
     }
 }
