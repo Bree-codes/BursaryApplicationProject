@@ -17,7 +17,7 @@ public class StudentFormAndValuesModel {
 
     private Long fieldId;
 
-    private Long section;
+    private String section;
 
     private String fieldName;
 
