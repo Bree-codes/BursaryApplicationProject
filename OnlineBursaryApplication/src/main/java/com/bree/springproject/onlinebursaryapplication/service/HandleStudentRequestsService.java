@@ -86,7 +86,7 @@ public class HandleStudentRequestsService {
         return new ResponseEntity<>("Form Values Saved Successfully", HttpStatus.OK);
     }
 
-    public ResponseEntity<List<List<StudentFormAndValuesModel>>> getBindLatestFormAndValues(Long userId) {
+    public ResponseEntity<List<StudentFormAndValuesModel>> getBindLatestFormAndValues(Long userId) {
 
         List<List<ApplicationFormCreateTable>> form = createFormService.getForm().getBody();
 
@@ -95,10 +95,10 @@ public class HandleStudentRequestsService {
             throw new NoFormAvailableException("No Form Available For Application");
         }
 
-        String latestFormValue = form.get(1).get(1).getBursaryMonth();
+        String latestFormValue = form.get(0).get(0).getBursaryMonth();
 
-        studentsValueRepository.getFormAndValues(userId, latestFormValue);
+       return  new ResponseEntity<>(studentsValueRepository.
+               getFormAndValues(userId, latestFormValue), HttpStatus.OK);
 
-        return null;
     }
 }

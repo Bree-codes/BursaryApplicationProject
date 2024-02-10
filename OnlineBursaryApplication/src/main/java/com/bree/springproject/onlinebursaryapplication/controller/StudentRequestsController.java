@@ -45,7 +45,7 @@ public class StudentRequestsController {
     }
 
     @GetMapping("/get-user-values")
-    public ResponseEntity<List<List<StudentFormAndValuesModel>>> getLatestFormValues(
+    public ResponseEntity<List<StudentFormAndValuesModel>> getLatestFormValues(
             @RequestParam Long userId
     )
     {

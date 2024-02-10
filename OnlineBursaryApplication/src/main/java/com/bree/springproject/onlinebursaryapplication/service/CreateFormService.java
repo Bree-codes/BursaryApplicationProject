@@ -3,6 +3,7 @@ package com.bree.springproject.onlinebursaryapplication.service;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.DuplicateFormFieldException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FormNotFoundException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidUpdateException;
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.NoFormAvailableException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.models.Months;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
@@ -119,7 +120,7 @@ public class CreateFormService {
 
         int month = LocalDate.now().getMonthValue();
 
-        int searchValue = month + year;
+        int searchValue = month + year+12;
 
 
         List<ApplicationFormCreateTable> applicationForm;
@@ -131,6 +132,10 @@ public class CreateFormService {
                     findAllByBursaryMonthOrderBySectionAsc(String.valueOf(searchValue));
 
             searchValue = searchValue - 1;
+
+            if(searchValue <= 2023){
+                throw new NoFormAvailableException("There isn't any form available.");
+            }
 
         }while(applicationForm.isEmpty());
 
@@ -164,6 +169,8 @@ public class CreateFormService {
             log.info("decoding the months");
             int currentYear = year;
 
+            //setting values to null.
+            row.setValues(null);
 
             //handle the default get method
             if(year == 0) currentYear = Year.now().getValue();
