@@ -120,7 +120,7 @@ public class CreateFormService {
 
         int month = LocalDate.now().getMonthValue();
 
-        int searchValue = month + year;
+        int searchValue = month + year+12;
 
 
         List<ApplicationFormCreateTable> applicationForm;
@@ -169,6 +169,8 @@ public class CreateFormService {
             log.info("decoding the months");
             int currentYear = year;
 
+            //setting values to null.
+            row.setValues(null);
 
             //handle the default get method
             if(year == 0) currentYear = Year.now().getValue();
