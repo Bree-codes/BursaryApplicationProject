@@ -123,17 +123,13 @@ public class HandleStudentRequestsService {
 
                 //values finder for fields
                 for (StudentFormValues valuesRow : studentFormValuesList) {
-
-                    if(valuesRow.getFieldValue() == null)
-                    {
-                        break;
-                    }
-                    if (valuesRow.getFieldValue().isEmpty())
-                    {
-                        break;
-                    }
                     if (valuesRow.getFieldId().equals(formRow.getFieldId())) {
+                        if (valuesRow.getFieldValue().isBlank()) {
+
+                            studentFormAndValuesModel.setFieldValue("");
+                        }else {
                             studentFormAndValuesModel.setFieldValue(valuesRow.getFieldValue());
+                        }
                             formAndValues.add(studentFormAndValuesModel);
                             bindingStatus = true;
                             break;
@@ -144,8 +140,9 @@ public class HandleStudentRequestsService {
                     formAndValues.add(studentFormAndValuesModel);
                 }
 
-                lists.add(formAndValues);
+
             }
+            lists.add(formAndValues);
         }
             return new ResponseEntity<>(lists, HttpStatus.OK);
     }
