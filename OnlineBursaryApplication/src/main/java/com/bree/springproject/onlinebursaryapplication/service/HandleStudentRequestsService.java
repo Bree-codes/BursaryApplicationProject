@@ -5,7 +5,6 @@ import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.Invalid
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.NoFormAvailableException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
-import com.bree.springproject.onlinebursaryapplication.models.Months;
 import com.bree.springproject.onlinebursaryapplication.models.StudentFormAndValuesModel;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import com.bree.springproject.onlinebursaryapplication.repository.StudentsValueRepository;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,13 +53,11 @@ public class HandleStudentRequestsService {
         Set<Long> fieldIds = fieldIdAndValue.keySet();
 
 
-
         log.info("Preparing the values for saving.");
-        for(Long fieldId : fieldIds)
-        {
+        for (Long fieldId : fieldIds) {
 
             //check whether the field already exists.
-            if(studentsValueRepository.findByFieldIdAndUserId(fieldId, userId) != null)
+            if (studentsValueRepository.findByFieldIdAndUserId(fieldId, userId) != null)
                 throw new FieldValuesAlreadyExistException("Attempt to store duplicate values is not allowed");
 
             StudentFormValues studentFormValues = new StudentFormValues();
@@ -72,9 +68,8 @@ public class HandleStudentRequestsService {
 
             ApplicationFormCreateTable applicationFormCreateTable =
                     formCreateRepository.findByFieldId(fieldId);
-            if(applicationFormCreateTable == null)
-            {
-                throw  new InvalidFieldIdProvidedException("The FieldId Entered is invalid");
+            if (applicationFormCreateTable == null) {
+                throw new InvalidFieldIdProvidedException("The FieldId Entered is invalid");
             }
 
             studentFormValues.setBursaryMonth(applicationFormCreateTable.getBursaryMonth());
@@ -95,8 +90,7 @@ public class HandleStudentRequestsService {
         StudentFormAndValuesModel studentFormAndValuesModel;
         List<List<StudentFormAndValuesModel>> lists = new ArrayList<>();
 
-        if(form == null)
-        {
+        if (form == null) {
             throw new NoFormAvailableException("No Form Available For Application");
         }
 
@@ -115,44 +109,44 @@ public class HandleStudentRequestsService {
         boolean bindingStatus = false;
 
         //this is an alternative to the jpa query.
-            for(List<ApplicationFormCreateTable> table : form)
-            {
-                formAndValues = new ArrayList<>();
+        for (List<ApplicationFormCreateTable> table : form) {
+            formAndValues = new ArrayList<>();
 
-                for(ApplicationFormCreateTable formRow : table)
-                {
-                    studentFormAndValuesModel = new StudentFormAndValuesModel();
+            for (ApplicationFormCreateTable formRow : table) {
+                studentFormAndValuesModel = new StudentFormAndValuesModel();
 
-                    studentFormAndValuesModel.setFieldInputType(formRow.getFieldInputType());
-                    studentFormAndValuesModel.setFieldName(formRow.getFieldName());
-                    studentFormAndValuesModel.setSection(formRow.getSection());
-                    studentFormAndValuesModel.setBursaryMonth(formRow.getBursaryMonth());
-                    studentFormAndValuesModel.setFieldId(formRow.getFieldId());
+                studentFormAndValuesModel.setFieldInputType(formRow.getFieldInputType());
+                studentFormAndValuesModel.setFieldName(formRow.getFieldName());
+                studentFormAndValuesModel.setSection(formRow.getSection());
+                studentFormAndValuesModel.setBursaryMonth(formRow.getBursaryMonth());
+                studentFormAndValuesModel.setFieldId(formRow.getFieldId());
 
-                    //values finder for fields
-                    for(StudentFormValues valuesRow : studentFormValuesList)
+                //values finder for fields
+                for (StudentFormValues valuesRow : studentFormValuesList) {
+
+                    if(valuesRow.getFieldValue() == null)
                     {
-                        if(valuesRow.getFieldId().equals(formRow.getFieldId()))
-                        {
+                        break;
+                    }
+                    if (valuesRow.getFieldValue().isEmpty())
+                    {
+                        break;
+                    }
+                    if (valuesRow.getFieldId().equals(formRow.getFieldId())) {
                             studentFormAndValuesModel.setFieldValue(valuesRow.getFieldValue());
                             formAndValues.add(studentFormAndValuesModel);
-                            //removing the already mapped items
-                            //studentFormValuesList.remove(valuesRow);
-                            //table.remove(formRow);
                             bindingStatus = true;
                             break;
-                        }
-                    }
-                    //if the value was never found.
-                    if(!bindingStatus)
-                    {
-                       studentFormAndValuesModel.setFieldValue(null);
-                       formAndValues.add(studentFormAndValuesModel);
                     }
                 }
+                if (!bindingStatus) {
+                    studentFormAndValuesModel.setFieldValue("");
+                    formAndValues.add(studentFormAndValuesModel);
+                }
+
                 lists.add(formAndValues);
             }
-
-       return new ResponseEntity<>(lists, HttpStatus.OK);
+        }
+            return new ResponseEntity<>(lists, HttpStatus.OK);
     }
 }
