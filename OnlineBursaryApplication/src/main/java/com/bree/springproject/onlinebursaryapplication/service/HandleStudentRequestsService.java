@@ -39,8 +39,7 @@ public class HandleStudentRequestsService {
 
         //forwarding the use input for saving
         studentsValueRepository.save(formValues);
-
-        return new ResponseEntity<>("Values saved", HttpStatus.OK);
+        return new ResponseEntity<>("Values updated", HttpStatus.OK);
     }
 
     public ResponseEntity<String> saveFormValues
@@ -127,8 +126,10 @@ public class HandleStudentRequestsService {
                         if (valuesRow.getFieldValue().isBlank()) {
 
                             studentFormAndValuesModel.setFieldValue("");
+                            studentFormAndValuesModel.setValueId(valuesRow.getValueId());
                         }else {
                             studentFormAndValuesModel.setFieldValue(valuesRow.getFieldValue());
+                            studentFormAndValuesModel.setValueId(valuesRow.getValueId());
                         }
                             formAndValues.add(studentFormAndValuesModel);
                             bindingStatus = true;
@@ -137,6 +138,7 @@ public class HandleStudentRequestsService {
                 }
                 if (!bindingStatus) {
                     studentFormAndValuesModel.setFieldValue("");
+                    studentFormAndValuesModel.setValueId(0L);
                     formAndValues.add(studentFormAndValuesModel);
                 }
 

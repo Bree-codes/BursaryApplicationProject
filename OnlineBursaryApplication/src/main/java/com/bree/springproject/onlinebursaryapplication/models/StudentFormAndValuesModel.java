@@ -25,5 +25,6 @@ public class StudentFormAndValuesModel {
 
     private String bursaryMonth;
 
+    private Long valueId;
 
 }

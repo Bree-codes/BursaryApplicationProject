@@ -18,6 +18,7 @@ public class StudentFormValues {
     private Long userId;
 
     @NotNull
+    @Column(unique = true)
     private Long fieldId;
 
     @NotNull
