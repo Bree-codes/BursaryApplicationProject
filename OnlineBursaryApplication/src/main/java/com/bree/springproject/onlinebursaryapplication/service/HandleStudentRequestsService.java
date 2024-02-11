@@ -89,16 +89,58 @@ public class HandleStudentRequestsService {
     public ResponseEntity<List<StudentFormAndValuesModel>> getBindLatestFormAndValues(Long userId) {
 
         List<List<ApplicationFormCreateTable>> form = createFormService.getForm().getBody();
+        List<StudentFormAndValuesModel> formAndValues = new ArrayList<>();
 
         if(form == null)
         {
             throw new NoFormAvailableException("No Form Available For Application");
         }
 
-        String latestFormValue = form.get(0).get(0).getBursaryMonth();
+        String latestFormMonth = form.get(0).get(0).getBursaryMonth();
 
-       return  new ResponseEntity<>(studentsValueRepository.
-               getFormAndValues(userId, latestFormValue), HttpStatus.OK);
+        latestFormMonth = createFormService.encoder(latestFormMonth, 0);
 
+        log.info("getting the form values.");
+        List<StudentFormValues> studentFormValuesList = studentsValueRepository.
+                findAllByUserIdAndBursaryMonthOrderByBursaryMonth(userId, latestFormMonth);
+
+        formAndValues = studentsValueRepository.getFormAndValues(userId, latestFormMonth);
+
+        //moving forward to bind the values to the form fields.
+        log.info("Binding the form values to the fields.");
+
+
+        //this is an alternative to the jpa query.
+       /* for(StudentFormValues valuesRow : studentFormValuesList)
+        {
+            StudentFormAndValuesModel studentFormAndValuesModel = new StudentFormAndValuesModel();
+
+            for(List<ApplicationFormCreateTable> table : form)
+            {
+                for(ApplicationFormCreateTable formRow : table)
+                {
+                    if(valuesRow.getFieldId().equals(formRow.getFieldId()))
+                    {
+                        studentFormAndValuesModel.setFieldInputType(formRow.getFieldInputType());
+                        studentFormAndValuesModel.setFieldName(formRow.getFieldName());
+                        studentFormAndValuesModel.setSection(formRow.getSection());
+                        studentFormAndValuesModel.setFieldValue(valuesRow.getFieldValue());
+                        studentFormAndValuesModel.setBursaryMonth(valuesRow.getBursaryMonth());
+                        studentFormAndValuesModel.setFieldId(valuesRow.getFieldId());
+
+                        //removing the already mapped items
+                        //studentFormValuesList.remove(valuesRow);
+                        //table.remove(formRow);
+
+                        break;
+                    }
+                }
+                //pushing the values
+                formAndValues.add(studentFormAndValuesModel);
+                break;
+            }
+
+        }*/
+       return new ResponseEntity<>(formAndValues, HttpStatus.OK);
     }
 }
