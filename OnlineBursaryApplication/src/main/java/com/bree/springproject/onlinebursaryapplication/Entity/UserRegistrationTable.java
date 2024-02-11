@@ -35,14 +35,5 @@ public class  UserRegistrationTable {
     private Boolean status = false;
 
 
-    @OneToMany(targetEntity = ApplicationFormCreateTable.class,cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_forms", referencedColumnName = "userId")
-    List<ApplicationFormCreateTable> forms;
-
-
-    @OneToMany(targetEntity = StudentFormValues.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_values", referencedColumnName = "userId")
-    List<StudentFormValues> formValues;
-
 }
 

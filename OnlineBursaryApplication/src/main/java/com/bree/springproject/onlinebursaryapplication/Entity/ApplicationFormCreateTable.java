@@ -28,8 +28,4 @@ public class ApplicationFormCreateTable {
     @NotNull
     private String section;
 
-    @OneToMany(targetEntity = StudentFormValues.class, cascade = CascadeType.ALL)
-    @JoinColumn(name="fk_f_id", referencedColumnName = "fieldId")
-    List<StudentFormValues> values;
-
 }
