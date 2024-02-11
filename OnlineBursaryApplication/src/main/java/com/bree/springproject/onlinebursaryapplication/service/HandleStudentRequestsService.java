@@ -106,9 +106,6 @@ public class HandleStudentRequestsService {
 
         formAndValues = studentsValueRepository.getFormAndValues(userId, latestFormMonth);
 
-        //moving forward to bind the values to the form fields.
-        log.info("Binding the form values to the fields.");
-
 
         //this is an alternative to the jpa query.
        /* for(StudentFormValues valuesRow : studentFormValuesList)
