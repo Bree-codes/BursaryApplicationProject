@@ -14,11 +14,9 @@ public interface StudentsValueRepository extends CrudRepository<StudentFormValue
     StudentFormValues findByFieldIdAndUserId(Long fieldId, Long userId);
 
 
-    @Query("SELECT new com.bree.springproject.onlinebursaryapplication.models.StudentFormAndValuesModel" +
+   /* @Query("SELECT new com.bree.springproject.onlinebursaryapplication.models.StudentFormAndValuesModel" +
             "(a.fieldInputType, u.fieldValue, a.fieldId, a.section, a.fieldName, a.bursaryMonth) " +
-            "FROM ApplicationFormCreateTable a, StudentFormValues u " +
-            "where u.userId = :userId AND a.bursaryMonth = :bursaryMonth AND a.fieldId = u.fieldId")
-
-    List<StudentFormAndValuesModel> getFormAndValues(Long userId, String bursaryMonth);
+            "FROM ApplicationFormCreateTable a, StudentFormValues u where " +
+            "u.userId =: userId AND a.bursaryMonth =: bursaryMonth")
+    List<StudentFormAndValuesModel> getFormAndValues(Long userId, String bursaryMonth);*/
 }
-
