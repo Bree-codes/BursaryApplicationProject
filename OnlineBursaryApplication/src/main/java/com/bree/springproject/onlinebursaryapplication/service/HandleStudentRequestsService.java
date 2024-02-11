@@ -5,6 +5,7 @@ import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.Invalid
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.NoFormAvailableException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
+import com.bree.springproject.onlinebursaryapplication.models.Months;
 import com.bree.springproject.onlinebursaryapplication.models.StudentFormAndValuesModel;
 import com.bree.springproject.onlinebursaryapplication.repository.FormCreateRepository;
 import com.bree.springproject.onlinebursaryapplication.repository.StudentsValueRepository;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +88,7 @@ public class HandleStudentRequestsService {
         return new ResponseEntity<>("Form Values Saved Successfully", HttpStatus.OK);
     }
 
-    public ResponseEntity<List<StudentFormAndValuesModel>> getBindLatestFormAndValues(Long userId) {
+    public ResponseEntity<List<List<StudentFormAndValuesModel>>> getBindLatestFormAndValues(Long userId) {
 
         List<List<ApplicationFormCreateTable>> form = createFormService.getForm().getBody();
         List<StudentFormAndValuesModel> formAndValues = new ArrayList<>();
@@ -138,6 +140,63 @@ public class HandleStudentRequestsService {
             }
 
         }*/
-       return new ResponseEntity<>(formAndValues, HttpStatus.OK);
+       return new ResponseEntity<>(sortingForm(formAndValues, 0), HttpStatus.OK);
+    }
+
+
+    private List<List<StudentFormAndValuesModel>> sortingForm(
+            List<StudentFormAndValuesModel> applicationForm, int year) {
+
+        log.info("bing the grouping the values by section");
+
+        //list to hold the sorted form.
+        List<List<StudentFormAndValuesModel>> sortedForm = new ArrayList<>();
+        List<StudentFormAndValuesModel> section = new ArrayList<>();
+        StudentFormAndValuesModel lastRow = applicationForm.get(applicationForm.size()-1);
+
+
+        /*In the for loop below, I am grouping form in sections as provided from the database.
+         * We will also decode the month from the given integer*/
+        String previousSection = null;
+
+        for(StudentFormAndValuesModel row : applicationForm) {
+
+            /*Here we need to decode the month name from the given number
+            This method may be reused when coding the functionality where the
+            user enters a specific month when they want to get the form for, so will check if the
+            year provided is 0*/
+            log.info("decoding the months");
+            int currentYear = year;
+
+
+            //handle the default get method
+            if(year == 0) currentYear = Year.now().getValue();
+
+
+            int month = Integer.parseInt(row.getBursaryMonth()) - currentYear;
+
+            String formMonth = String.valueOf(Months.values()[month]);
+
+            row.setBursaryMonth(formMonth);
+
+
+            log.info("Moving to grouping of the form");
+
+            String currentSection = row.getSection();
+
+            if (currentSection.equals(previousSection)) section.add(row);
+            else {
+                sortedForm.add(section);
+                section = new ArrayList<>();
+                section.add(row);
+                previousSection = currentSection;
+            }
+
+            if(row == lastRow) sortedForm.add(section);
+        }
+
+        sortedForm.remove(0);
+        log.info("Decoding and Grouping of the form done.");
+        return sortedForm;
     }
 }
