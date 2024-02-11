@@ -168,9 +168,7 @@ public class CreateFormService {
             year provided is 0*/
             log.info("decoding the months");
             int currentYear = year;
-
-            //setting values to null.
-            row.setValues(null);
+            
 
             //handle the default get method
             if(year == 0) currentYear = Year.now().getValue();

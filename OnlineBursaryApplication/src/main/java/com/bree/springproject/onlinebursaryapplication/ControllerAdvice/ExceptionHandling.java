@@ -220,6 +220,18 @@ public class ExceptionHandling {
         exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
 
+
+    @ExceptionHandler(NoFormAvailableException.class)
+    public ResponseEntity<ExceptionModel> handleNoFormAvailableException(NoFormAvailableException e)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setHttpStatus(HttpStatus.NOT_FOUND);
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setDate(new Date());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.NOT_FOUND);
     }
 }

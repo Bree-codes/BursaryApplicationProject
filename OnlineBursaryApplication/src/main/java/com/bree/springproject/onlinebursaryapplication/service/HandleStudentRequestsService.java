@@ -39,8 +39,7 @@ public class HandleStudentRequestsService {
 
         //forwarding the use input for saving
         studentsValueRepository.save(formValues);
-
-        return new ResponseEntity<>("Values saved", HttpStatus.OK);
+        return new ResponseEntity<>("Values updated", HttpStatus.OK);
     }
 
     public ResponseEntity<String> saveFormValues
@@ -53,13 +52,11 @@ public class HandleStudentRequestsService {
         Set<Long> fieldIds = fieldIdAndValue.keySet();
 
 
-
         log.info("Preparing the values for saving.");
-        for(Long fieldId : fieldIds)
-        {
+        for (Long fieldId : fieldIds) {
 
             //check whether the field already exists.
-            if(studentsValueRepository.findByFieldIdAndUserId(fieldId, userId) != null)
+            if (studentsValueRepository.findByFieldIdAndUserId(fieldId, userId) != null)
                 throw new FieldValuesAlreadyExistException("Attempt to store duplicate values is not allowed");
 
             StudentFormValues studentFormValues = new StudentFormValues();
@@ -70,9 +67,8 @@ public class HandleStudentRequestsService {
 
             ApplicationFormCreateTable applicationFormCreateTable =
                     formCreateRepository.findByFieldId(fieldId);
-            if(applicationFormCreateTable == null)
-            {
-                throw  new InvalidFieldIdProvidedException("The FieldId Entered is invalid");
+            if (applicationFormCreateTable == null) {
+                throw new InvalidFieldIdProvidedException("The FieldId Entered is invalid");
             }
 
             studentFormValues.setBursaryMonth(applicationFormCreateTable.getBursaryMonth());
@@ -86,19 +82,70 @@ public class HandleStudentRequestsService {
         return new ResponseEntity<>("Form Values Saved Successfully", HttpStatus.OK);
     }
 
-    public ResponseEntity<List<StudentFormAndValuesModel>> getBindLatestFormAndValues(Long userId) {
+    public ResponseEntity<List<List<StudentFormAndValuesModel>>> getBindLatestFormAndValues(Long userId) {
 
         List<List<ApplicationFormCreateTable>> form = createFormService.getForm().getBody();
+        List<StudentFormAndValuesModel> formAndValues;
+        StudentFormAndValuesModel studentFormAndValuesModel;
+        List<List<StudentFormAndValuesModel>> lists = new ArrayList<>();
 
-        if(form == null)
-        {
+        if (form == null) {
             throw new NoFormAvailableException("No Form Available For Application");
         }
 
-        String latestFormValue = form.get(0).get(0).getBursaryMonth();
+        String latestFormMonth = form.get(0).get(0).getBursaryMonth();
 
-       return  new ResponseEntity<>(studentsValueRepository.
-               getFormAndValues(userId, latestFormValue), HttpStatus.OK);
+        latestFormMonth = createFormService.encoder(latestFormMonth, 0);
 
+        log.info("getting the form values.");
+        List<StudentFormValues> studentFormValuesList = studentsValueRepository.
+                findAllByUserIdAndBursaryMonthOrderByBursaryMonth(userId, latestFormMonth);
+
+        /*formAndValues = studentsValueRepository.getFormAndValues(userId, latestFormMonth);*/
+
+
+        //this variable will help identify unbound fields.
+        boolean bindingStatus = false;
+
+        //this is an alternative to the jpa query.
+        for (List<ApplicationFormCreateTable> table : form) {
+            formAndValues = new ArrayList<>();
+
+            for (ApplicationFormCreateTable formRow : table) {
+                studentFormAndValuesModel = new StudentFormAndValuesModel();
+
+                studentFormAndValuesModel.setFieldInputType(formRow.getFieldInputType());
+                studentFormAndValuesModel.setFieldName(formRow.getFieldName());
+                studentFormAndValuesModel.setSection(formRow.getSection());
+                studentFormAndValuesModel.setBursaryMonth(formRow.getBursaryMonth());
+                studentFormAndValuesModel.setFieldId(formRow.getFieldId());
+
+                //values finder for fields
+                for (StudentFormValues valuesRow : studentFormValuesList) {
+                    if (valuesRow.getFieldId().equals(formRow.getFieldId())) {
+                        if (valuesRow.getFieldValue().isBlank()) {
+
+                            studentFormAndValuesModel.setFieldValue("");
+                            studentFormAndValuesModel.setValueId(valuesRow.getValueId());
+                        }else {
+                            studentFormAndValuesModel.setFieldValue(valuesRow.getFieldValue());
+                            studentFormAndValuesModel.setValueId(valuesRow.getValueId());
+                        }
+                            formAndValues.add(studentFormAndValuesModel);
+                            bindingStatus = true;
+                            break;
+                    }
+                }
+                if (!bindingStatus) {
+                    studentFormAndValuesModel.setFieldValue("");
+                    studentFormAndValuesModel.setValueId(0L);
+                    formAndValues.add(studentFormAndValuesModel);
+                }
+
+
+            }
+            lists.add(formAndValues);
+        }
+            return new ResponseEntity<>(lists, HttpStatus.OK);
     }
 }
