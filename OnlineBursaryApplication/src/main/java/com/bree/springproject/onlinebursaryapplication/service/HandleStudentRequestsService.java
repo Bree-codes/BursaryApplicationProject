@@ -34,11 +34,18 @@ public class HandleStudentRequestsService {
     @Autowired
     FormCreateRepository formCreateRepository;
 
-    public ResponseEntity<String> updateValues(StudentFormValues formValues) {
+    public ResponseEntity<String> updateValues(String fieldValue, Long fieldId, Long userId) {
         log.info("Forwarded the request to save the Student values.");
 
+        //check if the field exists.
+        if(studentsValueRepository.findByFieldIdAndUserId(fieldId, userId) == null)
+        {
+            throw new
+        }
+
         //forwarding the use input for saving
-        studentsValueRepository.updateStudentFormValuesByFieldId(formValues, formValues.getFieldId());
+        studentsValueRepository.updateFieldValueByFieldIdAndUserId(fieldValue, fieldId, userId);
+
         return new ResponseEntity<>("Values updated", HttpStatus.OK);
     }
 

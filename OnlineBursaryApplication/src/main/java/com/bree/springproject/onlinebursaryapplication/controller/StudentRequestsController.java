@@ -23,13 +23,15 @@ public class StudentRequestsController {
 
     @PutMapping("/update-form-field")
     public ResponseEntity<String> updateFieldValue(
-            @RequestBody StudentFormValues studentFormValues
+            @RequestParam Long fieldId,
+            @RequestParam Long userId,
+            @RequestParam String fieldValue
             ){
 
         log.info("Received a request to update a form field");
 
         //forwarding the values to the backend.
-        return handleStudentRequestsService.updateValues(studentFormValues);
+        return handleStudentRequestsService.updateValues(fieldValue, fieldId, userId);
     }
 
     @PostMapping("/save-form/{userId}")
