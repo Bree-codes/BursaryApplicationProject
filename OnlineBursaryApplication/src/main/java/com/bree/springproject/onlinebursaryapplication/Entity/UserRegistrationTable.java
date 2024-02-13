@@ -38,6 +38,7 @@ public class  UserRegistrationTable {
     @Column()
     private Boolean status = false;
 
-
+    @Column(columnDefinition = "user")
+    private String role;
 }
 

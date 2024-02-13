@@ -3,6 +3,7 @@ package com.bree.springproject.onlinebursaryapplication.ControllerAdvice;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.*;
 import com.bree.springproject.onlinebursaryapplication.models.ExceptionModel;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.query.IllegalSelectQueryException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.lang.reflect.Executable;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -22,6 +22,7 @@ import java.util.Map;
 
 @ControllerAdvice
 @Setter
+@Slf4j
 public class ExceptionHandling {
 
     @ExceptionHandler(value = UserDoesNotExistException.class)
@@ -258,5 +259,19 @@ public class ExceptionHandling {
         exceptionModel.setDate(new Date());
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNotAChiefException.class)
+    public ResponseEntity<ExceptionModel> handleUserNotAChiefException(UserNotAChiefException e)
+    {
+        ExceptionModel  exceptionModel = new ExceptionModel();
+
+        log.error("Unauthorized request, Username entered Not a chief");
+
+        exceptionModel.setDate(new Date());
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.UNAUTHORIZED);
     }
 }
