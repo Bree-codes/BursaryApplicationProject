@@ -38,7 +38,7 @@ public class HandleStudentRequestsService {
         log.info("Forwarded the request to save the Student values.");
 
         //forwarding the use input for saving
-        studentsValueRepository.save(formValues);
+        studentsValueRepository.updateStudentFormValuesByFieldId(formValues, formValues.getFieldId());
         return new ResponseEntity<>("Values updated", HttpStatus.OK);
     }
 
