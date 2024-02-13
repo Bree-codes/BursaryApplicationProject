@@ -18,17 +18,12 @@ public class ChiefDataEntity {
     Long userValuesId;
 
     @Column(unique = true)
-    @NotNull
-    @NotBlank
     String chiefUserName;
 
     @Column(unique = true)
-    @NotNull
-    @NotBlank
     Long userId;
 
-    @NotNull
-    @NotBlank
+
     String bursaryMonth;
 
 }

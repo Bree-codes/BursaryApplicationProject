@@ -63,7 +63,7 @@ public class StudentRequestsController {
     @PutMapping("/consent")
     public ResponseEntity<ResponseModel> chiefConsent(
             @RequestParam Long userId,
-            @RequestBody String bursaryMonth,
+            @RequestParam String bursaryMonth,
             @RequestParam String chiefUserName
     )
     {
