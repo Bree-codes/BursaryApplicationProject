@@ -244,8 +244,19 @@ public class ExceptionHandling {
 
         exceptionModel.setMessage(e.getMessage());
         exceptionModel.setDate(new Date());
-        exceptionModel.setHttpStatus(HttpStatus.NOT_FOUND);
+        exceptionModel.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 
-        return  new ResponseEntity<>(exceptionModel,HttpStatus.BAD_REQUEST);
+        return  new ResponseEntity<>(exceptionModel,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(UserFieldDoesNotExistException.class)
+    public ResponseEntity<ExceptionModel> handlerUserFieldDoesNotExistException(UserFieldDoesNotExistException e){
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setHttpStatus(HttpStatus.NOT_FOUND);
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setDate(new Date());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 }

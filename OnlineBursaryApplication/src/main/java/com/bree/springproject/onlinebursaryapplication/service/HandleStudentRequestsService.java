@@ -3,6 +3,7 @@ package com.bree.springproject.onlinebursaryapplication.service;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FieldValuesAlreadyExistException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.InvalidFieldIdProvidedException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.NoFormAvailableException;
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserFieldDoesNotExistException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
 import com.bree.springproject.onlinebursaryapplication.models.StudentFormAndValuesModel;
@@ -40,7 +41,7 @@ public class HandleStudentRequestsService {
         //check if the field exists.
         if(studentsValueRepository.findByFieldIdAndUserId(fieldId, userId) == null)
         {
-            throw new
+            throw new UserFieldDoesNotExistException("The Field Id Or The User Id provided is Invalid");
         }
 
         //forwarding the use input for saving
