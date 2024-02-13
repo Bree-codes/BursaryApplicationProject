@@ -1,6 +1,8 @@
 package com.bree.springproject.onlinebursaryapplication.Entity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.grammars.hql.HqlParser;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,8 @@ import java.util.List;
 @Table()
 @Data
 @Component
+@AllArgsConstructor
+@NoArgsConstructor
 public class  UserRegistrationTable {
 
     @Id

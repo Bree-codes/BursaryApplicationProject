@@ -2,9 +2,11 @@ package com.bree.springproject.onlinebursaryapplication.repository;
 
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
 import com.bree.springproject.onlinebursaryapplication.models.StudentFormAndValuesModel;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,7 +17,10 @@ public interface StudentsValueRepository extends CrudRepository<StudentFormValue
 
     List<StudentFormValues> findAllByUserIdAndBursaryMonthOrderByBursaryMonth(Long userId, String bursaryMonth);
 
-    Boolean updateStudentFormValuesByFieldId(StudentFormValues studentFormValues, Long fieldId);
+    @Modifying
+    @Transactional
+    @Query("UPDATE StudentFormValues SET fieldValue = :fieldValue WHERE fieldId = :fieldId AND userId = :userId")
+    void updateFieldValueByFieldIdAndUserId(String fieldValue, Long fieldId, Long userId);
 
    /* Boolean updateByFieldId(Long fieldId, StudentFormValues studentFormValues);*/
 

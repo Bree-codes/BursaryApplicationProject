@@ -3,6 +3,7 @@ package com.bree.springproject.onlinebursaryapplication.ControllerAdvice;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.*;
 import com.bree.springproject.onlinebursaryapplication.models.ExceptionModel;
 import lombok.Setter;
+import org.hibernate.query.IllegalSelectQueryException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.lang.reflect.Executable;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -233,5 +235,28 @@ public class ExceptionHandling {
         exceptionModel.setDate(new Date());
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(IllegalSelectQueryException.class)
+    public ResponseEntity<ExceptionModel> handleIllegalSelectQueryException(IllegalSelectQueryException e)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return  new ResponseEntity<>(exceptionModel,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(UserFieldDoesNotExistException.class)
+    public ResponseEntity<ExceptionModel> handlerUserFieldDoesNotExistException(UserFieldDoesNotExistException e){
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setHttpStatus(HttpStatus.NOT_FOUND);
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setDate(new Date());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 }
