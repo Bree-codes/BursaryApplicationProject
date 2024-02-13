@@ -15,7 +15,7 @@ import java.util.Date;
 
 @Service
 @Slf4j
-public class handleChiefLogicService {
+public class HandleChiefLogicService {
 
     @Autowired
     UserRegistrationRepository userRegistrationRepository;

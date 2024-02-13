@@ -1,9 +1,11 @@
 package com.bree.springproject.onlinebursaryapplication.controller;
 
 
+import com.bree.springproject.onlinebursaryapplication.Entity.ChiefDataEntity;
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
 import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
 import com.bree.springproject.onlinebursaryapplication.models.StudentFormAndValuesModel;
+import com.bree.springproject.onlinebursaryapplication.service.HandleChiefLogicService;
 import com.bree.springproject.onlinebursaryapplication.service.HandleStudentRequestsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class StudentRequestsController {
     @Autowired
     HandleStudentRequestsService handleStudentRequestsService;
 
+    @Autowired
+    HandleChiefLogicService handleChiefLogicService;
 
     @PutMapping("/update-form-field")
     public ResponseEntity<String> updateFieldValue(
@@ -59,10 +63,18 @@ public class StudentRequestsController {
     @PutMapping("/consent")
     public ResponseEntity<ResponseModel> chiefConsent(
             @RequestParam Long userId,
-            @RequestBody String bursaryMonth
+            @RequestBody String bursaryMonth,
+            @RequestParam String chiefUserName
     )
     {
-        return null;
+
+        log.info("Received a request to send user form to chief");
+        return handleChiefLogicService.receiveUserApplicationForm(new ChiefDataEntity(
+                0L,
+               chiefUserName,
+                userId,
+                bursaryMonth
+        ));
     }
 
 }
