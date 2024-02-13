@@ -3,12 +3,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.grammars.hql.HqlParser;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.support.AbstractPlatformTransactionManager;
-
-import java.util.List;
 
 @Entity
 @Table()
@@ -38,6 +33,15 @@ public class  UserRegistrationTable {
     @Column()
     private Boolean status = false;
 
+    private String role;
 
+    @PrePersist
+    private void setDefaultValue()
+    {
+        if(this.role == null)
+        {
+            this.role = "user";
+        }
+    }
 }
 
