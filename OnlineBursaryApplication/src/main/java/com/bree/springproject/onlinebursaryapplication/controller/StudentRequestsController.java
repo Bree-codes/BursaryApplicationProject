@@ -2,6 +2,7 @@ package com.bree.springproject.onlinebursaryapplication.controller;
 
 
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
+import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
 import com.bree.springproject.onlinebursaryapplication.models.StudentFormAndValuesModel;
 import com.bree.springproject.onlinebursaryapplication.service.HandleStudentRequestsService;
 import lombok.extern.slf4j.Slf4j;
@@ -54,5 +55,14 @@ public class StudentRequestsController {
         return handleStudentRequestsService.getBindLatestFormAndValues(userId);
     }
 
+
+    @PutMapping("/consent")
+    public ResponseEntity<ResponseModel> chiefConsent(
+            @RequestParam Long userId,
+            @RequestBody String bursaryMonth
+    )
+    {
+        return null;
+    }
 
 }
