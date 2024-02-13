@@ -7,8 +7,11 @@ import com.bree.springproject.onlinebursaryapplication.repository.ChiefRequestRe
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 @Slf4j
@@ -19,6 +22,8 @@ public class handleChiefLogicService {
 
     @Autowired
     ChiefRequestRepository chiefRequestRepository;
+
+    ResponseModel responseModel;
 
     public ResponseEntity<ResponseModel> receiveUserApplicationForm(ChiefDataEntity chiefDataEntity)
     {
@@ -31,6 +36,15 @@ public class handleChiefLogicService {
             throw new UserFieldDoesNotExistException("The Chief Entered Is Not Register Yet");
         }
 
+        log.info("Moving forward to save the chief");
+        chiefRequestRepository.save(chiefDataEntity);
 
+        //giving the response after insertion
+        responseModel = new ResponseModel();
+        responseModel.setDate(new Date());
+        responseModel.setMessage("Form Sent Successfully.");
+        responseModel.setHttpStatus(HttpStatus.OK);
+
+        return new ResponseEntity<>(responseModel, HttpStatus.OK);
     }
 }
