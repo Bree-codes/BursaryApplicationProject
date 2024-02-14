@@ -22,10 +22,9 @@ FUNCTIONALITIES OF THE ONLINE BURSARY APPLICATION SYSTEM
         Upload and storage of required documents (transcripts, recommendation letters, etc.)
         Document verification and validation
 
-5.Bursary eligibility criteria
 
-6.Communication:
-        Internal messaging system for communication between applicants, reviewers, and          administrators
+5.Communication:
+        Internal messaging system for communication between applicants, reviewers, and administrators
         Email notifications for important updates and announcements
 
 7.User Profile Management:
