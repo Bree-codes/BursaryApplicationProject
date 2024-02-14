@@ -31,7 +31,8 @@ public class ChiefsRequestController {
     @PutMapping("/consent")
     public ResponseEntity<String> consentUserValues(
             @RequestParam Long userId,
-            @RequestParam Boolean status
+            @RequestParam Boolean status,
+            @RequestParam String bursaryMonth
     )
     {
 
@@ -39,6 +40,6 @@ public class ChiefsRequestController {
 
         //forwarding the status.
 
-        return handleChiefLogicService.consent(userId, status);
+        return handleChiefLogicService.consent(userId, status, bursaryMonth);
     }
 }

@@ -133,14 +133,18 @@ public class HandleChiefLogicService {
         return new ResponseEntity<>(sentForms, HttpStatus.OK);
     }
 
-    public ResponseEntity<String> consent(Long userId, Boolean status) {
+    public ResponseEntity<String> consent(Long userId, Boolean status, String bursaryMonth) {
         log.info("forwarded the request for consenting");
 
         if(!chiefRequestRepository.existsById(userId)){
             throw new UserDoesNotExistException("The UserId Entered Does Not Exists");
         }
 
-        chiefRequestRepository.updateStatusByUserId(status, userId);
+        //encoding the bursary month.
+        createFormService.encoder(bursaryMonth, 0);
+
+
+        chiefRequestRepository.updateStatusByUserId(status, userId, bursaryMonth);
 
         return new ResponseEntity<>("Consenting Successful", HttpStatus.OK);
     }
