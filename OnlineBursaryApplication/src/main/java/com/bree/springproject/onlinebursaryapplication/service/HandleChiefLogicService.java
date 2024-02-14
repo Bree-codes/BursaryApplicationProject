@@ -1,9 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FormAlreadySentException;
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.NoFormAvailableException;
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserFieldDoesNotExistException;
-import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserNotAChiefException;
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.*;
 import com.bree.springproject.onlinebursaryapplication.Entity.ChiefDataEntity;
 import com.bree.springproject.onlinebursaryapplication.Entity.StudentFormValues;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
@@ -104,8 +101,31 @@ public class HandleChiefLogicService {
 
         if(!userRole.equalsIgnoreCase("chief"))
         {
-            return  new
+            throw new UnauthorisedRequestException("User Id Entered Does Not Belong To A chief");
         }
+
+        //find out the latest bursary month
+        List<String> bursaryMonthsEncoded = chiefRequestRepository.findAllDistinctBursaryMonth();
+
+        int latest = 2023;
+
+        for (String monthEncoded : bursaryMonthsEncoded)
+        {
+            int bursaryMonthValue = Integer.parseInt(monthEncoded);
+
+           if(bursaryMonthValue > latest)
+           {
+               latest = bursaryMonthValue;
+           }
+        }
+
+        //find the chief username.
+        String chiefName = userRegistrationRepository.findUsernameByUserId(chiefId);
+
+        //moving forward to get the form.
+
+
+
 
         return null;
     }

@@ -13,4 +13,6 @@ public interface UserRegistrationRepository extends JpaRepository<UserRegistrati
 
     UserRegistrationTable findByUsername(String userName);
 
+    String findUsernameByUserId(Long userId);
+
 }
