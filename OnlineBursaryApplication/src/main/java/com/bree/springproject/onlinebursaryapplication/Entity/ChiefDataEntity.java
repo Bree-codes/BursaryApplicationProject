@@ -23,7 +23,5 @@ public class ChiefDataEntity {
     @Column(unique = true)
     Long userId;
 
-
     String bursaryMonth;
-
 }

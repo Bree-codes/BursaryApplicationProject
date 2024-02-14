@@ -18,6 +18,7 @@ import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 
 @ControllerAdvice
@@ -298,5 +299,20 @@ public class ExceptionHandling {
         exceptionModel.setMessage(e.getMessage());
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ExceptionModel> handleNoSuchElementException(NoSuchElementException e)
+    {
+        log.info("The Passed chief id does not exist");
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.NOT_FOUND);
+        exceptionModel.setDate(new Date());
+
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 }

@@ -105,7 +105,8 @@ public class HandleChiefLogicService {
         }
 
         //find out the latest bursary month
-        List<String> bursaryMonthsEncoded = chiefRequestRepository.findAllDistinctBursaryMonth();
+        List<String> bursaryMonthsEncoded = chiefRequestRepository.findDistinctBursaryMonth();
+
 
         int latest = 2023;
 
@@ -128,7 +129,6 @@ public class HandleChiefLogicService {
                 chiefName,
                 String.valueOf(latest)
         );
-
 
         return new ResponseEntity<>(sentForms, HttpStatus.OK);
     }
