@@ -24,4 +24,22 @@ public class ChiefDataEntity {
     Long userId;
 
     String bursaryMonth;
+
+    Boolean status;
+
+    public ChiefDataEntity(String chiefUserName, Long userId, String bursaryMonth)
+    {
+        this.bursaryMonth = bursaryMonth;
+        this.userId = userId;
+        this.chiefUserName =  chiefUserName;
+    }
+
+    @PrePersist
+    public void setDefaultStatus()
+    {
+        if(status == null)
+        {
+            status = false;
+        }
+    }
 }
