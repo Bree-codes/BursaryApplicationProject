@@ -274,4 +274,18 @@ public class ExceptionHandling {
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(FormAlreadySentException.class)
+    public ResponseEntity<ExceptionModel> handleFormAlreadySentException(FormAlreadySentException e)
+    {
+        log.error("Attempt to send duplicate forms.");
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setDate(new Date());
+
+        return  new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
 }
