@@ -132,4 +132,16 @@ public class HandleChiefLogicService {
 
         return new ResponseEntity<>(sentForms, HttpStatus.OK);
     }
+
+    public ResponseEntity<String> consent(Long userId, Boolean status) {
+        log.info("forwarded the request for consenting");
+
+        if(!chiefRequestRepository.existsById(userId)){
+            throw new UserDoesNotExistException("The UserId Entered Does Not Exists");
+        }
+
+        chiefRequestRepository.updateStatusByUserId(status, userId);
+
+        return new ResponseEntity<>("Consenting Successful", HttpStatus.OK);
+    }
 }

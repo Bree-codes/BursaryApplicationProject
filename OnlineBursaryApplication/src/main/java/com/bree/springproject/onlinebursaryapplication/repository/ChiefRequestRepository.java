@@ -20,4 +20,7 @@ public interface ChiefRequestRepository extends CrudRepository<ChiefDataEntity, 
     List<String> findDistinctBursaryMonth();
 
     List<ChiefDataEntity> findAllByChiefUserNameAndBursaryMonth(String chiefUserName, String latestMonth);
+
+    @Query("UPDATE ChiefDataEntity c SET c.status= :status WHERE c.userId= :userId")
+    void updateStatusByUserId(Boolean status, Long userId);
 }
