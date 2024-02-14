@@ -21,7 +21,8 @@ public class BursaryFormCreationController {
     @PostMapping("/create-form/{section}")
     public ResponseEntity<String> createForm(@PathVariable String section,
                                              @RequestBody Map<String, String> formSectionA,
-                                             @RequestParam String month, @RequestParam Long userId)
+                                             @RequestParam String month,
+                                             @RequestParam Long userId)
     {
         log.info("Receive a request to create a form");
         //here the administrator will fill the field names required for section A.

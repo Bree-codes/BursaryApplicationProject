@@ -127,7 +127,8 @@ public class HandleChiefLogicService {
         //moving forward to get the form.
         List<ChiefDataEntity> sentForms = chiefRequestRepository.findAllByChiefUserNameAndBursaryMonth(
                 chiefName,
-                String.valueOf(latest)
+                String.valueOf(latest),
+                null
         );
 
         return new ResponseEntity<>(sentForms, HttpStatus.OK);

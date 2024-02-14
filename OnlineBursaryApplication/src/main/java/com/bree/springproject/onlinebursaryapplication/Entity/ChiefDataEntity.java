@@ -40,7 +40,7 @@ public class ChiefDataEntity {
     {
         if(status == null)
         {
-            status = false;
+            status = null;
         }
     }
 }
