@@ -288,4 +288,15 @@ public class ExceptionHandling {
 
         return  new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(UnauthorisedRequestException.class)
+    public ResponseEntity<ExceptionModel> handleUnauthorisedRequestException(UnauthorisedRequestException e)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        exceptionModel.setMessage(e.getMessage());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.UNAUTHORIZED);
+    }
 }

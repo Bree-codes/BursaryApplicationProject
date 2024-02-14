@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -91,5 +92,21 @@ public class HandleChiefLogicService {
         responseModel.setHttpStatus(HttpStatus.OK);
 
         return new ResponseEntity<>(responseModel, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<ChiefDataEntity>> getForms(Long chiefId) {
+
+        log.info("forwarded the request to get the forms.");
+
+        //validate the request.
+        String userRole =
+                userRegistrationRepository.findById(chiefId).get().getRole();
+
+        if(!userRole.equalsIgnoreCase("chief"))
+        {
+            return  new
+        }
+
+        return null;
     }
 }
