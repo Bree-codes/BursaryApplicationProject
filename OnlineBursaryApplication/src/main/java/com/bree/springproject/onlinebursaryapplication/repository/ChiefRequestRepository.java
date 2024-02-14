@@ -17,5 +17,5 @@ public interface ChiefRequestRepository extends CrudRepository<ChiefDataEntity, 
 
     List<String> findAllDistinctBursaryMonth();
 
-    List<ChiefDataEntity> findAllByChiefUserNameAndBursaryMonth();
+    List<ChiefDataEntity> findAllByChiefUserNameAndBursaryMonth(String chiefUserName, String latestMonth);
 }

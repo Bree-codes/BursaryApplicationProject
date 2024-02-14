@@ -122,11 +122,14 @@ public class HandleChiefLogicService {
         //find the chief username.
         String chiefName = userRegistrationRepository.findUsernameByUserId(chiefId);
 
+        log.info("fetching the froms.");
         //moving forward to get the form.
+        List<ChiefDataEntity> sentForms = chiefRequestRepository.findAllByChiefUserNameAndBursaryMonth(
+                chiefName,
+                String.valueOf(latest)
+        );
 
 
-
-
-        return null;
+        return new ResponseEntity<>(sentForms, HttpStatus.OK);
     }
 }
