@@ -70,7 +70,6 @@ public class StudentRequestsController {
 
         log.info("Received a request to send user form to chief");
         return handleChiefLogicService.receiveUserApplicationForm(new ChiefDataEntity(
-                0L,
                chiefUserName,
                 userId,
                 bursaryMonth
