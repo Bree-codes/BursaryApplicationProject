@@ -18,9 +18,9 @@ public class ViewFormsController {
 
     @GetMapping("/view-forms/{viewerId}")
     public ResponseEntity<List<Long>> viewAvailableForms(
-            @PathVariable String viewerId)
+            @PathVariable Long viewerId)
     {
         log.info("Received A Request Form A viewer To Get Consented Froms");
-        return viewLogicService.getAvaibleForms(viewerId);
+        return viewLogicService.getAvailableForms(viewerId);
     }
 }
