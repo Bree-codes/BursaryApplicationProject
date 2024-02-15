@@ -4,6 +4,7 @@ package com.bree.springproject.onlinebursaryapplication.service;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UnauthorisedRequestException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ChiefDataEntity;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
+import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
 import com.bree.springproject.onlinebursaryapplication.repository.ChiefRequestRepository;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -50,5 +51,15 @@ public class ViewLogicService {
         List<Long> userIds = chiefRequestRepository.findAllByStatus(true, String.valueOf(latestBursary));
 
         return new ResponseEntity<>(userIds, HttpStatus.OK);
+    }
+
+    public ResponseEntity<ResponseModel> approveForm(Boolean status, Long formUserId, String message) {
+
+        //get the bursary month.
+        int bursaryMonth = handleChiefLogicService.latestFinder();
+
+
+
+        return null;
     }
 }
