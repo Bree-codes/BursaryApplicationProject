@@ -8,6 +8,7 @@ import com.bree.springproject.onlinebursaryapplication.repository.ChiefRequestRe
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class ViewLogicService {
     @Autowired
     UserRegistrationRepository userRegistrationRepository;
 
+    @Autowired
     HandleChiefLogicService handleChiefLogicService;
 
     @Autowired
@@ -36,7 +38,7 @@ public class ViewLogicService {
          if(!(userRegistrationTable.getRole().equalsIgnoreCase("view") ||
             userRegistrationTable.getRole().equalsIgnoreCase("admin")))
         {
-            throw new UnauthorisedRequestException("The Id passed Does Not Belong to a view");
+            throw new UnauthorisedRequestException("The Id passed Does Not Belong to a viewer");
         }
 
          //moving forward to get the userId for the available forms.
@@ -45,8 +47,8 @@ public class ViewLogicService {
          int latestBursary = handleChiefLogicService.latestFinder();
 
          //find the bursary the passed the chief's verification
-        List<Long> userId = chiefRequestRepository.findAllByStatus(true, String.valueOf(latestBursary));
+        List<Long> userIds = chiefRequestRepository.findAllByStatus(true, String.valueOf(latestBursary));
 
-        return null;
+        return new ResponseEntity<>(userIds, HttpStatus.OK);
     }
 }
