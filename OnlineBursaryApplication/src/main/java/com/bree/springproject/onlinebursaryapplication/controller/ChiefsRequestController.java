@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v0/chief")
+@RequestMapping("/api/v0/chief/")
 @Slf4j
 public class ChiefsRequestController {
 
@@ -19,7 +19,7 @@ public class ChiefsRequestController {
     /*Get mapping to get form paths for all students who have committed
     * their forms to the chief for consenting.*/
     @GetMapping("/get-forms/{chiefId}")
-    public ResponseEntity<List<ChiefDataEntity>> getSentForm(
+    public ResponseEntity<List<ChiefDataEntity>> getSentForms(
             @PathVariable Long chiefId
     )
     {

@@ -152,7 +152,10 @@ public class RegisterUserService {
         {
             //the string is an email
             communicationService.sendChangePasswordEmail(userEmailOrPassword);
-            return new ResponseEntity<>("Check your Email.",HttpStatus.CONTINUE);
+
+            log.info("Email sent successfully");
+
+            return new ResponseEntity<>("Check your Email.",HttpStatus.OK);
         }
 
         //here we send the message to the phone number.

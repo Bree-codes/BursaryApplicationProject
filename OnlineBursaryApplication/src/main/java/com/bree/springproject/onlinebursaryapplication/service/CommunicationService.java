@@ -144,9 +144,9 @@ public class CommunicationService {
         messageHelper.setSubject(subject);
         messageHelper.setSentDate(new Date());
 
-        javaMailSender.send(mimeMessage);
-        log.info("Forgotten password email sent successfully");
 
-        return;
+        log.info("Forgotten password sending the email");
+
+        javaMailSender.send(mimeMessage);
     }
 }

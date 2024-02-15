@@ -21,16 +21,16 @@ public class  UserRegistrationTable {
     @Column(nullable = false)
     private String username;
 
-    @Column()
+    @Column(unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
 
-    @Column()
+
     private Boolean status = false;
 
     private String role;
