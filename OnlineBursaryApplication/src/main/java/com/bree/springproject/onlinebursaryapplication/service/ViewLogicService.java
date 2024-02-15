@@ -2,13 +2,16 @@ package com.bree.springproject.onlinebursaryapplication.service;
 
 
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UnauthorisedRequestException;
+import com.bree.springproject.onlinebursaryapplication.Entity.ChiefDataEntity;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
+import com.bree.springproject.onlinebursaryapplication.repository.ChiefRequestRepository;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +20,11 @@ public class ViewLogicService {
 
     @Autowired
     UserRegistrationRepository userRegistrationRepository;
+
+    HandleChiefLogicService handleChiefLogicService;
+
+    @Autowired
+    ChiefRequestRepository chiefRequestRepository;
     public ResponseEntity<List<Long>> getAvailableForms(Long viewerId) {
         log.info("Forwarded the request to find available forms");
 
@@ -33,6 +41,11 @@ public class ViewLogicService {
 
          //moving forward to get the userId for the available forms.
 
+                //find the latest bursary
+         int latestBursary = handleChiefLogicService.latestFinder();
+
+         //find the bursary the passed the chief's verification
+        List<Long> userId = chiefRequestRepository.findAllByStatus(true, String.valueOf(latestBursary));
 
         return null;
     }

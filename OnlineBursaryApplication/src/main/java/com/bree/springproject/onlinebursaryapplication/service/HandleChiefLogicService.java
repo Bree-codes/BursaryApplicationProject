@@ -104,21 +104,8 @@ public class HandleChiefLogicService {
             throw new UnauthorisedRequestException("User Id Entered Does Not Belong To A chief");
         }
 
-        //find out the latest bursary month
-        List<String> bursaryMonthsEncoded = chiefRequestRepository.findDistinctBursaryMonth();
 
-
-        int latest = 2023;
-
-        for (String monthEncoded : bursaryMonthsEncoded)
-        {
-            int bursaryMonthValue = Integer.parseInt(monthEncoded);
-
-           if(bursaryMonthValue > latest)
-           {
-               latest = bursaryMonthValue;
-           }
-        }
+        int latest = latestFinder();
 
         //find the chief username.
         String chiefName = userRegistrationRepository.findUsernameByUserId(chiefId);
@@ -148,5 +135,25 @@ public class HandleChiefLogicService {
         chiefRequestRepository.updateStatusByUserId(status, userId, bursaryMonth);
 
         return new ResponseEntity<>("Consenting Successful", HttpStatus.OK);
+    }
+
+    public int latestFinder()
+    {
+        //find all bursary months available
+        List<String> bursaryMonthsEncoded = chiefRequestRepository.findDistinctBursaryMonth();
+
+        int latest = 2023;
+
+        //find out the latest one
+        for (String monthEncoded : bursaryMonthsEncoded)
+        {
+            int bursaryMonthValue = Integer.parseInt(monthEncoded);
+
+            if(bursaryMonthValue > latest)
+            {
+                latest = bursaryMonthValue;
+            }
+        }
+        return latest;
     }
 }
