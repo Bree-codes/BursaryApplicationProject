@@ -1,7 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class UserNotificationTable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long notificationsId;
 
     Long userId;
@@ -20,4 +20,14 @@ public class UserNotificationTable {
     String message;
 
     Boolean status;
+
+    @PrePersist
+    public void setDefaults()
+    {
+        if(status == null)
+        {
+            status = false;
+        }
+    }
+
 }
