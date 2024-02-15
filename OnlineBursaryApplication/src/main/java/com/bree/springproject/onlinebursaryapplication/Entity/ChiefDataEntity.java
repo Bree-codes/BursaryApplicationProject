@@ -35,12 +35,12 @@ public class ChiefDataEntity {
         this.chiefUserName =  chiefUserName;
     }
 
-   /* @PrePersist
+    @PrePersist
     public void setDefaultStatus()
     {
         if(status == null)
         {
             status = null;
         }
-    }*/
+    }
 }
