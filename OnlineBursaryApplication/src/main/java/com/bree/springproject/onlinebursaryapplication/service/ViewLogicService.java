@@ -24,12 +24,14 @@ public class ViewLogicService {
          UserRegistrationTable userRegistrationTable =
                  userRegistrationRepository.findById(viewerId).get();
 
-
+         //checking if it is a viewer's or admin's id.
          if(!(userRegistrationTable.getRole().equalsIgnoreCase("view") ||
             userRegistrationTable.getRole().equalsIgnoreCase("admin")))
         {
             throw new UnauthorisedRequestException("The Id passed Does Not Belong to a view");
         }
+
+         //moving forward to get the userId for the available forms.
 
 
         return null;
