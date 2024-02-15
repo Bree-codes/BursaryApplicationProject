@@ -142,7 +142,7 @@ public class HandleChiefLogicService {
         }
 
         //encoding the bursary month.
-        createFormService.encoder(bursaryMonth, 0);
+        bursaryMonth = createFormService.encoder(bursaryMonth, 0);
 
 
         chiefRequestRepository.updateStatusByUserId(status, userId, bursaryMonth);
