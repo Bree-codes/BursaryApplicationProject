@@ -1,6 +1,7 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FormAlreadySentException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UnauthorisedRequestException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApprovedFormsEntity;
 import com.bree.springproject.onlinebursaryapplication.Entity.ChiefDataEntity;
@@ -65,15 +66,19 @@ public class ViewLogicService {
         //get the bursary month.
         int bursaryMonth = handleChiefLogicService.latestFinder();
 
-        /*Check if the form had already been approved.*/
-        ApprovedFormsEntity approvedForm =
-                formApprovalRepository.findAllByUserIdAndBursaryMonth(
-                        formUserId, String.valueOf(bursaryMonth));
 
-        if(approvedForm != null)
+        /*Check if the form had already been approved.*/
+        if(formApprovalRepository.findAllByUserIdAndBursaryMonth(
+                formUserId, String.valueOf(bursaryMonth)) != null)
         {
-            /*Return an exception here.*/
+            /*throw an exception here.*/
+            throw  new FormAlreadySentException("The Form You Are Trying To Approve Has Already Been Approved");
         }
+
+        /*Here we need to update the status at the chief's table to identify the form as approved*/
+        chiefRequestRepository.updateStatusByUserIdAndBursaryMonth(formUserId, String.valueOf(bursaryMonth));
+
+        /*Here we need to message the user.*/
 
         ApprovedFormsEntity approvedFormsEntity = new ApprovedFormsEntity();
 

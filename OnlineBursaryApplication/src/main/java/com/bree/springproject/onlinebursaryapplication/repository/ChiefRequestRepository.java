@@ -34,4 +34,9 @@ public interface ChiefRequestRepository extends CrudRepository<ChiefDataEntity, 
 
     @Query("SELECT c.userId FROM ChiefDataEntity c WHERE c.status= :status AND  c.bursaryMonth= :bursaryMonth")
     List<Long> findAllByStatus(Boolean status, String bursaryMonth);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE ChiefDataEntity c SET c.status = false WHERE c.userId= :userId AND c.bursaryMonth = :bursaryMonth")
+    void updateStatusByUserIdAndBursaryMonth(Long userId, String bursaryMonth);
 }
