@@ -5,10 +5,12 @@ import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FormAlr
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UnauthorisedRequestException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApprovedFormsEntity;
 import com.bree.springproject.onlinebursaryapplication.Entity.ChiefDataEntity;
+import com.bree.springproject.onlinebursaryapplication.Entity.UserNotificationTable;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
 import com.bree.springproject.onlinebursaryapplication.repository.ChiefRequestRepository;
 import com.bree.springproject.onlinebursaryapplication.repository.FormApprovalRepository;
+import com.bree.springproject.onlinebursaryapplication.repository.UserNotificationsRepository;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +27,20 @@ import java.util.List;
 public class ViewLogicService {
 
     @Autowired
-    UserRegistrationRepository userRegistrationRepository;
+    private UserRegistrationRepository userRegistrationRepository;
 
     @Autowired
-    HandleChiefLogicService handleChiefLogicService;
+    private HandleChiefLogicService handleChiefLogicService;
 
     @Autowired
-    ChiefRequestRepository chiefRequestRepository;
+    private ChiefRequestRepository chiefRequestRepository;
 
 
     @Autowired
-    FormApprovalRepository formApprovalRepository;
+    private FormApprovalRepository formApprovalRepository;
+
+    @Autowired
+    private UserNotificationsRepository userNotificationsRepository;
     public ResponseEntity<List<Long>> getAvailableForms(Long viewerId) {
         log.info("Forwarded the request to find available forms");
 
@@ -79,6 +84,14 @@ public class ViewLogicService {
         chiefRequestRepository.updateStatusByUserIdAndBursaryMonth(formUserId, String.valueOf(bursaryMonth));
 
         /*Here we need to message the user.*/
+        UserNotificationTable userNotificationTable = new UserNotificationTable();
+
+        userNotificationTable.setUserId(formUserId);
+        userNotificationTable.setMessage(message);
+
+        userNotificationsRepository.save(userNotificationTable);
+        log.info("Update the user notification");
+
 
         ApprovedFormsEntity approvedFormsEntity = new ApprovedFormsEntity();
 
