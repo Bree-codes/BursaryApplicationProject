@@ -315,4 +315,20 @@ public class ExceptionHandling {
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(FormAlreadyApprovedException.class)
+    public ResponseEntity<ExceptionModel> handleFormAlreadyApprovedException(
+            FormAlreadyApprovedException e)
+    {
+
+        log.error("Attempt to approve the same form twice.");
+        /*Prepare the response model*/
+        ExceptionModel exceptionModel = new ExceptionModel();
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        exceptionModel.setMessage(e.getMessage());
+
+        log.info("Exception handled");
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
 }
