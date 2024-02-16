@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface FormApprovalRepository extends CrudRepository<ApprovedFormsEntity, Long> {
 
-
+    ApprovedFormsEntity findAllByUserIdAndBursaryMonth(Long userId, String bursaryMonth);
 }

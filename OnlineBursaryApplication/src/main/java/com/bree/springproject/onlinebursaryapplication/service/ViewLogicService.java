@@ -65,6 +65,16 @@ public class ViewLogicService {
         //get the bursary month.
         int bursaryMonth = handleChiefLogicService.latestFinder();
 
+        /*Check if the form had already been approved.*/
+        ApprovedFormsEntity approvedForm =
+                formApprovalRepository.findAllByUserIdAndBursaryMonth(
+                        formUserId, String.valueOf(bursaryMonth));
+
+        if(approvedForm != null)
+        {
+            /*Return an exception here.*/
+        }
+
         ApprovedFormsEntity approvedFormsEntity = new ApprovedFormsEntity();
 
         approvedFormsEntity.setUserId(formUserId);
