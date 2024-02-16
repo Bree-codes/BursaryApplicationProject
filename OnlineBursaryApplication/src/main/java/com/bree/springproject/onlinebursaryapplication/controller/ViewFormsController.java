@@ -25,6 +25,7 @@ public class ViewFormsController {
         return viewLogicService.getAvailableForms(viewerId);
     }
 
+    @PutMapping("/approve-form")
     public ResponseEntity<ResponseModel> ApproveForm(Boolean status, Long formUserId, String message)
     {
         log.info("Received a request to approve a form");

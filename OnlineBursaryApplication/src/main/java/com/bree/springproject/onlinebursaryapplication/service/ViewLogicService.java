@@ -2,10 +2,12 @@ package com.bree.springproject.onlinebursaryapplication.service;
 
 
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UnauthorisedRequestException;
+import com.bree.springproject.onlinebursaryapplication.Entity.ApprovedFormsEntity;
 import com.bree.springproject.onlinebursaryapplication.Entity.ChiefDataEntity;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
 import com.bree.springproject.onlinebursaryapplication.repository.ChiefRequestRepository;
+import com.bree.springproject.onlinebursaryapplication.repository.FormApprovalRepository;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,6 +31,10 @@ public class ViewLogicService {
 
     @Autowired
     ChiefRequestRepository chiefRequestRepository;
+
+
+    @Autowired
+    FormApprovalRepository formApprovalRepository;
     public ResponseEntity<List<Long>> getAvailableForms(Long viewerId) {
         log.info("Forwarded the request to find available forms");
 
@@ -58,8 +65,23 @@ public class ViewLogicService {
         //get the bursary month.
         int bursaryMonth = handleChiefLogicService.latestFinder();
 
+        ApprovedFormsEntity approvedFormsEntity = new ApprovedFormsEntity();
+
+        approvedFormsEntity.setUserId(formUserId);
+        approvedFormsEntity.setStatus(status);
+        approvedFormsEntity.setBursaryMonth(String.valueOf(bursaryMonth));
+
+        //saving the field to the database;
+        formApprovalRepository.save(approvedFormsEntity);
+        log.info("Saved the approval repository");
 
 
-        return null;
+        /*Preparing the response.*/
+        ResponseModel responseModel = new ResponseModel();
+        responseModel.setMessage("Form Approval Successful");
+        responseModel.setDate(new Date());
+        responseModel.setHttpStatus(HttpStatus.OK);
+
+        return new ResponseEntity<>(responseModel,HttpStatus.OK);
     }
 }
