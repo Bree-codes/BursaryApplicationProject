@@ -74,7 +74,7 @@ public class RegisterUserService {
         * as it is a mandatory field as opposed to the email field*/
 
         //check if the user has an email
-        if(registerUserDTO.getUserEmail() == null)
+        if(registerUserDTO.getUserPhoneNumber() == null)
         {
             //Here we should send a message to the phone number.
 

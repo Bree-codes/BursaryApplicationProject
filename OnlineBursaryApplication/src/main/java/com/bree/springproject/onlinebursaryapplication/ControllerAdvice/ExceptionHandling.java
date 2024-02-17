@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.net.ConnectException;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
@@ -330,5 +331,17 @@ public class ExceptionHandling {
 
         log.info("Exception handled");
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SocketException.class)
+    public ResponseEntity<ExceptionModel> handleSocketException(SocketException e)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setDate(new Date());
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.REQUEST_TIMEOUT);
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.REQUEST_TIMEOUT);
     }
 }
