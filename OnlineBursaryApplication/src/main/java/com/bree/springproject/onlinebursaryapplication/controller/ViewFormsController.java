@@ -2,6 +2,9 @@ package com.bree.springproject.onlinebursaryapplication.controller;
 
 import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
 import com.bree.springproject.onlinebursaryapplication.service.ViewLogicService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +29,10 @@ public class ViewFormsController {
     }
 
     @PutMapping("/approve-form")
-    public ResponseEntity<ResponseModel> ApproveForm(Boolean status, Long formUserId, String message)
+    public ResponseEntity<ResponseModel> ApproveForm(
+            @Valid @NotNull Boolean status,
+            @Valid @NotNull Long formUserId,
+            @Valid @NotNull String message)
     {
         log.info("Received a request to approve a form");
 
