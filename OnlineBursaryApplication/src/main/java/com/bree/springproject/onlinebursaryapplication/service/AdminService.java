@@ -2,6 +2,7 @@ package com.bree.springproject.onlinebursaryapplication.service;
 
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserExistException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserRequestNotAuthorised;
+import com.bree.springproject.onlinebursaryapplication.Entity.ApprovedFormsEntity;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.models.PrivilegedUserModel;
 import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +37,9 @@ public class AdminService {
 
     @Autowired
     private HandleChiefLogicService handleChiefLogicService;
+
+    @Autowired
+    private CreateFormService createFormService;
 
     public ResponseEntity<ResponseModel> createUser(Long adminId, PrivilegedUserModel privilegedUserModel) {
 
@@ -116,8 +121,27 @@ public class AdminService {
         //Finding out the latest bursaries.
         int latestMonthEncoding = handleChiefLogicService.latestFinder();
 
+        String month = createFormService.decodeMonth(0,latestMonthEncoding);
 
+        Map<String, String> approvedStudents = new HashMap<>();
 
-        return null;
+        //bursary title.
+        approvedStudents.put("Bursary Month", month+" 2024");
+
+        /*Moving forward to get the approved students.*/
+        List<Long> approvedFormsEntities =
+                formApprovalRepository.findAllByBursaryMonth(String.valueOf(latestMonthEncoding));
+
+        /*Moving forward to get approved students names and phone numbers.*/
+        for(Long userId : approvedFormsEntities)
+        {
+            UserRegistrationTable userRegistrationTable =
+                    userRegistrationRepository.findById(userId).get();
+            approvedStudents.put(
+                    userRegistrationTable.getUsername(),
+                    userRegistrationTable.getPhoneNumber());
+        }
+
+        return new ResponseEntity<>(approvedStudents, HttpStatus.OK);
     }
 }
