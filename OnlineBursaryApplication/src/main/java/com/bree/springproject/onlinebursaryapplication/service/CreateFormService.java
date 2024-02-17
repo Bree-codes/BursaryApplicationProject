@@ -78,6 +78,8 @@ public class CreateFormService {
 
         if(currentYear == 0) currentYear = Year.now().getValue();
 
+        monthValue = monthValue + (12 * (currentYear - 2024));
+
         //getting the total value of the month-field for the form.
         return String.valueOf((monthValue + currentYear));
     }
@@ -125,7 +127,8 @@ public class CreateFormService {
 
         List<ApplicationFormCreateTable> applicationForm;
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //this method should me changes
         //getting the complete form.
         do{
             applicationForm = formCreateRepository.
@@ -138,7 +141,7 @@ public class CreateFormService {
             }
 
         }while(applicationForm.isEmpty());
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //where we need to break down the form into sections.
 
@@ -161,24 +164,8 @@ public class CreateFormService {
 
         for(ApplicationFormCreateTable row : applicationForm) {
 
-
-            /*Here we need to decode the month name from the given number
-            This method may be reused when coding the functionality where the
-            user enters a specific month when they want to get the form for, so will check if the
-            year provided is 0*/
-            log.info("decoding the months");
-            int currentYear = year;
-            
-
-            //handle the default get method
-            if(year == 0) currentYear = Year.now().getValue();
-
-
-            int month = Integer.parseInt(row.getBursaryMonth()) - currentYear;
-
-            String formMonth = String.valueOf(Months.values()[month]);
-
-            row.setBursaryMonth(formMonth);
+            /*Decoding the encoded month representation*/
+            row.setBursaryMonth(decodeMonth(year, Integer.parseInt(row.getBursaryMonth())));
 
 
             log.info("Moving to grouping of the form");
@@ -199,6 +186,25 @@ public class CreateFormService {
         sortedForm.remove(0);
         log.info("Decoding and Grouping of the form done.");
         return sortedForm;
+    }
+
+
+    public String decodeMonth(int year, int bursaryMonth)
+    {
+         /*Here we need to decode the month name from the given number
+            This method may be reused when coding the functionality where the
+            user enters a specific month when they want to get the form for, so will check if the
+            year provided is 0*/
+        log.info("decoding the months");
+        int currentYear = year;
+
+
+        //handle the default get method
+        if(year == 0) currentYear = Year.now().getValue();
+
+        int month = bursaryMonth - currentYear - (12 * (currentYear - 2024));
+
+        return String.valueOf(Months.values()[month]);
     }
 
     public ResponseEntity<List<List<ApplicationFormCreateTable>>> getForm(String month, String year) {
