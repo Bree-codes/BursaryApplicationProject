@@ -4,7 +4,6 @@ package com.bree.springproject.onlinebursaryapplication.service;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.FormAlreadySentException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UnauthorisedRequestException;
 import com.bree.springproject.onlinebursaryapplication.Entity.ApprovedFormsEntity;
-import com.bree.springproject.onlinebursaryapplication.Entity.ChiefDataEntity;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserNotificationTable;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
@@ -18,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,21 +24,41 @@ import java.util.List;
 @Slf4j
 public class ViewLogicService {
 
-    @Autowired
     private UserRegistrationRepository userRegistrationRepository;
 
-    @Autowired
     private HandleChiefLogicService handleChiefLogicService;
 
-    @Autowired
     private ChiefRequestRepository chiefRequestRepository;
 
-
-    @Autowired
     private FormApprovalRepository formApprovalRepository;
 
-    @Autowired
     private UserNotificationsRepository userNotificationsRepository;
+
+    @Autowired
+    public void setUserRegistrationRepository(UserRegistrationRepository userRegistrationRepository) {
+        this.userRegistrationRepository = userRegistrationRepository;
+    }
+
+    @Autowired
+    public void setHandleChiefLogicService(HandleChiefLogicService handleChiefLogicService) {
+        this.handleChiefLogicService = handleChiefLogicService;
+    }
+
+    @Autowired
+    public void setChiefRequestRepository(ChiefRequestRepository chiefRequestRepository) {
+        this.chiefRequestRepository = chiefRequestRepository;
+    }
+
+    @Autowired
+    public void setFormApprovalRepository(FormApprovalRepository formApprovalRepository) {
+        this.formApprovalRepository = formApprovalRepository;
+    }
+
+    @Autowired
+    public void setUserNotificationsRepository(UserNotificationsRepository userNotificationsRepository) {
+        this.userNotificationsRepository = userNotificationsRepository;
+    }
+
     public ResponseEntity<List<Long>> getAvailableForms(Long viewerId) {
         log.info("Forwarded the request to find available forms");
 
@@ -48,7 +66,7 @@ public class ViewLogicService {
          UserRegistrationTable userRegistrationTable =
                  userRegistrationRepository.findById(viewerId).get();
 
-         //checking if it is a viewer's or admin's id.
+         //checking if it is a viewer's or admins id.
          if(!(userRegistrationTable.getRole().equalsIgnoreCase("view") ||
             userRegistrationTable.getRole().equalsIgnoreCase("admin")))
         {
