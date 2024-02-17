@@ -9,13 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v0/admin/")
 @Slf4j
 public class AdministratorController {
 
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
 
     @PostMapping("/create-higher-users/{adminId}")
     public ResponseEntity<ResponseModel> createPrivilegedUsers(
@@ -27,6 +29,14 @@ public class AdministratorController {
         log.warn("Request to create a privileged user");
 
         return adminService.createUser(adminId, privilegedUserModel);
+    }
+
+    @GetMapping("/get-qualified-students")
+    public ResponseEntity<Map<String, String>> viewAllocateStudents()
+    {
+        log.info("Request to get the qualified applicants");
+
+        return adminService.getQualifiedApplicants();
     }
 
 }

@@ -5,6 +5,7 @@ import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserReq
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.models.PrivilegedUserModel;
 import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
+import com.bree.springproject.onlinebursaryapplication.repository.FormApprovalRepository;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -26,6 +28,9 @@ public class AdminService {
 
     @Autowired
     private CommunicationService communicationService;
+
+    @Autowired
+    private FormApprovalRepository formApprovalRepository;
 
     public ResponseEntity<ResponseModel> createUser(Long adminId, PrivilegedUserModel privilegedUserModel) {
 
@@ -87,6 +92,7 @@ public class AdminService {
             throw  new UserExistException("The Username Entered Is Already Assign To another Person");
         }
 
+        log.info("request handled successfully");
         /*Performing the insertion*/
         userRegistrationRepository.save(userRegistrationTable);
 
@@ -98,5 +104,15 @@ public class AdminService {
         responseModel.setMessage("New Privileged User Created Successfully");
 
         return new ResponseEntity<>(responseModel, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, String>> getQualifiedApplicants() {
+        log.info("Received a request to get approved students.");
+
+        //Finding out the latest bursaries.
+        formApprovalRepository
+
+
+        return null;
     }
 }

@@ -78,6 +78,8 @@ public class CreateFormService {
 
         if(currentYear == 0) currentYear = Year.now().getValue();
 
+        monthValue = monthValue + (12 * (currentYear - 2024));
+
         //getting the total value of the month-field for the form.
         return String.valueOf((monthValue + currentYear));
     }
@@ -174,7 +176,7 @@ public class CreateFormService {
             if(year == 0) currentYear = Year.now().getValue();
 
 
-            int month = Integer.parseInt(row.getBursaryMonth()) - currentYear;
+            int month = Integer.parseInt(row.getBursaryMonth()) - currentYear - (12 * (currentYear - 2024));
 
             String formMonth = String.valueOf(Months.values()[month]);
 
