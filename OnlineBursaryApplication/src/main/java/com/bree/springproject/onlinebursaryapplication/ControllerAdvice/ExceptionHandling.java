@@ -2,7 +2,6 @@ package com.bree.springproject.onlinebursaryapplication.ControllerAdvice;
 
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.*;
 import com.bree.springproject.onlinebursaryapplication.models.ExceptionModel;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.query.IllegalSelectQueryException;
 import org.springframework.http.HttpStatus;
@@ -23,11 +22,10 @@ import java.util.NoSuchElementException;
 
 
 @ControllerAdvice
-@Setter
 @Slf4j
 public class ExceptionHandling {
 
-    @ExceptionHandler(value = UserDoesNotExistException.class)
+    @ExceptionHandler(UserDoesNotExistException.class)
    public ResponseEntity<ExceptionModel> handleUserNonExistence(UserDoesNotExistException userDoesNotExistException)
     {
 
@@ -333,6 +331,7 @@ public class ExceptionHandling {
         return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 
+<<<<<<< HEAD
     @ExceptionHandler(SocketException.class)
     public ResponseEntity<ExceptionModel> handleSocketException(SocketException e)
     {
@@ -343,5 +342,19 @@ public class ExceptionHandling {
         exceptionModel.setHttpStatus(HttpStatus.REQUEST_TIMEOUT);
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.REQUEST_TIMEOUT);
+=======
+    @ExceptionHandler(UserRequestNotAuthorised.class)
+    public ResponseEntity<ExceptionModel> handleUserRequestNotAuthorised(UserRequestNotAuthorised e)
+    {
+        log.error("Non Admin user Attempt to perform admin operations");
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setDate(new Date());
+
+        log.info("Exception handled");
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+>>>>>>> f7e6b5de6d8b5b50106362fc5b538fce0b0db1a7
     }
 }

@@ -9,13 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v0/admin/")
 @Slf4j
 public class AdministratorController {
 
     @Autowired
-    AdminService adminService;
+    private AdminService adminService;
 
     @PostMapping("/create-higher-users/{adminId}")
     public ResponseEntity<ResponseModel> createPrivilegedUsers(
@@ -29,4 +31,22 @@ public class AdministratorController {
         return adminService.createUser(adminId, privilegedUserModel);
     }
 
+    @GetMapping("/get-qualified-students")
+    public ResponseEntity<Map<String, String>> viewAllocateStudents()
+    {
+        log.info("Request to get the qualified applicants");
+
+        return adminService.getQualifiedApplicants();
+    }
+
+    @GetMapping("/get-past-qualified")
+    public ResponseEntity<Map<String, String>> viewByMonthAndYear(
+            @RequestParam String bursaryMonth,
+            @RequestParam String bursaryYear
+    )
+    {
+        log.info("Received Request To Get Approved Students By Year.");
+
+        return adminService.getQualifiedApplicantsByYearAndMonth(bursaryYear, bursaryMonth);
+    }
 }
