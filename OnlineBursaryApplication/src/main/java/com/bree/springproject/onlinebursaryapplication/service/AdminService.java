@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserExistException;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.models.PrivilegedUserModel;
 import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
@@ -30,12 +31,24 @@ public class AdminService {
         log.info("Forwarded the request to create the new privileged user.");
 
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
+        String defaultPassword = privilegedUserModel.getRole();
+
+        /*Creating the new privileged user.*/
+
+        userRegistrationTable.setPassword(defaultPassword);
+        userRegistrationTable.setUsername(privilegedUserModel.getUsername());
+        userRegistrationTable.setRole(privilegedUserModel.getRole());
+
 
         /*Check if it's an email or a phone number passed*/
         if(registerUserService.checkValidityOfPhoneNumber(privilegedUserModel.getPhoneNumberOrEmail())){
             userRegistrationTable.setPhoneNumber(privilegedUserModel.getPhoneNumberOrEmail());
             userRegistrationTable.setEmail(null);
 
+            /*The user may have entered the phone number
+            so the email should remain null and will be updated by the created user.*/
+            userRegistrationTable.setPhoneNumber(privilegedUserModel.getPhoneNumberOrEmail());
+            userRegistrationTable.setEmail(null);
             /*Here we are messaging the new user, the request to log in with default credentials
             * changes them and take-up their role in the application*/
 
@@ -44,21 +57,33 @@ public class AdminService {
             userRegistrationTable.setEmail(privilegedUserModel.getPhoneNumberOrEmail());
             userRegistrationTable.setPhoneNumber("0123456789");
 
+            /*The phone number is a non-null field, so we are setting the random number as the default phone number to
+            * be updated later by the created user.*/
+            userRegistrationTable.setPhoneNumber("0123456789");
+            userRegistrationTable.setEmail(privilegedUserModel.getPhoneNumberOrEmail());
+
             /*Here we are emailing the new user, the request to log in with default credentials
              * changes them and take-up their role in the application*/
-            communicationService.emailPrivilegedUsers(privilegedUserModel.getPhoneNumberOrEmail());
-
+            communicationService.emailPrivilegedUsers(
+                    privilegedUserModel.getPhoneNumberOrEmail(),
+                    privilegedUserModel.getUsername(),
+                    defaultPassword
+                    );
         }
 
+        /*Saving the new privileged user to the database.*/
 
+            //before inserting the new user, we need to ensure that the user does not already exist
+        if(userRegistrationRepository.findByUsername(privilegedUserModel.getUsername()) != null){
 
+            log.error("Duplicate user name exception");
+            throw  new UserExistException("The Username Entered Is Already Assign To another Person");
+        }
 
-        userRegistrationTable.setPassword(privilegedUserModel.getRole());
-        userRegistrationTable.setUsername(privilegedUserModel.getUsername());
+        /*Performing the insertion*/
+        userRegistrationRepository.save(userRegistrationTable);
 
-       // userRegistrationRepository.save()
-
-        /*The Response Model*/
+        /*Preparing the response to the performed process*/
         ResponseModel responseModel = new ResponseModel();
 
         responseModel.setHttpStatus(HttpStatus.CREATED);

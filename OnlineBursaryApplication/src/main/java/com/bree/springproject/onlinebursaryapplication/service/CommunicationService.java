@@ -155,7 +155,6 @@ public class CommunicationService {
         javaMailSender.send(mimeMessage);
     }
 
-    public void emailPrivilegedUsers(String email) {
-
+    public void emailPrivilegedUsers(String email, String username, String defaultPassword) {
     }
 }
