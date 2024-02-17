@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Table()
 @Data
 @Component
 @AllArgsConstructor

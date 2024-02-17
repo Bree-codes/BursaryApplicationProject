@@ -45,9 +45,8 @@ public class AdministratorController {
             @RequestParam String bursaryYear
     )
     {
+        log.info("Received Request To Get Approved Students By Year.");
 
-
-
-        return null;
+        return adminService.getQualifiedApplicantsByYearAndMonth(bursaryYear, bursaryMonth);
     }
 }

@@ -132,7 +132,7 @@ public class AdminService {
         List<Long> approvedFormsEntities =
                 formApprovalRepository.findAllByBursaryMonth(String.valueOf(latestMonthEncoding));
 
-        /*Moving forward to get approved students names and phone numbers.*/
+        /*Moving forward to get approved students' names and phone numbers.*/
         for(Long userId : approvedFormsEntities)
         {
             UserRegistrationTable userRegistrationTable =
@@ -143,5 +143,35 @@ public class AdminService {
         }
 
         return new ResponseEntity<>(approvedStudents, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, String>> getQualifiedApplicantsByYearAndMonth(
+            String bursaryYear, String bursaryMonth) {
+        //creating the map to be return to teh admin
+        Map<String, String> approvedStudent = new HashMap<>();
+
+        /*Inserting the bursary title.*/
+        approvedStudent.put("Bursary Month", bursaryMonth+" "+bursaryYear);
+
+        /*First, we need to encode the provided month*/
+        String encodedMonth =
+                createFormService.encoder(bursaryMonth, Integer.parseInt(bursaryYear));
+
+        List<Long> approvedFormsEntities =
+                formApprovalRepository.findAllByBursaryMonth(encodedMonth);
+
+        /*Moving forward to get approved students' names and phone numbers.*/
+        for(Long userId : approvedFormsEntities)
+        {
+            UserRegistrationTable userRegistrationTable =
+                    userRegistrationRepository.findById(userId).get();
+            approvedStudent.put(
+                    userRegistrationTable.getUsername(),
+                    userRegistrationTable.getPhoneNumber());
+        }
+
+
+
+        return new ResponseEntity<>(approvedStudent, HttpStatus.OK);
     }
 }
