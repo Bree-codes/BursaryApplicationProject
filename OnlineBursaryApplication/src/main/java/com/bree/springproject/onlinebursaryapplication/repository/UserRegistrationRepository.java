@@ -1,6 +1,7 @@
 package com.bree.springproject.onlinebursaryapplication.repository;
 
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
+import com.bree.springproject.onlinebursaryapplication.models.LoginModel;
 import jakarta.annotation.PostConstruct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -20,5 +21,7 @@ public interface UserRegistrationRepository extends JpaRepository<UserRegistrati
     @Query("SELECT T.username FROM UserRegistrationTable T WHERE T.userId = :userId")
     String findUsernameByUserId(Long userId);
 
+    @Query("select new com.bree.springproject.onlinebursaryapplication.models.LoginModel(T.email,T.phoneNumber,T.role,T.status,T.userId,T.username) from UserRegistrationTable T where T.username = :username and T.password = :password")
+    LoginModel findUserDetails(String username ,String password);
 }
 
