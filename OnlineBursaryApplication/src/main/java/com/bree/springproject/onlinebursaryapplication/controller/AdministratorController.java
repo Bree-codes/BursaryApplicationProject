@@ -1,14 +1,13 @@
 package com.bree.springproject.onlinebursaryapplication.controller;
 
 
+import com.bree.springproject.onlinebursaryapplication.models.PrivilegedUserModel;
 import com.bree.springproject.onlinebursaryapplication.models.ResponseModel;
 import com.bree.springproject.onlinebursaryapplication.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v0/admin/")
@@ -18,16 +17,16 @@ public class AdministratorController {
     @Autowired
     AdminService adminService;
 
-    @PostMapping("/create-higher-users")
+    @PostMapping("/create-higher-users/{adminId}")
     public ResponseEntity<ResponseModel> createPrivilegedUsers(
-
-    )
+            @PathVariable Long adminId,
+            @RequestBody PrivilegedUserModel privilegedUserModel
+            )
     {
+
         log.warn("Request to create a privileged user");
 
-
-
-        return null;
+        return adminService.createUser(adminId, privilegedUserModel);
     }
 
 }
