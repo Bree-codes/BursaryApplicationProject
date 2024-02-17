@@ -14,8 +14,6 @@ public class PrivilegedUserModel
 {
     private String username;
 
-    private String password;
-
     private String phoneNumberOrEmail;
 
     private String role;

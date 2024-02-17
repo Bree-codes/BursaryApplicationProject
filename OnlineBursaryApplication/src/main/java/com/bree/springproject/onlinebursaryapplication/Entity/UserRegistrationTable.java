@@ -18,7 +18,7 @@ public class  UserRegistrationTable {
     @Column
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(unique = true)
