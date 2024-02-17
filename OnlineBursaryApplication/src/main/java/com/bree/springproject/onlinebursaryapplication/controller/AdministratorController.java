@@ -39,4 +39,15 @@ public class AdministratorController {
         return adminService.getQualifiedApplicants();
     }
 
+    @GetMapping("/get-past-qualified")
+    public ResponseEntity<Map<String, String>> viewByMonthAndYear(
+            @RequestParam String bursaryMonth,
+            @RequestParam String bursaryYear
+    )
+    {
+
+
+
+        return null;
+    }
 }
