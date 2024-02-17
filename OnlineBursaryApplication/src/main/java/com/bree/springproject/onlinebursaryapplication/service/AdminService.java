@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -31,6 +32,9 @@ public class AdminService {
 
     @Autowired
     private FormApprovalRepository formApprovalRepository;
+
+    @Autowired
+    private HandleChiefLogicService handleChiefLogicService;
 
     public ResponseEntity<ResponseModel> createUser(Long adminId, PrivilegedUserModel privilegedUserModel) {
 
@@ -110,7 +114,8 @@ public class AdminService {
         log.info("Received a request to get approved students.");
 
         //Finding out the latest bursaries.
-        //formApprovalRepository
+        int latestMonthEncoding = handleChiefLogicService.latestFinder();
+
 
 
         return null;

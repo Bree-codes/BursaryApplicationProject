@@ -11,6 +11,4 @@ public interface FormApprovalRepository extends CrudRepository<ApprovedFormsEnti
     ApprovedFormsEntity findAllByUserIdAndBursaryMonth(Long userId, String bursaryMonth);
 
 
-    @Query("SELECT DISTINCT t.bursaryMonth FROM ApprovedFormsEntity t")
-    List<String> findDistinctBursaryMonths();
 }
