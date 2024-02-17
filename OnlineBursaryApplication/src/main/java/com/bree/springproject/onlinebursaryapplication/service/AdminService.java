@@ -46,7 +46,7 @@ public class AdminService {
 
             /*Here we are emailing the new user, the request to log in with default credentials
              * changes them and take-up their role in the application*/
-
+            communicationService.emailPrivilegedUsers(privilegedUserModel.getPhoneNumberOrEmail());
 
         }
 

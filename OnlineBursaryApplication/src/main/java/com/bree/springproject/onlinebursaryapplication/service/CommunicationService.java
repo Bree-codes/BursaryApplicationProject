@@ -17,12 +17,15 @@ import java.util.Date;
 @Slf4j
 public class CommunicationService {
 
-    @Autowired
-    JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;
 
+    @Autowired
+    public CommunicationService(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
 
     public void sendVerificationEmails(final String url, final String userEmail)
-            throws MessagingException , UnknownHostException {
+            throws MessagingException {
         String from = "Bursary-Made-Easy";
         String subject = "Verify Email";
         String body = """
@@ -64,7 +67,8 @@ public class CommunicationService {
                                 <body>
                                     <div class="container">
                                         <p><b>Click here to verify your email</b></p><br>
-                                        <a href='https://github.com/Red-stevo'"><center> Verify Email</center></a>
+                                        <a href='"""+url+""" 
+                                    '><center> Verify Email</center></a>
                                     </div>
                                 </body>
                                 </html>
@@ -85,7 +89,7 @@ public class CommunicationService {
         javaMailSender.send(mimeMessage);
     }
 
-    public void sendChangePasswordEmail(String userEmail) throws MessagingException {
+    public void sendChangePasswordEmail(String userEmail, String url) throws MessagingException {
 
         String from = "Bursary-Made-Easy";
         String subject = "Verify Email";
@@ -128,7 +132,8 @@ public class CommunicationService {
                                 <body>
                                     <div class="container">
                                         <p><b>Click here to change you password</b></p><br>
-                                        <a href='https://github.com/Red-stevo'"><center>Forgotten Password</center></a>
+                                        <a href='"""+url+"""
+                                    '><center>Forgotten Password</center></a>
                                     </div>
                                 </body>
                                 </html>
@@ -148,5 +153,9 @@ public class CommunicationService {
         log.info("Forgotten password sending the email");
 
         javaMailSender.send(mimeMessage);
+    }
+
+    public void emailPrivilegedUsers(String email) {
+
     }
 }
