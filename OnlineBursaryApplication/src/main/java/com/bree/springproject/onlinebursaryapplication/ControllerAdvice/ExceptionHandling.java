@@ -18,6 +18,7 @@ import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 
 @ControllerAdvice
@@ -273,5 +274,61 @@ public class ExceptionHandling {
         exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(FormAlreadySentException.class)
+    public ResponseEntity<ExceptionModel> handleFormAlreadySentException(FormAlreadySentException e)
+    {
+        log.error("Attempt to send duplicate forms.");
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setDate(new Date());
+
+        return  new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UnauthorisedRequestException.class)
+    public ResponseEntity<ExceptionModel> handleUnauthorisedRequestException(UnauthorisedRequestException e)
+    {
+        ExceptionModel exceptionModel = new ExceptionModel();
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        exceptionModel.setMessage(e.getMessage());
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ExceptionModel> handleNoSuchElementException(NoSuchElementException e)
+    {
+        log.info("The Passed chief id does not exist");
+
+        ExceptionModel exceptionModel = new ExceptionModel();
+
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setHttpStatus(HttpStatus.NOT_FOUND);
+        exceptionModel.setDate(new Date());
+
+
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FormAlreadyApprovedException.class)
+    public ResponseEntity<ExceptionModel> handleFormAlreadyApprovedException(
+            FormAlreadyApprovedException e)
+    {
+
+        log.error("Attempt to approve the same form twice.");
+        /*Prepare the response model*/
+        ExceptionModel exceptionModel = new ExceptionModel();
+        exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        exceptionModel.setMessage(e.getMessage());
+
+        log.info("Exception handled");
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
     }
 }

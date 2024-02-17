@@ -150,9 +150,13 @@ public class RegisterUserService {
         //check whether it is an email or a password.
         if(!checkValidityOfPhoneNumber(userEmailOrPassword))
         {
+            String url = "";
             //the string is an email
-            communicationService.sendChangePasswordEmail(userEmailOrPassword);
-            return new ResponseEntity<>("Check your Email.",HttpStatus.CONTINUE);
+            communicationService.sendChangePasswordEmail(userEmailOrPassword, url);
+
+            log.info("Email sent successfully");
+
+            return new ResponseEntity<>("Check your Email.",HttpStatus.OK);
         }
 
         //here we send the message to the phone number.

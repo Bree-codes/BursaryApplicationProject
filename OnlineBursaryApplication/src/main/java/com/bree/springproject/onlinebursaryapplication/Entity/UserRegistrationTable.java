@@ -18,20 +18,19 @@ public class  UserRegistrationTable {
     @Column
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column()
+    @Column(unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
 
-    @Column()
-    private Boolean status = false;
+    private Boolean status;
 
     private String role;
 
@@ -42,6 +41,8 @@ public class  UserRegistrationTable {
         {
             this.role = "user";
         }
+        if(this.status == null)
+            status = false;
     }
 }
 
