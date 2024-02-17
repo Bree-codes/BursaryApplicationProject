@@ -30,8 +30,7 @@ public class  UserRegistrationTable {
     @Column(nullable = false, unique = true)
     private String phoneNumber;
 
-
-    private Boolean status = false;
+    private Boolean status;
 
     private String role;
 
@@ -42,6 +41,8 @@ public class  UserRegistrationTable {
         {
             this.role = "user";
         }
+        if(this.status == null)
+            status = false;
     }
 }
 
