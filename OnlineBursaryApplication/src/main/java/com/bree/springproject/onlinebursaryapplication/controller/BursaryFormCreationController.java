@@ -18,6 +18,8 @@ public class BursaryFormCreationController {
     @Autowired
     CreateFormService createFormService;
 
+    /*
+    * This API accepts a section of the form.(eg Section A)*/
     @PostMapping("/create-form/{section}")
     public ResponseEntity<String> createForm(@PathVariable String section,
                                              @RequestBody Map<String, String> formSectionA,
