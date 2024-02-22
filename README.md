@@ -6,7 +6,7 @@ FUNCTIONALITIES OF THE ONLINE BURSARY APPLICATION SYSTEM
         User registration and login
         Role-based access control (Admin, Applicant, Reviewer, etc.)
         Password reset and recovery mechanisms
-
+        
 2.Application Workflow:
         Bursary application form creation
         Dynamic form fields based on the type of bursary or scholarship
