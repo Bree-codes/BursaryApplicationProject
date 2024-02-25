@@ -321,19 +321,19 @@ public class ExceptionHandling {
         exceptionModel.setHttpStatus(HttpStatus.REQUEST_TIMEOUT);
 
         return new ResponseEntity<>(exceptionModel, HttpStatus.REQUEST_TIMEOUT);
+    }
 
-        /*public ResponseEntity<ExceptionModel> handleUserRequestNotAuthorised (UserRequestNotAuthorised e)
-        {
-            log.error("Non Admin user Attempt to perform admin operations");
-            ExceptionModel exceptionModel = new ExceptionModel();
+    @ExceptionHandler(UserRequestNotAuthorised.class)
+    public ResponseEntity<ExceptionModel> handleUserRequestNotAuthorised(UserRequestNotAuthorised e) {
+        log.error("Non Admin user Attempt to perform admin operations");
+        ExceptionModel exceptionModel = new ExceptionModel();
 
-            exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
-            exceptionModel.setMessage(e.getMessage());
-            exceptionModel.setDate(new Date());
+        exceptionModel.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        exceptionModel.setMessage(e.getMessage());
+        exceptionModel.setDate(new Date());
 
-            log.info("Exception handled");
-            return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
+        log.info("Exception handled");
+        return new ResponseEntity<>(exceptionModel, HttpStatus.BAD_REQUEST);
 
-        }*/
     }
 }
