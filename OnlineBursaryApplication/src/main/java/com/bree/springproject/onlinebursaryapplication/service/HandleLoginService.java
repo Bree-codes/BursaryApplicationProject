@@ -2,6 +2,7 @@ package com.bree.springproject.onlinebursaryapplication.service;
 
 import com.bree.springproject.onlinebursaryapplication.models.AuthenticationResponseModel;
 import com.bree.springproject.onlinebursaryapplication.models.LoginModel;
+import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +20,14 @@ public class HandleLoginService {
 
     private final JwtService jwtService;
 
-    private final LoginService loginService;
+    private final UserRegistrationRepository userRegistrationRepository;
 
     @Autowired
-    public HandleLoginService(AuthenticationManager authenticationManager, JwtService jwtService, LoginService loginService) {
+    public HandleLoginService(AuthenticationManager authenticationManager,
+                              JwtService jwtService, UserRegistrationRepository userRegistrationRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
-        this.loginService = loginService;
+        this.userRegistrationRepository = userRegistrationRepository;
     }
 
     public AuthenticationResponseModel login(LoginModel loginModel) {
@@ -38,7 +40,9 @@ public class HandleLoginService {
         );
 
         log.info("Assigning a jwt token to user.");
-        String token = jwtService.generateToken(loginService.loadUserByUsername(loginModel.getUsername()));
+        String token = jwtService.generateToken(
+                userRegistrationRepository.findByUsername(loginModel.getUsername())
+        );
 
         log.info("preparing user response");
         AuthenticationResponseModel authenticationResponseModel =

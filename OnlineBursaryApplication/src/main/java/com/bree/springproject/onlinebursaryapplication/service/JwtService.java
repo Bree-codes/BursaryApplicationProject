@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -14,7 +15,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    public String generateToken(UserDetails userDetails)
+    public String generateToken(UserRegistrationTable userDetails)
     {
         return Jwts
                 .builder()
