@@ -12,8 +12,11 @@ import org.springframework.stereotype.Component;
 public class LoginModel {
 
     private String email;
+
     private String phoneNumber;
+
     private String role;
+
     private Boolean status;
     private Long userId;
     private String username;
