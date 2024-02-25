@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +17,9 @@ public interface UserRegistrationRepository extends JpaRepository<UserRegistrati
 
     UserRegistrationTable findByPhoneNumber(String phoneNumber);
 
-    <T> T findByUsername(String userName);
+    UserRegistrationTable findByUsername(String userName);
 
+    UserDetails findAllByUsername(String userName);
     @Query("SELECT T.username FROM UserRegistrationTable T WHERE T.userId = :userId")
     String findUsernameByUserId(Long userId);
 

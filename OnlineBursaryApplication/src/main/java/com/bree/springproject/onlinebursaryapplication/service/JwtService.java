@@ -14,7 +14,6 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private String SECRETE_KEY = "3c9e9b869f4133d087f4bac5f89500f7f8759a27e6e0d09de8ffa46d80011eee";
     public String generateToken(UserDetails userDetails)
     {
         return Jwts
@@ -27,6 +26,7 @@ public class JwtService {
     }
 
     private SecretKey getSecreteKey() {
+        String SECRETE_KEY = "3c9e9b869f4133d087f4bac5f89500f7f8759a27e6e0d09de8ffa46d80011eee";
         byte[] bytes = Decoders.BASE64URL.decode(SECRETE_KEY);
         return Keys.hmacShaKeyFor(bytes);
     }
