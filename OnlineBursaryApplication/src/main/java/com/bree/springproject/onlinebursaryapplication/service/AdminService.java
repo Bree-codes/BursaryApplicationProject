@@ -43,16 +43,8 @@ public class AdminService {
 
     public ResponseEntity<ResponseModel> createUser(Long adminId, PrivilegedUserModel privilegedUserModel) {
 
-        log.info("Forwarded the request to create the new privileged user.");
-
-        /*Confirming that it is the administrator who sent this request*/
-        if(!userRegistrationRepository.findById(adminId).get().getRole().equalsIgnoreCase("admin"))
-        {
-            throw new UserRequestNotAuthorised("User Not An Administrator.");
-        }
-
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
-        String defaultPassword = privilegedUserModel.getRole();
+        String defaultPassword = privilegedUserModel.getRole().toString();
 
         /*Creating the new privileged user.*/
 

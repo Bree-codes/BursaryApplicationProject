@@ -72,11 +72,6 @@ public class HandleChiefLogicService {
         {
             throw new UserFieldDoesNotExistException("The Chief Entered Is Not Register Yet");
         }
-        //check if the username entered belongs to a chef
-        if(!userRegistrationTable.getRole().equalsIgnoreCase("chief"))
-        {
-            throw  new UserNotAChiefException("User userName Entered Does not Belong To A Chief");
-        }
 
 
         log.info("Moving forward to save the chief");
@@ -97,7 +92,7 @@ public class HandleChiefLogicService {
 
         //validate the request.
         String userRole =
-                userRegistrationRepository.findById(chiefId).get().getRole();
+                userRegistrationRepository.findById(chiefId).get().getRole().toString();
 
         if(!userRole.equalsIgnoreCase("chief"))
         {

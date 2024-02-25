@@ -13,15 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class LoginController {
 
-    @Autowired
-    private LoginService loginService;
-
-    @GetMapping("/login")
-    public ResponseEntity<LoginModel> login(@RequestParam String username,@RequestParam String password){
-        log.info("Received login request");
-        return loginService.loginUser(username,password);
-    }
-
 
 }
 

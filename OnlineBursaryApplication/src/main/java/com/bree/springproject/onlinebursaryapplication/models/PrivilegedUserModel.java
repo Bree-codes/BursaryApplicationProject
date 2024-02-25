@@ -16,6 +16,6 @@ public class PrivilegedUserModel
 
     private String phoneNumberOrEmail;
 
-    private String role;
+    private Role role;
 
 }
