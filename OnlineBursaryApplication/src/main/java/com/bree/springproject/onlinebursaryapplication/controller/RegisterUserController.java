@@ -1,6 +1,7 @@
 package com.bree.springproject.onlinebursaryapplication.controller;
 
 
+import com.bree.springproject.onlinebursaryapplication.models.AuthenticationResponseModel;
 import com.bree.springproject.onlinebursaryapplication.service.RegisterUserService;
 import com.bree.springproject.onlinebursaryapplication.userDTO.RegisterUserDTO;
 import jakarta.mail.MessagingException;
@@ -23,11 +24,11 @@ public class RegisterUserController {
     private RegisterUserService registerUserService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody
-                                               RegisterUserDTO registerUserDTO) throws MessagingException, UnknownHostException {
+    public ResponseEntity<AuthenticationResponseModel>
+    registerUser(@Valid @RequestBody
+                 RegisterUserDTO registerUserDTO)
+            throws MessagingException, UnknownHostException {
         log.info("Received a request to create a user.");
-
-        //verify the user-email
 
         return  registerUserService.registrationValidation(registerUserDTO);
 
