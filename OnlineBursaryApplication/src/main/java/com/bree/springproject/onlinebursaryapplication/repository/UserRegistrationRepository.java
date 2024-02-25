@@ -16,12 +16,12 @@ public interface UserRegistrationRepository extends JpaRepository<UserRegistrati
 
     UserRegistrationTable findByPhoneNumber(String phoneNumber);
 
-    UserRegistrationTable findByUsername(String userName);
+    <T> T findByUsername(String userName);
 
     @Query("SELECT T.username FROM UserRegistrationTable T WHERE T.userId = :userId")
     String findUsernameByUserId(Long userId);
 
-    @Query("select new com.bree.springproject.onlinebursaryapplication.models.LoginModel(T.email,T.phoneNumber,T.role,T.status,T.userId,T.username) from UserRegistrationTable T where T.username = :username and T.password = :password")
-    LoginModel findUserDetails(String username ,String password);
+   /* @Query("select new com.bree.springproject.onlinebursaryapplication.models.LoginModel(T.email,T.phoneNumber,T.role,T.status,T.userId,T.username) from UserRegistrationTable T where T.username = :username and T.password = :password")
+    LoginModel findUserDetails(String username ,String password);*/
 }
 
