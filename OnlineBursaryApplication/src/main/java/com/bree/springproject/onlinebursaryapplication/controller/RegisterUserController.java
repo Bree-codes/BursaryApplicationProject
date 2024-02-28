@@ -67,7 +67,7 @@ public class RegisterUserController {
 
     @GetMapping("/forgotten-password")
     public ResponseEntity<String> forgottenPassword(@RequestParam String userEmailOrPassword) throws MessagingException {
-        log.info("User forgotten password");
+        log.info("User has forgotten password");
 
         //forward the request to send the email to the user for changing the password.
         return registerUserService.changePassword(userEmailOrPassword);
