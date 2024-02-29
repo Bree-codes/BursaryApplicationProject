@@ -5,8 +5,8 @@ import "./../ComponetStyles/InputComponentStyles.css"
 const InputComponent = (props) =>{
     return(
         <>
-            <InputGroup className={"m-2 p-2"}>
-            <table>
+            <InputGroup className={"m-0 p-2 justify-content-center container-fluid"}>
+        {/*    <table className={"justify-content-center"}>*/}
                 <tbody>
                 <tr>
                     <td>
@@ -24,11 +24,13 @@ const InputComponent = (props) =>{
                                       /* eslint-disable-next-line react/prop-types */
                             placeholder={props.placeHolder}
                                       /* eslint-disable-next-line react/prop-types */
-                            required={props.required}/>
+                            required={props.required}
+                                      /* eslint-disable-next-line react/prop-types */
+                            value={props.value}/>
                     </td>
             </tr>
                 </tbody>
-            </table>
+        {/*    </table>*/}
             </InputGroup>
         </>
     );
