@@ -1,10 +1,9 @@
-
-import InputComponent from "./Components/InputComponent.jsx";
+import CreateAccountLayout from "./Layouts/CreateAccountLayout.jsx";
 
 function App() {
   return (
     <>
-      <InputComponent />
+      <CreateAccountLayout />
     </>
   )
 }
