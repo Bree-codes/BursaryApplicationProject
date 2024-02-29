@@ -1,9 +1,10 @@
-import './App.css'
+
+import InputComponent from "./Components/InputComponent.jsx";
 
 function App() {
   return (
     <>
-
+      <InputComponent />
     </>
   )
 }
