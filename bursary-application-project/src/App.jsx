@@ -1,9 +1,9 @@
-import LoginPage from "./Pages/LoginPage.jsx";
+import HomePageLayout from "./Layouts/HomePageLayout.jsx";
 
 function App() {
   return (
     <>
-        <LoginPage />
+        <HomePageLayout />
     </>
   )
 }
