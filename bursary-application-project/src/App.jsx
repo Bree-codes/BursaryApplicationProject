@@ -1,9 +1,9 @@
-import LoginForm from "./Layouts/LoginPageLayout.jsx";
+import LoginPage from "./Pages/LoginPage.jsx";
 
 function App() {
   return (
     <>
-      <LoginForm />
+        <LoginPage />
     </>
   )
 }
