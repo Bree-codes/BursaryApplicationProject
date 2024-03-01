@@ -1,9 +1,9 @@
-import CreateAccountLayout from "./Layouts/CreateAccountLayout.jsx";
+import LoginForm from "./Layouts/LoginPageLayout.jsx";
 
 function App() {
   return (
     <>
-      <CreateAccountLayout />
+      <LoginForm />
     </>
   )
 }
