@@ -1,22 +1,17 @@
 import InputComponent from "../Components/InputComponent.jsx";
-import {useState} from "react";
-import {Button, Container} from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
-const CreateAccountLayout = () => {
-    const [userName, setUserName] = useState("");
-    const [userEmail, setUserEmail] = useState("");
-    const [userPhoneNumber, setUserPhoneNumber] = useState("");
-    const [userPassword, setUserPassword] = useState("");
-    const {confirmPassword, setConfirmPassword} = useState("");
-
-
+// eslint-disable-next-line react/prop-types
+const CreateAccountLayout = ({ userName, userEmail, userPhoneNumber, userPassword, confirmPassword,
+                                 // eslint-disable-next-line react/prop-types
+                                 setUserName, setUserEmail, setUserPhoneNumber, setUserPassword, setConfirmPassword }) => {
     /*This function will run when the user clicks register*/
     const handleRegister = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        // Your registration logic here
+    };
 
-    }
-
-    return(
+    return (
         <div
             style={{
                 display: 'flex',
@@ -31,17 +26,19 @@ const CreateAccountLayout = () => {
                 maxWidth: '450px',
                 boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
                 backdropFilter: 'blur(5px)',
-                backgroundColor: 'rgba(250, 250, 10, 0.5)' }}>
+                backgroundColor: 'rgba(250, 250, 10, 0.5)'
+            }}>
 
-                <h2 className={"px-3 mx-2"}
-                >User Registration</h2>
+                <h2 className={"px-3 mx-2"}>
+                    User Registration
+                </h2>
                 <InputComponent
                     type={"text"}
                     filedName="User Name : "
                     placeHolder={"Enter Your Username"}
                     value={userName}
                     onChange={(e) => setUserName(e.target.value)}
-                    required={"true"}
+                    required={true}
                 />
                 <InputComponent
                     type={"text"}
@@ -49,7 +46,7 @@ const CreateAccountLayout = () => {
                     placeHolder={"Enter Your Email"}
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
-                    required={"false"}
+                    required={false}
                 />
                 <InputComponent
                     type={"text"}
@@ -57,7 +54,7 @@ const CreateAccountLayout = () => {
                     placeHolder={"Enter Your Phone Number"}
                     value={userPhoneNumber}
                     onChange={(e) => setUserPhoneNumber(e.target.value)}
-                    required={"true"}
+                    required={true}
                 />
                 <InputComponent
                     type={"password"}
@@ -65,15 +62,15 @@ const CreateAccountLayout = () => {
                     placeHolder={"Password "}
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
-                    required={"true"}
+                    required={true}
                 />
                 <InputComponent
                     type={"password"}
-                    filedName="Password : "
+                    filedName="Confirm Password : " // Adjusted field name
                     placeHolder={"Confirm Password"}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    required={"true"}
+                    required={true}
                 />
                 <Button style={{
                     borderRadius: '10px',
@@ -83,15 +80,17 @@ const CreateAccountLayout = () => {
                     height: '10vh',
                     background: 'rgba(255, 255, 255, 0.5)',
                 }}
-                    type={"submit"}
-                    className={"m-0 p-2 justify-content-center container-fluid"}
-                    variant={"none"}
-                    onClick={handleRegister}
-                    required={"true"}
+                        type={"submit"}
+                        className={"m-0 p-2 justify-content-center container-fluid"}
+                        variant={"none"}
+                        onClick={handleRegister}
+                        required={true}
                 >
                     Register
                 </Button>
             </Container>
         </div>
-    );}
+    );
+};
+
 export default CreateAccountLayout;

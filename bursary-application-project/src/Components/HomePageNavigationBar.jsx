@@ -1,11 +1,12 @@
 import {Container,Navbar} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 
 const HomePageNavigationBar = () =>
 {
     return(
+        <>
         <Navbar style={{
-            background: 'rgba(245, 250, 110, 0.9)',
+            background: 'rgba(245, 250, 10, 0.9)',
         }}>
                 <Container  fluid={"xxl"} className={"m-0"}>
                     <Navbar.Brand>Online Bursary Application</Navbar.Brand>
@@ -20,6 +21,10 @@ const HomePageNavigationBar = () =>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-    )
+
+            <Outlet />
+        </>
+    );
+
 }
 export default HomePageNavigationBar;
