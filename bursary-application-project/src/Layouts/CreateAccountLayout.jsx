@@ -4,12 +4,9 @@ import { Button, Container } from "react-bootstrap";
 // eslint-disable-next-line react/prop-types
 const CreateAccountLayout = ({ userName, userEmail, userPhoneNumber, userPassword, confirmPassword,
                                  // eslint-disable-next-line react/prop-types
-                                 setUserName, setUserEmail, setUserPhoneNumber, setUserPassword, setConfirmPassword }) => {
-    /*This function will run when the user clicks register*/
-    const handleRegister = (e) => {
-        e.preventDefault();
-        // Your registration logic here
-    };
+                                 setUserName, setUserEmail, setUserPhoneNumber, setUserPassword, setConfirmPassword,
+                                 // eslint-disable-next-line react/prop-types
+                                    handleRegister}) => {
 
     return (
         <div
@@ -38,7 +35,6 @@ const CreateAccountLayout = ({ userName, userEmail, userPhoneNumber, userPasswor
                     placeHolder={"Enter Your Username"}
                     value={userName}
                     onChange={(e) => setUserName(e.target.value)}
-                    required={true}
                 />
                 <InputComponent
                     type={"text"}
@@ -46,7 +42,6 @@ const CreateAccountLayout = ({ userName, userEmail, userPhoneNumber, userPasswor
                     placeHolder={"Enter Your Email"}
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
-                    required={false}
                 />
                 <InputComponent
                     type={"text"}
@@ -54,7 +49,6 @@ const CreateAccountLayout = ({ userName, userEmail, userPhoneNumber, userPasswor
                     placeHolder={"Enter Your Phone Number"}
                     value={userPhoneNumber}
                     onChange={(e) => setUserPhoneNumber(e.target.value)}
-                    required={true}
                 />
                 <InputComponent
                     type={"password"}
@@ -62,7 +56,6 @@ const CreateAccountLayout = ({ userName, userEmail, userPhoneNumber, userPasswor
                     placeHolder={"Password "}
                     value={userPassword}
                     onChange={(e) => setUserPassword(e.target.value)}
-                    required={true}
                 />
                 <InputComponent
                     type={"password"}
@@ -70,7 +63,6 @@ const CreateAccountLayout = ({ userName, userEmail, userPhoneNumber, userPasswor
                     placeHolder={"Confirm Password"}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    required={true}
                 />
                 <Button style={{
                     borderRadius: '10px',
@@ -84,7 +76,6 @@ const CreateAccountLayout = ({ userName, userEmail, userPhoneNumber, userPasswor
                         className={"m-0 p-2 justify-content-center container-fluid"}
                         variant={"none"}
                         onClick={handleRegister}
-                        required={true}
                 >
                     Register
                 </Button>

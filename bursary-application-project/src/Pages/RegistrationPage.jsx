@@ -1,3 +1,5 @@
+// RegistrationPage.jsx
+
 import { Container } from "react-bootstrap";
 import CreateAccountLayout from "../Layouts/CreateAccountLayout.jsx";
 import { useState } from "react";
@@ -8,6 +10,11 @@ const RegistrationPage = () => {
     const [userPhoneNumber, setUserPhoneNumber] = useState("");
     const [userPassword, setUserPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    const handleRegister = () => {
+        console.log(userName);
+        console.log(userPassword)
+    };
 
     return (
         <Container>
@@ -22,6 +29,7 @@ const RegistrationPage = () => {
                 setUserPassword={setUserPassword}
                 confirmPassword={confirmPassword}
                 setConfirmPassword={setConfirmPassword}
+                handleRegister={handleRegister}
             />
         </Container>
     );
