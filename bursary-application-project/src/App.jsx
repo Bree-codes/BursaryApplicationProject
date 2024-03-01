@@ -1,7 +1,7 @@
-import HomePageLayout from "./Layouts/HomePageLayout.jsx";
+import IndexRouting from "./RoutingPages/IndexRouting.jsx";
 
 function App() {
-  return (<HomePageLayout />)
+  return (<IndexRouting />)
 }
 
 export default App

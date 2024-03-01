@@ -3,7 +3,7 @@ import CreateAccountLayout from "../Layouts/CreateAccountLayout.jsx";
 
 const RegistrationPage = () =>{
     return(
-      <Container className={"bg-dark"}>
+      <Container>
           <CreateAccountLayout/>
       </Container>
 
