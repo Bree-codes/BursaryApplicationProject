@@ -1,11 +1,14 @@
 import InputComponent from "../InputComponent.jsx";
 import ChoiceInputComponent from "../ChoiceInputComponent.jsx";
 
-const CreateFormSection = ({fieldName, setFieldName,fieldType, setFieldType}) =>{
-
+// eslint-disable-next-line react/prop-types
+const CreateFormSection = ({fieldName, setFieldName,fieldType, setFieldType, section, setSection}) =>{
     return(
         <>
-            <table className={"justify-content-center align-content-center bg-dark m-auto"}>
+            <table className={"justify-content-center align-content-center bg-dark m-auto position-fixed"}
+                   style={{
+                       left:250
+                   }}>
                 <tbody>
                     <tr>
                         <td>
@@ -19,9 +22,9 @@ const CreateFormSection = ({fieldName, setFieldName,fieldType, setFieldType}) =>
                         <td>
                              <InputComponent filedName={"Field Section : "}
                                             type={"text"}
-                                            onChange={setFieldName}
+                                            onChange={setSection}
                                             placeHolder={"e.g Section A"}
-                                            value={fieldName}/>
+                                            value={section}/>
                         </td>
                     </tr>
                 <tr>
