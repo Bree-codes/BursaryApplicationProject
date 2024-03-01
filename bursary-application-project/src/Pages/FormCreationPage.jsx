@@ -8,6 +8,16 @@ const FormCreationPage = () =>
     const [fieldName, setFieldName] = useState("")
 
 
+    const handleAddForm = () => {
+
+    }
+
+    const handleFormRemove = (e) =>{
+        e.preventDefault()
+        setFieldName("")
+        setFieldType("")
+    }
+
    return(
        <div >
         <CreateFormSection
@@ -16,7 +26,9 @@ const FormCreationPage = () =>
             fieldType={fieldType}
             setFieldType={setFieldType}
             section={section}
-            setSection={setSection}/>
+            setSection={setSection}
+            onAddForm={handleAddForm}
+            onRemoveForm={handleFormRemove}/>
    </div>);
 }
 
