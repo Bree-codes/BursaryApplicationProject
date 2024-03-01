@@ -1,4 +1,3 @@
-import React from "react";
 import { Carousel, Image } from "react-bootstrap";
 import image3 from "./../Images/image3.jpeg";
 import image4 from "./../Images/image4.jpeg";
@@ -9,9 +8,9 @@ import image2 from "./../Images/image2.jpeg";
 
 const SlidesComponent = () => {
     const images = [image2,image3,image4,image5,image6,image7];
-
     return (
-        <Carousel data-bs-theme="dark" style={{ height: 'calc(100vh - 56px)' }}> {/* Adjust 56px according to your navbar height */}
+        <Carousel data-bs-theme="dark"
+                  style={{ height: 'calc(100vh - 56px)' }}>
             {images.map((image, index) => (
                 <Carousel.Item key={index}>
                     <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
