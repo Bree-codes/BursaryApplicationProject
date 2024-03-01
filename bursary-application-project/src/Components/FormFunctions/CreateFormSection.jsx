@@ -65,5 +65,4 @@ const CreateFormSection = ({fieldName, setFieldName,fieldType, setFieldType, sec
         </>
     )
 }
-
 export default  CreateFormSection;
