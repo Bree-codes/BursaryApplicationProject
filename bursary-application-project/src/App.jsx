@@ -1,7 +1,10 @@
-import IndexRouting from "./RoutingPages/IndexRouting.jsx";
+import FormCreationPage from "./Pages/FormCreationPage.jsx";
+
 
 function App() {
-  return (<IndexRouting />)
+return <>
+  <FormCreationPage />
+</>
 }
 
 export default App
