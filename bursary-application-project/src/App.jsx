@@ -1,9 +1,9 @@
-import FormCreationPage from "./Pages/FormCreationPage.jsx";
+import DisplayForm from "./Components/FormFunctions/DisplayForm.jsx";
 
 
 function App() {
 return <>
-  <FormCreationPage />
+  <DisplayForm />
 </>
 }
 

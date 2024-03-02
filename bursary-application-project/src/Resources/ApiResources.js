@@ -6,7 +6,7 @@ const opeApis= axios.create(
     }
 )
 
-export function register(username, email,phoneNumber, password)  {
+export async function register(username, email,phoneNumber, password)  {
 
     //Create the registration model
     const registrationModel = {
@@ -18,13 +18,13 @@ export function register(username, email,phoneNumber, password)  {
 
 
     //sending the registration model to the backend
-    const response = opeApis.post("/register", registrationModel)
+    const response = await opeApis.post("/register", registrationModel)
 
     /*evaluating the response to the jwt token or return an error*/
 }
 
 
-export function login(username, password){
+export async function login(username, password){
 
     /*login model*/
    const loginModel = {
@@ -32,7 +32,7 @@ export function login(username, password){
         userPassword: password
     }
 
-    const response = opeApis.post("/login", loginModel);
+    const response = await opeApis.post("/login", loginModel);
 
    /*Evaluate the response here */
 
