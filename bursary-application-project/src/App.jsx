@@ -1,9 +1,10 @@
-import DisplayForm from "./Components/FormFunctions/DisplayForm.jsx";
+import IndexRouting from "./RoutingPages/IndexRouting.jsx";
+
 
 
 function App() {
 return <>
-  <DisplayForm />
+  <IndexRouting />
 </>
 }
 

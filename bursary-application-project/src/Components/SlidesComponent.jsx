@@ -11,7 +11,7 @@ const SlidesComponent = () => {
     return (
         <Carousel data-bs-theme="dark"
                   style={{ height: 'calc(100vh - 56px)' }}>
-            {images.map((image, index) => (
+            {images.map( (image, index) => (
                 <Carousel.Item key={index}>
                     <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Image src={image} className="d-block w-100" alt={`Slide ${index}`} />

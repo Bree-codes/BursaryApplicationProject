@@ -1,4 +1,4 @@
-import CreateFormSection from "../Components/FormFunctions/CreateFormSection.jsx";
+import CreateFormSection from "../../Components/FormFunctions/CreateFormSection.jsx";
 import {useEffect, useState} from "react";
 
 const FormCreationPage = () =>

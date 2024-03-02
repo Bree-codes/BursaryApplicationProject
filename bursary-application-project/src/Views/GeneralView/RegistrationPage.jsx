@@ -1,5 +1,5 @@
 import {Container} from "react-bootstrap";
-import CreateAccountLayout from "../Layouts/CreateAccountLayout.jsx";
+import CreateAccountLayout from "../../Layouts/CreateAccountLayout.jsx";
 import { useState } from "react";
 
 const RegistrationPage = () => {

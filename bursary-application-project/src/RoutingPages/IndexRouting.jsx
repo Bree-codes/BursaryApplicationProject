@@ -1,8 +1,8 @@
 import {createBrowserRouter, createRoutesFromElements, Route} from "react-router-dom";
 import {RouterProvider} from "react-router";
-import LoginPage from "../Pages/LoginPage.jsx";
+import LoginPage from "../Views/GeneralView/LoginPage.jsx";
 import HomePageLayout from "../Layouts/HomePageLayout.jsx";
-import RegistrationPage from "../Pages/RegistrationPage.jsx";
+import RegistrationPage from "../Views/GeneralView/RegistrationPage.jsx";
 
 const  IndexRouting = () => {
 

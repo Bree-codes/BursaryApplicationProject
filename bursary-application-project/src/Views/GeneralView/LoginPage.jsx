@@ -1,4 +1,4 @@
-import LoginPageLayout from "../Layouts/LoginPageLayout.jsx";
+import LoginPageLayout from "../../Layouts/LoginPageLayout.jsx";
 import {useState} from "react";
 
 const LoginPage = () =>{
