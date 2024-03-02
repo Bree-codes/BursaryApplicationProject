@@ -1,5 +1,6 @@
 import InputComponent from "../InputComponent.jsx";
 import ConsentInput from "../ConsentInput.jsx";
+import GenderInputComponent from "../GenderInputComponent.jsx";
 
 
 const DisplayForm = () =>{
@@ -20,7 +21,7 @@ const DisplayForm = () =>{
             {
                 section: "Section B",
                 Student_FullName: "text",
-                Gender: "text"
+                Gender: "gender"
             },
             {
                 section: "Section C",
@@ -41,7 +42,7 @@ const DisplayForm = () =>{
         <div>
             {theObjectFromTheBackend.form.map((section, index) => (
                 <div key={index}>
-                    <h3>{section.section}</h3>
+                    <h3 className={"bg-primary"}>{section.section} <hr /></h3>
                     {/* Iterate through the fields in the section */}
                     {Object.keys(section).map((fieldName, fieldIndex) => (
                         fieldName !== 'section' && (
@@ -56,7 +57,7 @@ const DisplayForm = () =>{
                                     <ConsentInput value={fieldName} />
                                 )}
                                 {section[fieldName] === 'gender' && (
-
+                                    <GenderInputComponent />
                                 )}
                             </div>
                         )
