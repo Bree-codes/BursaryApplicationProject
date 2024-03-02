@@ -1,4 +1,5 @@
 import InputComponent from "../InputComponent.jsx";
+import ConsentInput from "../ConsentInput.jsx";
 
 
 const DisplayForm = () =>{
@@ -13,7 +14,7 @@ const DisplayForm = () =>{
         form: [
             {
                 section: "Section A",
-                Student_FullName: "text",
+                Student_FullName: "checkbox",
                 Student_Age: "text"
             },
             {
@@ -23,14 +24,14 @@ const DisplayForm = () =>{
             },
             {
                 section: "Section C",
-                Student_FullName: "text",
+                Student_FullName: "checkbox",
                 Student_Age: "password"
             },
             {
                 section: "Section D",
                 Student_FullName: "text",
                 Student_Age: "password",
-                Student_FullNameA: "text",
+                Student_FullNameA: "checkbox",
                 Student_AgeA: "password"
             }
         ]
@@ -52,7 +53,10 @@ const DisplayForm = () =>{
                                     <InputComponent filedName={fieldName} type="password" />
                                 )}
                                 {section[fieldName] === 'checkbox' && (
-                                    <InputComponent filedName={fieldName} type="checkbox" />
+                                    <ConsentInput value={fieldName} />
+                                )}
+                                {section[fieldName] === 'gender' && (
+
                                 )}
                             </div>
                         )
