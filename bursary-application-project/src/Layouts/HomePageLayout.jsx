@@ -1,5 +1,5 @@
 import SlidesComponent from "../Components/SlidesComponent.jsx";
-import HomePageNavigationBar from "../Components/HomePageNavigationBar.jsx";
+import HomePageNavigationBar from "./HomePageNavigationBar.jsx";
 
 
 function HomePageLayout() {
