@@ -1,11 +1,10 @@
-import LoginForm from "./Layouts/LoginPageLayout.jsx";
+import DisplayForm from "./Components/FormFunctions/DisplayForm.jsx";
+
 
 function App() {
-  return (
-    <>
-      <LoginForm />
-    </>
-  )
+return <>
+  <DisplayForm />
+</>
 }
 
 export default App
