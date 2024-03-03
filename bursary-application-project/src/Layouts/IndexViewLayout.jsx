@@ -1,19 +1,19 @@
-import OffCanvas from "../Components/OffCanvas.jsx";
-import {Col, Container, Nav, Navbar, NavLink} from "react-bootstrap";
+
+import {Container} from "react-bootstrap";
 import PageTemplateNavigationBar from "../Components/FormFunctions/<PageTemplateNavigationBar.jsx";
 
 const IndexViewLayout = () =>{
+    const handleApply = () =>{
+        //getting the form from the backend.
+
+    }
+
+
     return(
         <>
-            <PageTemplateNavigationBar />
+            <PageTemplateNavigationBar handleApply={handleApply()} action={"Apply"}/>
             <Container>
-                <Col md={"auto"} className={"m-3 p-3 shadow "}
-                style={{
-                    background:'grey',
-                    height:"4em"
-                }}>
-                    <NavLink></NavLink>
-                </Col>
+
             </Container>
 
 
