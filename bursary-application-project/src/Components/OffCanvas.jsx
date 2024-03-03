@@ -16,9 +16,11 @@ const OffCanvas = ({ name, ...props }) =>{
                 {name}
             </Button>
             <Offcanvas show={show} onHide={handleClose} {...props}>
-                <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Stephen Muiru</Offcanvas.Title>
+                <Offcanvas.Header closeButton className={"bg-info px-3"}>
+                    <Offcanvas.Title className={"fw-bolder"}>User Dashboard </Offcanvas.Title>
+
                 </Offcanvas.Header>
+
                 <Offcanvas.Body>
                     Some text as placeholder. In real life you can have the elements you
                     have chosen. Like, text, images, lists, etc.
