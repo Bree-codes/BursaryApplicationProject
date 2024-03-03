@@ -17,6 +17,11 @@ const LoginPage = ({setRenderApp}) => {
                 updateJwt(res.data.token);
                 setRenderApp(res.data.role);
 
+
+                /*Storing data to the broswers storage.*/
+                localStorage.setItem('isAuthenticated', res.data.role);
+                localStorage.setItem('jwt', res.data.token);
+
                 console.log("The Role Is : ",res.data.role);
             })
             .catch(error => {

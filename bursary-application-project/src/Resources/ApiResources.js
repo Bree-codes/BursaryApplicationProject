@@ -9,8 +9,6 @@ const opeApis= axios.create(
 
 export async function register(username, email,phoneNumber, password)  {
 
- /*const [ErrorMessage, setErrorMessage] = useState('');
-*/
 
     //Create the registration model
     const registrationModel = {
@@ -26,7 +24,6 @@ export async function register(username, email,phoneNumber, password)  {
     return response;
 }
 
-let jwt;
 
 export async function login(username, password){
 
@@ -48,14 +45,13 @@ export async function login(username, password){
 
 export function updateJwt(token){
     console.log(token);
-    jwt = token;
 }
 
 
 const securedApi = axios.create(
     {baseURL:"http://192.168.5.194:8080/api/v0",
     headers:{
-        "Authorization":"Bearer "+jwt
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
     }},
 );
 
