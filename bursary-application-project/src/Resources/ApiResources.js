@@ -32,8 +32,6 @@ export async function login(username, password){
         userPassword: password
     }
 
-    const response = await opeApis.post("/login", loginModel);
-
-   /*Evaluate the response here */
-
+   /*Return the response for evaluations*/
+    return await opeApis.post("/login", loginModel);
 }
