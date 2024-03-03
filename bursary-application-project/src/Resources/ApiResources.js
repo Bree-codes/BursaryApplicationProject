@@ -1,12 +1,18 @@
 import axios from "axios";
+import {useState} from "react";
+
+
 
 const opeApis= axios.create(
     {
-        baseURL:"http://localhost:8080/api/v0"
+        baseURL:"http://192.168.5.194:8080/api/v0"
     }
 )
 
 export async function register(username, email,phoneNumber, password)  {
+
+ /*const [ErrorMessage, setErrorMessage] = useState('');
+*/
 
     //Create the registration model
     const registrationModel = {
@@ -16,13 +22,13 @@ export async function register(username, email,phoneNumber, password)  {
         userPassword : password
     }
 
+    const response =
+        (await opeApis.post("/users/register", registrationModel));
 
-    //sending the registration model to the backend
-    const response = await opeApis.post("/register", registrationModel)
-
-    /*evaluating the response to the jwt token or return an error*/
+    return response;
 }
 
+let jwt;
 
 export async function login(username, password){
 
@@ -33,5 +39,25 @@ export async function login(username, password){
     }
 
    /*Return the response for evaluations*/
-    return await opeApis.post("/login", loginModel);
+    const response  = await opeApis.post("/login", loginModel);
+
+    //update the axios api header.
+    updateJwt(response.data.token);
+
+    //return object for evaluation
+    return response;
 }
+
+export function updateJwt(token){
+    console.log(token);
+    jwt = token;
+}
+
+
+const securedApi = axios.create(
+    {baseURL:"http://192.168.5.194:8080/api/v0",
+    headers:{
+        "Authorization":"Bearer "+jwt
+    }},
+);
+

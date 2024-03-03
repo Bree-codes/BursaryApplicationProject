@@ -4,7 +4,8 @@ import LoginPage from "../Views/GeneralView/LoginPage.jsx";
 import HomePageLayout from "../Layouts/HomePageLayout.jsx";
 import RegistrationPage from "../Views/GeneralView/RegistrationPage.jsx";
 
-const  IndexRouting = () => {
+// eslint-disable-next-line react/prop-types
+const  IndexRouting = ({setRenderApp}) => {
 
 
     const routes = createBrowserRouter(
@@ -12,7 +13,7 @@ const  IndexRouting = () => {
             <Route path={"/"}>
                 <Route path={""} element={<HomePageLayout /> } />
                 <Route path={"login"} element={<LoginPage />} />
-                <Route path={"register"} element={<RegistrationPage /> } />
+                <Route path={"register"} element={<RegistrationPage setRenderApp={setRenderApp}/> } />
             </Route>
         )
     );

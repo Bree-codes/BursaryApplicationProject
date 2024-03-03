@@ -16,11 +16,12 @@ const LoginPage = () =>{
         setUsername("");
         setPassword("");
 
-        //check the response from the backend
-        const status =
-            response.then(response => response.status);
+        //check the response from the backend -> if the status is okay
+        if(response.then(res => res.status).toString() === "200"){
 
-        if(status!==200){
+            /*Make a request to get the user's role.*/
+
+
 
             return;
         }

@@ -7,7 +7,7 @@ function App() {
    const [renderApp, setRenderApp] = useState(<></>);
 
    useEffect(() => {
-      setRenderApp(<IndexRouting />)
+      setRenderApp(<IndexRouting setRenderApp={setRenderApp}/>)
    }, []);
 
 
