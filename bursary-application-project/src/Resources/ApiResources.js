@@ -1,6 +1,4 @@
 import axios from "axios";
-import {useState} from "react";
-
 
 
 const opeApis= axios.create(
@@ -34,12 +32,12 @@ export async function login(username, password){
 
     /*login model*/
    const loginModel = {
-        userName : username,
-        userPassword: password
+        username : username,
+        password: password
     }
 
    /*Return the response for evaluations*/
-    const response  = await opeApis.post("/login", loginModel);
+    const response  = await opeApis.post("/auth/login", loginModel);
 
     //update the axios api header.
     updateJwt(response.data.token);

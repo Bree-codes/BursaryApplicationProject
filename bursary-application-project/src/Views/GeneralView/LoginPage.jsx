@@ -2,6 +2,7 @@ import LoginPageLayout from "../../Layouts/LoginPageLayout.jsx";
 import {useState} from "react";
 import {login, updateJwt} from "../../Resources/ApiResources.js";
 
+// eslint-disable-next-line react/prop-types
 const LoginPage = ({setRenderApp}) => {
 
     const [username, setUsername] = useState("");
@@ -14,9 +15,9 @@ const LoginPage = ({setRenderApp}) => {
             .then(res => {
                 // Handle successful registration
                 updateJwt(res.data.token);
-
                 setRenderApp(res.data.role);
 
+                console.log("The Role Is : ",res.data.role);
             })
             .catch(error => {
                 // Handle registration error
