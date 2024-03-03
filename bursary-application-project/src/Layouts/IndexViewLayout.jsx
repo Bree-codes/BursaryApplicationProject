@@ -25,7 +25,9 @@ const IndexViewLayout = () => {
     return (
         <>
             <PageTemplateNavigationBar handleApply={handleApply} action={"Apply"} />
-            <Container>
+            <Container style={{
+                background:'grey'
+            }}>
                 <GetFormDisplay studentForm={studentForm}/>
             </Container>
         </>

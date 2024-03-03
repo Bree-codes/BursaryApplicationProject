@@ -1,5 +1,6 @@
 import InputComponent from "../InputComponent.jsx";
 import GenderInputComponent from "../GenderInputComponent.jsx";
+import ConsentInput from "../ConsentInput.jsx";
 
 // eslint-disable-next-line react/prop-types
 const GetFormDisplay = ({studentForm}) =>{
@@ -11,17 +12,20 @@ const GetFormDisplay = ({studentForm}) =>{
                     {/* eslint-disable-next-line react/prop-types */}
                     {studentForm.map((section, index) => (
                         <div key={index}>
-                            <h2>Section: {section[0].section}</h2>
+                            <h2>{section[0].section}</h2>
                             {section.map((field, fieldIndex) => (
                                 <div key={fieldIndex}>
                                     {/* Render form fields based on fieldInputType */}
                                     {field.fieldInputType === "text" && (
-                                        <InputComponent/>
+                                        <InputComponent filedName={field.fieldName} type={field.fieldInputType}
+                                        value={field.fieldValue}/>
                                     )}
                                     {field.fieldInputType === "gender" && (
                                         <GenderInputComponent/>
                                     )}
-                                    {/* Add handling for other field types as needed */}
+                                    {field.fieldInputType === "consent" && (
+                                        <ConsentInput />
+                                    )}
                                 </div>
                             ))}
                         </div>
