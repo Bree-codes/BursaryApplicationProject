@@ -1,31 +1,46 @@
 import LoginPageLayout from "../../Layouts/LoginPageLayout.jsx";
 import {useState} from "react";
-import {login} from "../../Resources/ApiResources.js";
+import {login, updateJwt} from "../../Resources/ApiResources.js";
 
-const LoginPage = () =>{
+const LoginPage = ({setRenderApp}) => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-   /* const [loginStatus, setLoginStatus] = useState(<></>)*/
+    /* const [loginStatus, setLoginStatus] = useState(<></>)*/
 
-    const handleLogin = () =>{
+    const handleLogin = () => {
         //pass the credentials to the backend
-        const response = login(username,password);
+        login(username, password)
+            .then(res => {
+                // Handle successful registration
+                updateJwt(res.data.token);
+
+                setRenderApp(res.data.role);
+
+            })
+            .catch(error => {
+                // Handle registration error
+                if (error.response) {
+
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.error('Server responded with an error:', error.response.data);
+                    console.log('Error Message:', error.response.data.message);
+                    // You can set the error message state here if needed
+                } else if (error.request) {
+
+                    // The request was made but no response was received
+                    console.error('No response received from server:', error.request);
+                } else {
+
+                    // Something happened in setting up the request that triggered an Error
+                    console.error('Error setting up the request:', error.message);
+                }
+            });
 
         //performing the cleanUp
         setUsername("");
         setPassword("");
-
-        //check the response from the backend -> if the status is okay
-        if(response.then(res => res.status).toString() === "200"){
-
-            /*Make a request to get the user's role.*/
-
-
-
-            return;
-        }
-
 
     }
 
@@ -37,7 +52,7 @@ const LoginPage = () =>{
                              setPassword={setPassword}
                              onChange={handleLogin}/>
         </>
-    )
+    );
 }
 
 export default LoginPage;
