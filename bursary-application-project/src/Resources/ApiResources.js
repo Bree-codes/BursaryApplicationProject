@@ -55,3 +55,9 @@ const securedApi = axios.create(
     }},
 );
 
+export async function getApplicationForm(){
+   const userId = localStorage.getItem('id');
+
+   return await securedApi.get("/student/get-user-values", userId);
+}
+
