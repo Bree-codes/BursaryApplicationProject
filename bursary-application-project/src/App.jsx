@@ -1,5 +1,6 @@
 import IndexRouting from "./RoutingPages/IndexRouting.jsx";
 import { useEffect, useState } from "react";
+import StudentView from "./Views/StudentView/StudentView.jsx";
 
 function App() {
    const [renderApp, setRenderApp] = useState(null);
@@ -15,7 +16,7 @@ function App() {
       switch (renderApp) {
          case 'user':
             //setIndexPage(null)
-            setIndexPage(<>Hello there 1</>);
+            setIndexPage(<StudentView />);
             break;
          case 'admin':
             setIndexPage(<>Hello there 2</>);
