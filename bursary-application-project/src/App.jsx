@@ -1,13 +1,18 @@
-/*import IndexRouting from "./RoutingPages/IndexRouting.jsx";*/
+import IndexRouting from "./RoutingPages/IndexRouting.jsx";
 
 
-import IndexViewLayout from "./Layouts/IndexViewLayout.jsx";
+import {useEffect, useState} from "react";
 
 function App() {
+   const [renderApp, setRenderApp] = useState(<></>);
+
+   useEffect(() => {
+      setRenderApp(<IndexRouting />)
+   }, []);
+
 
 return <>
- {/* <IndexRouting />*/}
-   <IndexViewLayout />
+   {renderApp}
 </>
 }
 

@@ -7,8 +7,6 @@ const LoginPage = () =>{
     const [password, setPassword] = useState("");
 
     const handleLogin = () =>{
-        console.log(username)
-        console.log(password)
 
         //pass the
 
