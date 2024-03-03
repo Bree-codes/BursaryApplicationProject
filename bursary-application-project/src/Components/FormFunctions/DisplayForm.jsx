@@ -1,4 +1,6 @@
 import InputComponent from "../InputComponent.jsx";
+import ConsentInput from "../ConsentInput.jsx";
+import GenderInputComponent from "../GenderInputComponent.jsx";
 
 
 const DisplayForm = () =>{
@@ -13,24 +15,24 @@ const DisplayForm = () =>{
         form: [
             {
                 section: "Section A",
-                Student_FullName: "text",
+                Student_FullName: "checkbox",
                 Student_Age: "text"
             },
             {
                 section: "Section B",
                 Student_FullName: "text",
-                Gender: "text"
+                Gender: "gender"
             },
             {
                 section: "Section C",
-                Student_FullName: "text",
+                Student_FullName: "checkbox",
                 Student_Age: "password"
             },
             {
                 section: "Section D",
                 Student_FullName: "text",
                 Student_Age: "password",
-                Student_FullNameA: "text",
+                Student_FullNameA: "checkbox",
                 Student_AgeA: "password"
             }
         ]
@@ -40,7 +42,7 @@ const DisplayForm = () =>{
         <div>
             {theObjectFromTheBackend.form.map((section, index) => (
                 <div key={index}>
-                    <h3>{section.section}</h3>
+                    <h3 className={"bg-primary"}>{section.section} <hr /></h3>
                     {/* Iterate through the fields in the section */}
                     {Object.keys(section).map((fieldName, fieldIndex) => (
                         fieldName !== 'section' && (
@@ -52,7 +54,10 @@ const DisplayForm = () =>{
                                     <InputComponent filedName={fieldName} type="password" />
                                 )}
                                 {section[fieldName] === 'checkbox' && (
-                                    <InputComponent filedName={fieldName} type="checkbox" />
+                                    <ConsentInput value={fieldName} />
+                                )}
+                                {section[fieldName] === 'gender' && (
+                                    <GenderInputComponent />
                                 )}
                             </div>
                         )
