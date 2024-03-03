@@ -3,13 +3,15 @@
 
 
 
+import CreateFormSection from "./Components/FormFunctions/CreateFormSection.jsx";
 import DisplayForm from "./Components/FormFunctions/DisplayForm.jsx";
 
 function App() {
 
 return <>
  {/* <IndexRouting />*/}
-    <DisplayForm />
+   <CreateFormSection />
+   <DisplayForm />
 </>
 }
 
