@@ -21,4 +21,8 @@ public class AuthenticationResponseModel {
     private String token;
 
     private Role role;
+
+    private String username;
+
+    private Long id;
 }

@@ -57,6 +57,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null)
         {
+            log.info("request contains a jwt.");
             UserDetails userDetails = loginService.loadUserByUsername(username);
 
             if(jwtService.isValid(userDetails,jwtToken))

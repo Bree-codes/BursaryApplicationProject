@@ -41,7 +41,7 @@ public class StudentRequestsController {
     }
 
     @PostMapping("/save-form/{userId}")
-    public ResponseEntity<String> storeFormFields(
+    public ResponseEntity<String>   storeFormFields(
             @PathVariable Long userId,
             @RequestBody Map<Long, String> fieldIdAndValue
     )
