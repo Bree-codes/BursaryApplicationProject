@@ -9,6 +9,8 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
     const handleLogin = () => {
+        console.log("login function called.")
+
         // Pass the credentials to the backend
         login(username, password)
             .then(res => {
@@ -20,6 +22,7 @@ const LoginPage = () => {
                 localStorage.setItem('jwt', res.data.token);
                 localStorage.setItem('username', res.data.username);
                 localStorage.setItem('id', res.data.id);
+                localStorage.setItem('isLoggedIn', 'true');
 
                 // Navigate based on the role after successful login
                 switch (res.data.role) {

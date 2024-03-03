@@ -3,7 +3,7 @@ import axios from "axios";
 
 const opeApis= axios.create(
     {
-        baseURL:"http://192.168.5.194:8080/api/v0"
+        baseURL:"http://192.168.173.194:8080/api/v0"
     }
 )
 
@@ -49,7 +49,7 @@ export function updateJwt(token){
 
 
 const securedApi = axios.create(
-    {baseURL:"http://192.168.5.194:8080/api/v0",
+    {baseURL:"http://192.168.173.194:8080/api/v0",
     headers:{
         Authorization: `Bearer ${localStorage.getItem('jwt')}`
     }},
