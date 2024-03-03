@@ -5,6 +5,7 @@ import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserExi
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.WeakPasswordException;
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
+import com.bree.springproject.onlinebursaryapplication.models.AuthenticationResponseModel;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import com.bree.springproject.onlinebursaryapplication.userDTO.RegisterUserDTO;
 import jakarta.mail.MessagingException;
@@ -15,31 +16,48 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.UserDetailsManagerConfigurer;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
 @Slf4j
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 public class RegisterUserService {
     /*
     Encrypt the passwords
     Strength of the password
     Verify(Emailing the user)and Validate email
+    return a jwt token
     * */
+    private final UserRegistrationRepository userRegistrationRepository;
+
+    private final CommunicationService communicationService;
+
+    private final  JwtService jwtService;
+
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private UserRegistrationRepository userRegistrationRepository;
+    public RegisterUserService(
+            UserRegistrationRepository userRegistrationRepository,
+            CommunicationService communicationService,
+            JwtService jwtService,
+            PasswordEncoder passwordEncoder) {
+        this.userRegistrationRepository = userRegistrationRepository;
+        this.communicationService = communicationService;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-
-    @Autowired
-    CommunicationService communicationService;
-
-    public ResponseEntity<String> registrationValidation(RegisterUserDTO registerUserDTO) throws MessagingException, UnknownHostException {
+    public ResponseEntity<AuthenticationResponseModel>
+    registrationValidation(RegisterUserDTO registerUserDTO)
+            throws MessagingException, UnknownHostException {
         log.info("Forwarded the request to register a new user.");
         //instance of a new user.
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
@@ -74,7 +92,7 @@ public class RegisterUserService {
         * as it is a mandatory field as opposed to the email field*/
 
         //check if the user has an email
-        if(registerUserDTO.getUserEmail() == null)
+        if(registerUserDTO.getUserPhoneNumber() == null)
         {
             //Here we should send a message to the phone number.
 
@@ -98,14 +116,26 @@ public class RegisterUserService {
         userRegistrationTable.setUsername(registerUserDTO.getUserName());
         userRegistrationTable.setEmail(registerUserDTO.getUserEmail());
         userRegistrationTable.setPhoneNumber(registerUserDTO.getUserPhoneNumber());
-        userRegistrationTable.setPassword(registerUserDTO.getUserPassword());
 
+        /*Encryption the password before storage*/
+        userRegistrationTable.setPassword(passwordEncoder.encode(
+                registerUserDTO.getUserPassword()));
 
         //saving the user to the database.
         userRegistrationRepository.save(userRegistrationTable);
 
+
+        /*Generating the jwt token*/
+        String jwtToken = jwtService.generateToken(userRegistrationTable);
+
+        AuthenticationResponseModel authenticationResponseModel = new AuthenticationResponseModel();
+        authenticationResponseModel.setToken(jwtToken);
+        authenticationResponseModel.setDate(new Date());
+        authenticationResponseModel.setHttpStatus(HttpStatus.CREATED);
+        authenticationResponseModel.setMessage("User created successfully");
+
         log.info("New User Added successfully");
-        return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(authenticationResponseModel, HttpStatus.CREATED);
     }
 
     public ResponseEntity<String> updatePassword(String userPassword, String userEmailOrPhoneNumber) {

@@ -32,7 +32,7 @@ public class AdministratorController {
     }
 
     @GetMapping("/get-qualified-students")
-    public ResponseEntity<Map<String, String>> viewAllocateStudents()
+    public ResponseEntity<Map<String, String>> viewAllocatedStudents()
     {
         log.info("Request to get the qualified applicants");
 

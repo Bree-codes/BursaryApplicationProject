@@ -1,21 +1,19 @@
 package com.bree.springproject.onlinebursaryapplication.models;
 
-
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PrivilegedUserModel
-{
+@Component
+public class LoginModel {
+
     private String username;
 
-    private String phoneNumberOrEmail;
-
-    private Role role;
+    private String password;
 
 }
