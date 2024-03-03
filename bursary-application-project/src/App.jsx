@@ -1,19 +1,22 @@
 import IndexRouting from "./RoutingPages/IndexRouting.jsx";
 import { useEffect, useState } from "react";
+import StudentView from "./Views/StudentView/StudentView.jsx";
 
 function App() {
    const [renderApp, setRenderApp] = useState(null);
    const [indexPage, setIndexPage] = useState(null);
 
    useEffect(() => {
-      setIndexPage(<IndexRouting setRenderApp={setRenderApp} />);
+      const userRole = localStorage.getItem('role');
+      userRole && setRenderApp(userRole);
    }, []);
+
 
 
    useEffect(() => {
       switch (renderApp) {
          case 'user':
-            setIndexPage(<>Hello there 1</>);
+            setIndexPage(<StudentView />);
             break;
          case 'admin':
             setIndexPage(<>Hello there 2</>);

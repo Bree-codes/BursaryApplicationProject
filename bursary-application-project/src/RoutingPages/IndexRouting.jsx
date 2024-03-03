@@ -11,9 +11,9 @@ const  IndexRouting = ({setRenderApp}) => {
     const routes = createBrowserRouter(
         createRoutesFromElements(
             <Route path={"/"}>
-                <Route path={""} element={<HomePageLayout /> } />
+                <Route path={""} element={<HomePageLayout setRenderApp={setRenderApp} /> } />
                 <Route path={"login"} element={<LoginPage setRenderApp={setRenderApp} />} />
-                <Route path={"register"} element={<RegistrationPage setRenderApp={setRenderApp}/> } />
+                <Route path={"register"} element={<RegistrationPage /> } />
             </Route>
         )
     );
