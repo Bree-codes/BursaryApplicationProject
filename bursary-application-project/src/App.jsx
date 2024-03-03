@@ -1,10 +1,13 @@
-import IndexRouting from "./RoutingPages/IndexRouting.jsx";
+/*import IndexRouting from "./RoutingPages/IndexRouting.jsx";*/
+
+
+import IndexViewLayout from "./Layouts/IndexViewLayout.jsx";
 
 function App() {
 
 return <>
-  <IndexRouting />
-
+ {/* <IndexRouting />*/}
+   <IndexViewLayout />
 </>
 }
 
