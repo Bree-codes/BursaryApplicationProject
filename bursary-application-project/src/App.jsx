@@ -1,17 +1,10 @@
-/*import IndexRouting from "./RoutingPages/IndexRouting.jsx";*/
-
-
-
-
-
-
-import SendToChiefComponent from "./Components/SendToChiefComponent.jsx";
+import IndexRouting from "./RoutingPages/IndexRouting.jsx";
 
 function App() {
 
 return <>
- {/* <IndexRouting />*/}
-   <SendToChiefComponent />
+  <IndexRouting />
+
 </>
 }
 
