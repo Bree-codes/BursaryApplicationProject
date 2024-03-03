@@ -133,6 +133,7 @@ public class RegisterUserService {
         authenticationResponseModel.setDate(new Date());
         authenticationResponseModel.setHttpStatus(HttpStatus.CREATED);
         authenticationResponseModel.setMessage("User created successfully");
+        authenticationResponseModel.setRole(userRegistrationTable.getRole());
 
         log.info("New User Added successfully");
         return new ResponseEntity<>(authenticationResponseModel, HttpStatus.CREATED);

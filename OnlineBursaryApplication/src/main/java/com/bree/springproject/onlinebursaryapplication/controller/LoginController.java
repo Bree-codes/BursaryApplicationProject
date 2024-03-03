@@ -9,8 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth/")
+@RequestMapping("/api/v0/")
 @Slf4j
+@CrossOrigin("http://localhost:5173/")
 public class LoginController {
 
     private final HandleLoginService handleLoginService;
@@ -20,7 +21,7 @@ public class LoginController {
         this.handleLoginService = handlleLoginService;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<AuthenticationResponseModel> login(
             @RequestBody LoginModel loginModel){
         log.info("received a login request");

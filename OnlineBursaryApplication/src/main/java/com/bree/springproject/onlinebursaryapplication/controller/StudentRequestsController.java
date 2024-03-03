@@ -18,6 +18,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 @RequestMapping("/api/v0/student")
+@CrossOrigin("http://localhost:5173/")
 public class StudentRequestsController {
 
     @Autowired

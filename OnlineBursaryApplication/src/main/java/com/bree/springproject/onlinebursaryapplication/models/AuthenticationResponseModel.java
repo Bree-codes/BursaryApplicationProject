@@ -19,4 +19,6 @@ public class AuthenticationResponseModel {
     private Date date;
 
     private String token;
+
+    private Role role;
 }
