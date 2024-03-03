@@ -7,37 +7,6 @@ const DisplayForm = () =>{
 
 
 
-    //call a function to get from the backend the form
-
-    /*I will bw using demo data for testing purpose*/
-
-    const theObjectFromTheBackend = {
-        form: [
-            {
-                section: "Section A",
-                Student_FullName: "checkbox",
-                Student_Age: "text"
-            },
-            {
-                section: "Section B",
-                Student_FullName: "text",
-                Gender: "gender"
-            },
-            {
-                section: "Section C",
-                Student_FullName: "checkbox",
-                Student_Age: "password"
-            },
-            {
-                section: "Section D",
-                Student_FullName: "text",
-                Student_Age: "password",
-                Student_FullNameA: "checkbox",
-                Student_AgeA: "password"
-            }
-        ]
-    };
-
     return (
         <div>
             {theObjectFromTheBackend.form.map((section, index) => (

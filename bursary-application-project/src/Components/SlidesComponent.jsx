@@ -5,9 +5,11 @@ import image5 from "./../Images/image5.jpeg";
 import image6 from "./../Images/image6.jpeg";
 import image7 from "./../Images/image7.jpeg";
 import image2 from "./../Images/image2.jpeg";
+import image1 from "./../Images/image1.jpeg";
+
 
 const SlidesComponent = () => {
-    const images = [image2,image3,image4,image5,image6,image7];
+    const images = [image1,image2,image3,image4,image5,image6,image7];
     return (
         <Carousel data-bs-theme="dark"
                   style={{ height: 'calc(100vh - 56px)' }}>

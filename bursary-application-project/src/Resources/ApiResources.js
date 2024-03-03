@@ -1,12 +1,14 @@
 import axios from "axios";
 
+
 const opeApis= axios.create(
     {
-        baseURL:"http://localhost:8080/api/v0"
+        baseURL:"http://192.168.30.194:8080/api/v0"
     }
 )
 
 export async function register(username, email,phoneNumber, password)  {
+
 
     //Create the registration model
     const registrationModel = {
@@ -16,11 +18,10 @@ export async function register(username, email,phoneNumber, password)  {
         userPassword : password
     }
 
+    const response =
+        (await opeApis.post("/users/register", registrationModel));
 
-    //sending the registration model to the backend
-    const response = await opeApis.post("/register", registrationModel)
-
-    /*evaluating the response to the jwt token or return an error*/
+    return response;
 }
 
 
@@ -28,12 +29,37 @@ export async function login(username, password){
 
     /*login model*/
    const loginModel = {
-        userName : username,
-        userPassword: password
+        username : username,
+        password: password
     }
 
-    const response = await opeApis.post("/login", loginModel);
+   /*Return the response for evaluations*/
+    const response  = await opeApis.post("/auth/login", loginModel);
 
-   /*Evaluate the response here */
+    //update the axios api header.
+    updateJwt(response.data.token);
 
+    //return object for evaluation
+    return response;
 }
+
+export function updateJwt(token){
+    console.log(token);
+}
+
+
+const securedApi = axios.create(
+    {
+        baseURL: "http://192.168.30.194:8080/api/v0",
+        header : {"Authorization":"Bearer "+localStorage.getItem('jwt')}
+    }
+
+);
+
+export async function getApplicationForm(){
+   const userId = localStorage.getItem('id');
+
+    console.log(userId)
+   return await securedApi.get("/student/get-user-values?userId="+userId);
+}
+
