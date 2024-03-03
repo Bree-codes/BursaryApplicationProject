@@ -1,18 +1,22 @@
 import OffCanvas from "../Components/OffCanvas.jsx";
-import {Container, Nav, Navbar} from "react-bootstrap";
+import {Col, Container, Nav, Navbar, NavLink} from "react-bootstrap";
+import PageTemplateNavigationBar from "../Components/FormFunctions/<PageTemplateNavigationBar.jsx";
 
 const IndexViewLayout = () =>{
     return(
         <>
-            <Navbar bg="dark" data-bs-theme="dark">
-                <Container>
-                    <Navbar.Brand><OffCanvas  placement={"start"} name={"Dashboard "} /></Navbar.Brand>
-                    <Nav className="me-auto">
+            <PageTemplateNavigationBar />
+            <Container>
+                <Col md={"auto"} className={"m-3 p-3 shadow "}
+                style={{
+                    background:'grey',
+                    height:"4em"
+                }}>
+                    <NavLink></NavLink>
+                </Col>
+            </Container>
 
-                    </Nav>
-                </Container>
-            </Navbar>
-            <br />
+
         </>
     );
 }
