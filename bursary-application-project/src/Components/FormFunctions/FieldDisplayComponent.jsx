@@ -21,16 +21,30 @@ const FieldDisplayComponent = ({ field }) => {
         }
     };
 
-    const handleOnChange = (value) => {
+    const handleOnChange = () => {
+        console.log("onchnge called.")
         if (isSubmitted) {
             if (field.fieldInputType === "gender") {
-                //
+                console.log("gender")
+                setForm(
+                    [...form,{fieldId : field.fieldId,
+                                    fieldValue : gender}]
+                )
             } else if (field.fieldInputType === "text"){
-                //
+                setForm(
+                    [...form,{fieldId : field.fieldId,
+                                    fieldValue : textValue}]
+                )
             }else if (field.fieldInputType === "password"){
-                //
+                setForm(
+                    [...form,{fieldId : field.fieldId,
+                                    fieldValue : textValue}]
+                )
             }else if (field.fieldInputType === "consent"){
-                //
+                setForm(
+                    [...form,{fieldId : field.fieldId,
+                                    fieldValue : consent}]
+                )
             }
         }
     };
@@ -46,7 +60,10 @@ const FieldDisplayComponent = ({ field }) => {
                                 filedName={field.fieldName}
                                 type={field.fieldInputType}
                                 value={textValue}
-                                onChange={(e) => {setTextValue(e.target.value)}}
+                                onChange={(e) => {
+                                    setTextValue(e.target.value);
+                                    handleOnChange();
+                                }}
                                 disabled={!isSubmitted}
                             />
                         )}
@@ -54,11 +71,14 @@ const FieldDisplayComponent = ({ field }) => {
                             <GenderInputComponent
                                 gender={gender}
                                 setGender={setGender}
+                                onChange={handleOnChange}
                                 disabled={!isSubmitted}
                             />
                         )}
                         {field.fieldInputType === "consent" && <ConsentInput
-                        isChecked={consent}  setIsChecked={setConsent}  value={field.fieldName}/>}
+                        isChecked={consent}  setIsChecked={setConsent}  value={field.fieldName}
+                        onChange={handleOnChange}/>}
+
                         {field.fieldInputType === "password" && (
                             <InputComponent
                                 filedName={field.fieldName}
