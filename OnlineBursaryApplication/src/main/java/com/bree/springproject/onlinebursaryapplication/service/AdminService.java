@@ -16,10 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.beans.Encoder;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -83,11 +80,14 @@ public class AdminService {
         }
         else {
             userRegistrationTable.setEmail(privilegedUserModel.getPhoneNumberOrEmail());
-            userRegistrationTable.setPhoneNumber("0123456789");
 
-            /*The phone number is a non-null field, so we are setting the random number as the default phone number to
+            /*The phone number is a non-null field, so we are setting the
+            random number as the default phone number to
             * be updated later by the created user.*/
-            userRegistrationTable.setPhoneNumber("0123456789");
+            Random random = new Random();
+
+            userRegistrationTable.setPhoneNumber(
+                    String.valueOf(random.ints(1,9)));
             userRegistrationTable.setEmail(privilegedUserModel.getPhoneNumberOrEmail());
 
             /*Here we are emailing the new user, the request to log in with default credentials
