@@ -1,14 +1,12 @@
-import InputComponent from "../InputComponent.jsx";
-import GenderInputComponent from "../GenderInputComponent.jsx";
-import ConsentInput from "../ConsentInput.jsx";
 import FieldDisplayComponent from "./FieldDisplayComponent.jsx";
+import {Button} from "react-bootstrap";
 
 // eslint-disable-next-line react/prop-types
 const GetFormDisplay = ({studentForm}) =>{
     return(
         <>
             {studentForm && (
-                <div>
+                <div >
                     <h1><u>CDF Bursary {studentForm[0][0].bursaryMonth}</u></h1>
                     {/* eslint-disable-next-line react/prop-types */}
                     {studentForm.map((section, index) => (
@@ -20,6 +18,7 @@ const GetFormDisplay = ({studentForm}) =>{
                             ))}
                         </div>
                     ))}
+                    <Button className={"justify-content-end align-content-end"} >Submit</Button>
                 </div>
             )}
         </>

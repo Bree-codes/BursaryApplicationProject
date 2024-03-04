@@ -64,7 +64,7 @@ const FieldDisplayComponent = ({ field }) => {
                             />
                         )}
                         {field.fieldInputType === "consent" && <ConsentInput
-                        isChecked={consent}  setIsChecked={setConsent}  />}
+                        isChecked={consent}  setIsChecked={setConsent}  value={field.fieldName}/>}
                         {field.fieldInputType === "password" && (
                             <InputComponent
                                 filedName={field.fieldName}
