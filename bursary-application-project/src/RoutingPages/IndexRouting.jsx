@@ -22,7 +22,7 @@ const IndexRouting = () => {
                     {/* Protected route for logged-in users */}
                     <Route path="applicant" element={isLoggedIn ? <StudentView /> : <Navigate to="/login" />} />
                     <Route path={"admin"} element={isLoggedIn ? <AdminIndexPage /> : <Navigate to={"/login"} />}>
-                        <Route path={"/admin/add-user"} element={<AddUserComponent />} />
+                        <Route path={"add-user"} element={<AddUserComponent />} />
                     </Route>
                 </Route>
             </Routes>
