@@ -22,7 +22,8 @@ const OffCanvas = ({name}) =>{
             </Button>
             <Offcanvas show={show} onHide={handleClose} >
                 <Offcanvas.Header closeButton className={"bg-info px-3"}>
-                    <Offcanvas.Title className={"fw-bolder"}>User Dashboard </Offcanvas.Title>
+                    <Offcanvas.Title className={"fw-bolder"}>
+                        {(localStorage.getItem('role').toUpperCase())+"'S Dashboard"}</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Col xs={6} md={4} className={"p-2 m-2"}>

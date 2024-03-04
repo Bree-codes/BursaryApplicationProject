@@ -9,7 +9,9 @@ const PageTemplateNavigationBar = ({action, handleApply}) =>{
         <>
             <Navbar bg="primary" data-bs-theme="dark" className={"align-content-end"} >
                 <Container >
-                    <Navbar.Brand><OffCanvas  placement={"start"} name={localStorage.getItem('user')+"'s Dashboard "} /></Navbar.Brand>
+                    <Navbar.Brand ><OffCanvas  placement={"start"}
+                                              name={(localStorage.getItem('role')).toUpperCase()+"'S  Dashboard "}
+                    /></Navbar.Brand>
                     <Nav className="me-auto">
                         <Button className={"fw-bolder px-5 mx-5 "} onClick={handleApply}>{action}</Button>
                     </Nav>
