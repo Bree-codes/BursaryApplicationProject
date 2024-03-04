@@ -18,10 +18,10 @@ const IndexViewLayout = () => {
             });
     };
 
-    useEffect(() => {
+   /* useEffect(() => {
         handleApply(); // Fetch form data when component mounts
     }, []); // Empty dependency array to ensure it only runs once
-
+*/
     return (
         <>
             <PageTemplateNavigationBar handleApply={handleApply} action={"Apply"} />
