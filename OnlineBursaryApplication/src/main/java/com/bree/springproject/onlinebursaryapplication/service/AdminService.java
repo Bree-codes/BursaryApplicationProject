@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.beans.Encoder;
@@ -42,7 +43,8 @@ public class AdminService {
     @Autowired
     private CreateFormService createFormService;
 
-
+    @Autowired
+    PasswordEncoder encoder;
 
     public ResponseEntity<ResponseModel> createUser(PrivilegedUserModel privilegedUserModel) {
 
@@ -99,7 +101,7 @@ public class AdminService {
         log.info("request handled successfully");
         /*Performing the insertion*/
 
-        userRegistrationTable.getPassword();
+        userRegistrationTable.setPassword(encoder.encode(userRegistrationTable.getPassword()));
         userRegistrationRepository.save(userRegistrationTable);
 
         /*Preparing the response to the performed process*/
