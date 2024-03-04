@@ -4,6 +4,8 @@ import HomePageLayout from '../Layouts/HomePageLayout.jsx';
 import RegistrationPage from '../Views/GeneralView/RegistrationPage.jsx';
 import StudentView from '../Views/StudentView/StudentView.jsx';
 import AdminIndexPage from "../Views/AdminView/AdminIndexPage.jsx";
+import AdminsPageLayout from "../Layouts/AdminsPageLayout.jsx";
+import AddUserComponent from "../Components/AddUserComponent.jsx";
 
 // eslint-disable-next-line react/prop-types
 const IndexRouting = () => {
@@ -19,8 +21,8 @@ const IndexRouting = () => {
                     <Route path="register" element={<RegistrationPage />} />
                     {/* Protected route for logged-in users */}
                     <Route path="applicant" element={isLoggedIn ? <StudentView /> : <Navigate to="/login" />} />
-                    <Route path={"admin"} element={isLoggedIn ? <AdminIndexPage /> :<Navigate to={"/login"} />}>
-                        <Route path={"add-user"} element={<AdminIndexPage />}  />
+                    <Route path={"admin"} element={isLoggedIn ? <AdminIndexPage /> : <Navigate to={"/login"} />}>
+                        <Route path={"/admin/add-user"} element={<AddUserComponent />} />
                     </Route>
                 </Route>
             </Routes>

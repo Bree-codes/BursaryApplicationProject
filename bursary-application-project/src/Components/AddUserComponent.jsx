@@ -16,7 +16,6 @@ const AddUserComponent = () =>{
                                 onChange={(e) => setUsername(e.target.value)}
                                 value={username}
                                 />
-
             </Col>
         </Row>
     )
