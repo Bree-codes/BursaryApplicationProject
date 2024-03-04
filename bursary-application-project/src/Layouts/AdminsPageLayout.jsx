@@ -8,6 +8,7 @@ import {Route} from "react-router-dom";
 const AdminsPageLayout = () => {
     const [pageData, setPageData] = useState(null);
     const navigate = useNavigate();
+    const [userCreationRules, setUserCreationRules] = useState(null);
 
     const handleAddUser = () => {
         console.log("Navigating to add user...")
@@ -24,22 +25,7 @@ const AdminsPageLayout = () => {
                 <Col>
                     { pageData }
                 </Col>
-                <Col>
-                    <Stack direction={"vertical"}>
-                        <h2>User Creation Rules And Considerations</h2>
-                        <ul>
-                            <li className={"p-2"}>Chief's Names Slot Should Be The Chief Governing Location <br />
-                                e.g Chief Kimathi Location</li>
-                            <li className={"p-2"}>The Privileged Users' Default Passwords are Their Roles <br />
-                                e.g viewer for A viewer user
-                            form viewer.</li>
-                            <li>
 
-                            </li>
-
-                        </ul>
-                    </Stack>
-                </Col>
             </Stack>
         </>
     );
