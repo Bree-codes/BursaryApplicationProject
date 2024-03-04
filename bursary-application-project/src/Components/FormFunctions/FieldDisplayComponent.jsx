@@ -24,23 +24,17 @@ const FieldDisplayComponent = ({ field }) => {
     const handleOnChange = (value) => {
         if (isSubmitted) {
             if (field.fieldInputType === "gender") {
-                setGender(value);
-            } else {
-                setForm({ ...form, [field.fieldName]: value });
+                //
+            } else if (field.fieldInputType === "text"){
+                //
+            }else if (field.fieldInputType === "password"){
+                //
+            }else if (field.fieldInputType === "consent"){
+                //
             }
         }
     };
 
-    const sendDataToBackend = () => {
-        axios.post('/your-backend-endpoint', form)
-            .then(response => {
-                console.log('Form data sent successfully:', response.data);
-                setIsSubmitted(true);
-            })
-            .catch(error => {
-                console.error('Error sending form data:', error);
-            });
-    };
 
     return (
         <>
