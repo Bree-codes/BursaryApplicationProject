@@ -85,7 +85,6 @@ public class AdminService {
             random number as the default phone number to
             * be updated later by the created user.*/
             Random random = new Random();
-
             userRegistrationTable.setPhoneNumber(
                     String.valueOf(random.ints(1,9)));
             userRegistrationTable.setEmail(privilegedUserModel.getPhoneNumberOrEmail());
