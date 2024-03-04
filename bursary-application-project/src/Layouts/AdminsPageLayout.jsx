@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import PageTemplateNavigationBar from "../Components/FormFunctions/<PageTemplateNavigationBar.jsx";
 import {useNavigate} from "react-router";
-import {Col, Stack} from "react-bootstrap";
+import {Col, Container, Stack} from "react-bootstrap";
 import AddUserComponent from "../Components/AddUserComponent.jsx";
 import UserCreationNotes from "../Components/UserCreationNotes.jsx";
 import {Link} from "react-router-dom";
@@ -32,13 +32,15 @@ const AdminsPageLayout = () => {
             <PageTemplateNavigationBar handleApply={handleAddUser}
                                        action={"Add User"}
                                        viewQualified={qualifiedLink}/>
+    <Container className={"shadow z-3 px-3 "}>
             <Stack direction={"horizontal"}>
                 {pageData && <Col>{ pageData }</Col>}
 
-                {    userCreationRules && <Col className={"shadow z-2 "} md={"auto"} style={{
+                {    userCreationRules && <Col  className={"shadow z-2 col-lg-0"}  style={{
                     background:"wheat",
                     padding:'10px'}}>{userCreationRules}</Col>}
             </Stack>
+    </Container>
         </>
     );
 }
