@@ -1,9 +1,9 @@
 import { useState } from "react";
 import PageTemplateNavigationBar from "../Components/FormFunctions/<PageTemplateNavigationBar.jsx";
 import {useNavigate} from "react-router";
-import {Col, Container, Stack} from "react-bootstrap";
+import {Col, Stack} from "react-bootstrap";
 import AddUserComponent from "../Components/AddUserComponent.jsx";
-import {Route} from "react-router-dom";
+import UserCreationNotes from "../Components/UserCreationNotes.jsx";
 
 const AdminsPageLayout = () => {
     const [pageData, setPageData] = useState(null);
@@ -15,17 +15,22 @@ const AdminsPageLayout = () => {
         navigate("add-user")
 
         setPageData(<AddUserComponent />)
+        setUserCreationRules(<UserCreationNotes />)
     }
 
     return (
         <>
             <PageTemplateNavigationBar handleApply={handleAddUser} action={"Add User"} />
-            <Stack direction={"horizontal"}
-                   className={"align-content-center justify-content-center "}>
+            <Stack direction={"horizontal"}>
                 <Col>
                     { pageData }
                 </Col>
-
+                <Col className={"shadow z-2 "} md={"auto"} style={{
+                    background:"wheat",
+                    padding:'10px',
+                }}>
+                    {userCreationRules}
+                </Col>
             </Stack>
         </>
     );

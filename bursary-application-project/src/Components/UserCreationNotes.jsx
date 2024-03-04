@@ -2,7 +2,6 @@ import {Col, Stack} from "react-bootstrap";
 
 const UserCreationNotes = () =>{
     return(
-        <Col>
             <Stack direction={"vertical"} className={"fw-bold"}>
                 <h2>User Creation Rules And Considerations</h2>
                 <ul>
@@ -20,7 +19,6 @@ const UserCreationNotes = () =>{
                     </li>
                 </ul>
             </Stack>
-        </Col>
     )
 }
 
