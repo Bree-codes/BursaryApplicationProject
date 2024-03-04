@@ -22,15 +22,11 @@ const AdminsPageLayout = () => {
         <>
             <PageTemplateNavigationBar handleApply={handleAddUser} action={"Add User"} />
             <Stack direction={"horizontal"}>
-                <Col>
-                    { pageData }
-                </Col>
-                <Col className={"shadow z-2 "} md={"auto"} style={{
+                {pageData && <Col>{ pageData }</Col>}
+                {userCreationRules && <Col className={"shadow z-2 "} md={"auto"} style={{
                     background:"wheat",
                     padding:'10px',
-                }}>
-                    {userCreationRules}
-                </Col>
+                }}>{userCreationRules}</Col>}
             </Stack>
         </>
     );

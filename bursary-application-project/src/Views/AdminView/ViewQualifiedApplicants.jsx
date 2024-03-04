@@ -1,13 +1,29 @@
 import {Button, Card} from "react-bootstrap";
+import {useEffect, useState} from "react";
+import {getQualifiedStudents} from "../../Resources/ApiResources.js";
 
 const ViewQualifiedApplicants = () =>{
 
+    const [qualifiedUsers, setQualifiedUsers] = useState({});
 
+    useEffect(() => {
+
+        getQualifiedStudents().then(
+            res =>{
+                setQualifiedUsers(res.data);
+            }).catch(
+                error =>{
+
+                }
+        )
+
+    }, []);
 
 
 
     return (
         <div className="d-flex justify-content-around">
+            {}
             <Card style={{width: '18rem'}}>
                 <Card.Img variant="top" src="holder.js/100px180"/>
                 <Card.Body>

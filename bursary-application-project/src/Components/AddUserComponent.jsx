@@ -7,7 +7,7 @@ import {addPrivilegedUser} from "../Resources/ApiResources.js";
 const AddUserComponent = () =>{
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
-    const [role, setRole] = useState("");
+    const [role, setRole] = useState(null);
     const [notification, setNotification] = useState(null);
 
 
@@ -15,17 +15,17 @@ const AddUserComponent = () =>{
         console.log("adding the new user");
 
         if(role === "Chief")
-            setRole("2");
+            setRole(2);
         else if (role === "Viewer")
-            setRole("3");
+            setRole(3);
 
-        addPrivilegedUser(username,email, parseInt(role)).then((res) => {
+        addPrivilegedUser(username,email,role).then((res) => {
                 console.log(res.status)
                 setNotification(<Alert className={"bg-success bg-transparent"}>
                 {res.data.message}</Alert>);
 
                 setEmail("");
-                setRole("");
+                setRole(null);
                 setUsername("");
             }
         ).catch(error => {
