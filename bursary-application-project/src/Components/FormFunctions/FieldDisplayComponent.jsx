@@ -8,8 +8,12 @@ import { useState } from "react";
 const FieldDisplayComponent = ({ field }) => {
     const [activeField, setActiveField] = useState(null);
     const [form, setForm] = useState({});
-    const [gender, setGender] = useState("");
+    const [gender, setGender] = useState(field.fieldValue);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [textValue, setTextValue] = useState(field.fieldValue);
+    const [consent, setConsent] = useState(false);
+
+
 
     const handleFieldClick = (fieldId) => {
         if (isSubmitted) {
@@ -45,38 +49,38 @@ const FieldDisplayComponent = ({ field }) => {
                     <>
                         {field.fieldInputType === "text" && (
                             <InputComponent
-                                fieldName={field.fieldName}
+                                filedName={field.fieldName}
                                 type={field.fieldInputType}
-                                value={field.fieldValue}
-                                onChange={handleOnChange}
+                                value={textValue}
+                                onChange={(e) => {setTextValue(e.target.value)}}
                                 disabled={!isSubmitted}
                             />
                         )}
                         {field.fieldInputType === "gender" && (
                             <GenderInputComponent
-                                gender={field.fieldValue}
-                                setGender={handleOnChange}
+                                gender={gender}
+                                setGender={setGender}
                                 disabled={!isSubmitted}
                             />
                         )}
-                        {field.fieldInputType === "consent" && <ConsentInput />}
+                        {field.fieldInputType === "consent" && <ConsentInput
+                        isChecked={consent}  setIsChecked={setConsent}  />}
                         {field.fieldInputType === "password" && (
                             <InputComponent
-                                fieldName={field.fieldName}
+                                filedName={field.fieldName}
                                 type={field.fieldInputType}
-                                value={field.fieldValue}
-                                onChange={handleOnChange}
+                                value={textValue}
+                                onChange={(e) => {setTextValue(e.target.value)}}
                                 disabled={!isSubmitted}
                             />
                         )}
                     </>
                 )}
             </div>
-            {!isSubmitted && (
-                <button onClick={sendDataToBackend}>Submit</button>
-            )}
         </>
     );
 };
 
 export default FieldDisplayComponent;
+
+
