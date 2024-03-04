@@ -1,9 +1,9 @@
-import PageTemplateNavigationBar from "../../Components/FormFunctions/<PageTemplateNavigationBar.jsx";
+import AdminsPageLayout from "../../Layouts/AdminsPageLayout.jsx";
 
 const AdminIndexPage = () =>{
     return(
         <>
-            <PageTemplateNavigationBar />
+            <AdminsPageLayout />
         </>
     )
 }
