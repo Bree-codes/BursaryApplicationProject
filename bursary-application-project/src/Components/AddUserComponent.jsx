@@ -2,6 +2,7 @@ import {Button, Col, Row, Stack} from "react-bootstrap";
 import InputComponent from "./InputComponent.jsx";
 import {useState} from "react";
 import ChoiceInputComponent from "./ChoiceInputComponent.jsx";
+import {addPrivilegedUser} from "../Resources/ApiResources.js";
 
 const AddUserComponent = () =>{
     const [username, setUsername] = useState("");
@@ -12,6 +13,30 @@ const AddUserComponent = () =>{
     const handleAddUser = () =>{
         console.log("adding the new user");
 
+        if(role === "Chief")
+            setRole("2");
+        else if (role === "Viewer")
+            setRole("3");
+
+        addPrivilegedUser(username,email, parseInt(role)).then((res) => {
+                console.log(res.status)
+            }
+        ).catch(error => {
+            // Handle login error
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.error('Server responded with an error:', error.response.data);
+                console.log('Error Message:', error.response.data.message);
+                // You can set the error message state here if needed
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error('No response received from server:', error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error('Error setting up the request:', error.message);
+            }
+        })
     }
 
 
