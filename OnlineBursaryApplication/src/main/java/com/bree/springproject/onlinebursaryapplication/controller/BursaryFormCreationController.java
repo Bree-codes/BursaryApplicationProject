@@ -2,6 +2,7 @@ package com.bree.springproject.onlinebursaryapplication.controller;
 
 import com.bree.springproject.onlinebursaryapplication.Entity.ApplicationFormCreateTable;
 import com.bree.springproject.onlinebursaryapplication.service.CreateFormService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,13 @@ import java.util.Map;
 @Slf4j
 public class BursaryFormCreationController {
 
+
+    private final CreateFormService createFormService;
+
     @Autowired
-    CreateFormService createFormService;
+    public BursaryFormCreationController(CreateFormService createFormService) {
+        this.createFormService = createFormService;
+    }
 
     /*
     * This API accepts a section of the form.(eg Section A)*/

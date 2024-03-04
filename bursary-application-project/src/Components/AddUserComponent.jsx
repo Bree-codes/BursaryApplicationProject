@@ -9,6 +9,11 @@ const AddUserComponent = () =>{
     const [role, setRole] = useState("");
 
 
+    const handleAddUser = () =>{
+        console.log("adding the new user");
+
+    }
+
 
     return(
         <Stack direction={"vertical"}
@@ -57,7 +62,7 @@ const AddUserComponent = () =>{
                             backgroundColor: 'rgba(15,25,20,0.5)',
                             outline:'none',
                             border:"none"
-                        }}
+                        }} onClick={handleAddUser}
                 >Add User</Button>
             </Col>
 

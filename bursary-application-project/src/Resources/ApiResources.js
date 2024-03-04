@@ -69,3 +69,13 @@ export async function store(form){
     return await securedApi.post("/student/save-form/"+userId, fieldIdAndValue);
 }
 
+
+export async function addPrivilegedUser(username, email, role){
+    const user = {
+        username:username,
+        phoneNumberOrEmail:email,
+        role:1
+    }
+
+    return await securedApi.post("/admin/create-higher-users", user);
+}
