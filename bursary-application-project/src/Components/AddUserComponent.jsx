@@ -1,4 +1,4 @@
-import {Button, Col, Row, Stack} from "react-bootstrap";
+import {Alert, Button, Col, Row, Stack} from "react-bootstrap";
 import InputComponent from "./InputComponent.jsx";
 import {useState} from "react";
 import ChoiceInputComponent from "./ChoiceInputComponent.jsx";
@@ -8,6 +8,7 @@ const AddUserComponent = () =>{
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("");
+    const [notification, setNotification] = useState(null);
 
 
     const handleAddUser = () =>{
@@ -20,6 +21,12 @@ const AddUserComponent = () =>{
 
         addPrivilegedUser(username,email, parseInt(role)).then((res) => {
                 console.log(res.status)
+                setNotification(<Alert className={"bg-success bg-transparent"}>
+                {res.data.message}</Alert>);
+
+                setEmail("");
+                setRole("");
+                setUsername("");
             }
         ).catch(error => {
             // Handle login error
@@ -29,6 +36,11 @@ const AddUserComponent = () =>{
                 console.error('Server responded with an error:', error.response.data);
                 console.log('Error Message:', error.response.data.message);
                 // You can set the error message state here if needed
+                setNotification(<Alert className={"shadow-danger bg-opacity-25 bg-danger"}>
+                    {error.response.data.message}</Alert>);
+                setEmail("");
+                setRole("");
+                setUsername("");
             } else if (error.request) {
                 // The request was made but no response was received
                 console.error('No response received from server:', error.request);
@@ -51,6 +63,7 @@ const AddUserComponent = () =>{
                     margin:'3em'
                 }}
                 className={"align-content-center justify-content-center p-3"}>
+            {notification}
             <Col>
                 <h1 style={{
                     color:'grey'
