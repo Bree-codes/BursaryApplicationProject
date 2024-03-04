@@ -29,7 +29,9 @@ const LoginPage = () => {
                     case "user":
                         navigate("/applicant");
                         break;
-                    // Add cases for other roles if needed
+                    case "admin":
+                        navigate("/admin")
+                        break;
                     default:
                         console.error("Unknown role:", res.data.role);
                 }
