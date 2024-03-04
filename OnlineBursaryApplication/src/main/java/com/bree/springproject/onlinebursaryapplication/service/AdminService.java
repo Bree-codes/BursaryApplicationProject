@@ -26,16 +26,16 @@ import java.util.Map;
 public class AdminService {
 
     @Autowired
-    private UserRegistrationRepository userRegistrationRepository;
+    private final UserRegistrationRepository userRegistrationRepository;
 
     @Autowired
-    private RegisterUserService registerUserService;
+    private final RegisterUserService registerUserService;
 
     @Autowired
-    private CommunicationService communicationService;
+    private final CommunicationService communicationService;
 
     @Autowired
-    private FormApprovalRepository formApprovalRepository;
+    private final FormApprovalRepository formApprovalRepository;
 
     @Autowired
     private HandleChiefLogicService handleChiefLogicService;
@@ -45,6 +45,13 @@ public class AdminService {
 
     @Autowired
     PasswordEncoder encoder;
+
+    public AdminService(UserRegistrationRepository userRegistrationRepository, RegisterUserService registerUserService, CommunicationService communicationService, FormApprovalRepository formApprovalRepository) {
+        this.userRegistrationRepository = userRegistrationRepository;
+        this.registerUserService = registerUserService;
+        this.communicationService = communicationService;
+        this.formApprovalRepository = formApprovalRepository;
+    }
 
     public ResponseEntity<ResponseModel> createUser(PrivilegedUserModel privilegedUserModel) {
 
@@ -146,6 +153,7 @@ public class AdminService {
 
     public ResponseEntity<Map<String, String>> getQualifiedApplicantsByYearAndMonth(
             String bursaryYear, String bursaryMonth) {
+
         //creating the map to be return to teh admin
         Map<String, String> approvedStudent = new HashMap<>();
 
