@@ -25,25 +25,24 @@ import java.util.Map;
 @Slf4j
 public class AdminService {
 
-    @Autowired
+
     private final UserRegistrationRepository userRegistrationRepository;
 
-    @Autowired
     private final RegisterUserService registerUserService;
 
-    @Autowired
+
     private final CommunicationService communicationService;
 
-    @Autowired
+
     private final FormApprovalRepository formApprovalRepository;
 
-    @Autowired
+
     private HandleChiefLogicService handleChiefLogicService;
 
-    @Autowired
+
     private CreateFormService createFormService;
 
-    @Autowired
+
     PasswordEncoder encoder;
 
     public AdminService(UserRegistrationRepository userRegistrationRepository, RegisterUserService registerUserService, CommunicationService communicationService, FormApprovalRepository formApprovalRepository) {
