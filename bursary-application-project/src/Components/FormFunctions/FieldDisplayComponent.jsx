@@ -21,7 +21,6 @@ const FieldDisplayComponent = ({ field ,form, setForm }) => {
     };
 
     const handleOnChange = () => {
-        console.log("onchnge called.");
         console.log(field.fieldInputType);
         if (!isSubmitted) {
             if (field.fieldInputType === "gender") {

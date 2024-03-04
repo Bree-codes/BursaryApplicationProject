@@ -58,8 +58,14 @@ const securedApi = axios.create(
 
 export async function getApplicationForm(){
    const userId = localStorage.getItem('id');
-
     console.log(userId)
    return await securedApi.get("/student/get-user-values?userId="+userId);
+}
+
+export async function store(form){
+    const userId = localStorage.getItem('id');
+    const fieldIdAndValue = form;
+
+    return await securedApi.post("/student/save-form/"+userId, fieldIdAndValue);
 }
 
