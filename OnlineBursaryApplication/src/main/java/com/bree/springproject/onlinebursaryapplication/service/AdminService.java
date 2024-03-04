@@ -37,19 +37,21 @@ public class AdminService {
     private final FormApprovalRepository formApprovalRepository;
 
 
-    private HandleChiefLogicService handleChiefLogicService;
+    private final HandleChiefLogicService handleChiefLogicService;
 
 
-    private CreateFormService createFormService;
+    private final CreateFormService createFormService;
 
 
     PasswordEncoder encoder;
 
-    public AdminService(UserRegistrationRepository userRegistrationRepository, RegisterUserService registerUserService, CommunicationService communicationService, FormApprovalRepository formApprovalRepository) {
+    public AdminService(UserRegistrationRepository userRegistrationRepository, RegisterUserService registerUserService, CommunicationService communicationService, FormApprovalRepository formApprovalRepository, HandleChiefLogicService handleChiefLogicService, CreateFormService createFormService) {
         this.userRegistrationRepository = userRegistrationRepository;
         this.registerUserService = registerUserService;
         this.communicationService = communicationService;
         this.formApprovalRepository = formApprovalRepository;
+        this.handleChiefLogicService = handleChiefLogicService;
+        this.createFormService = createFormService;
     }
 
     public ResponseEntity<ResponseModel> createUser(PrivilegedUserModel privilegedUserModel) {
