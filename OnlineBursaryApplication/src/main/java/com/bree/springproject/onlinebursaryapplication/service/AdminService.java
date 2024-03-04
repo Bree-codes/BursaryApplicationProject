@@ -43,16 +43,17 @@ public class AdminService {
     private final CreateFormService createFormService;
 
 
-    PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
     @Autowired
-    public AdminService(UserRegistrationRepository userRegistrationRepository, RegisterUserService registerUserService, CommunicationService communicationService, FormApprovalRepository formApprovalRepository, HandleChiefLogicService handleChiefLogicService, CreateFormService createFormService) {
+    public AdminService(UserRegistrationRepository userRegistrationRepository, RegisterUserService registerUserService, CommunicationService communicationService, FormApprovalRepository formApprovalRepository, HandleChiefLogicService handleChiefLogicService, CreateFormService createFormService, PasswordEncoder encoder) {
         this.userRegistrationRepository = userRegistrationRepository;
         this.registerUserService = registerUserService;
         this.communicationService = communicationService;
         this.formApprovalRepository = formApprovalRepository;
         this.handleChiefLogicService = handleChiefLogicService;
         this.createFormService = createFormService;
+        this.encoder = encoder;
     }
 
     public ResponseEntity<ResponseModel> createUser(PrivilegedUserModel privilegedUserModel) {
