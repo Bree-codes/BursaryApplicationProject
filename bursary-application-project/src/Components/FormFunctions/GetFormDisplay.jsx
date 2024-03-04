@@ -1,8 +1,12 @@
 import FieldDisplayComponent from "./FieldDisplayComponent.jsx";
 import {Button} from "react-bootstrap";
+import {useState} from "react";
 
 // eslint-disable-next-line react/prop-types
 const GetFormDisplay = ({studentForm}) =>{
+
+    const [form, setForm] = useState({});
+
     return(
         <>
             {studentForm && (
@@ -14,7 +18,7 @@ const GetFormDisplay = ({studentForm}) =>{
                             <h2>{section[0].section}</h2>
                             {section.map((field) => (
                                 // eslint-disable-next-line react/jsx-key
-                                <FieldDisplayComponent field={field} />
+                                <FieldDisplayComponent field={field} form={form} setForm={setForm}/>
                             ))}
                         </div>
                     ))}

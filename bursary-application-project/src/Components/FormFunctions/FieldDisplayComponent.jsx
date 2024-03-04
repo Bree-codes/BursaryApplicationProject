@@ -5,9 +5,8 @@ import ConsentInput from "../ConsentInput.jsx";
 import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const FieldDisplayComponent = ({ field }) => {
+const FieldDisplayComponent = ({ field ,form, setForm }) => {
     const [activeField, setActiveField] = useState(null);
-    const [form, setForm] = useState({});
     const [gender, setGender] = useState(field.fieldValue);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [textValue, setTextValue] = useState(field.fieldValue);
@@ -22,30 +21,32 @@ const FieldDisplayComponent = ({ field }) => {
     };
 
     const handleOnChange = () => {
-        console.log("onchnge called.")
-        if (isSubmitted) {
+        console.log("onchnge called.");
+        console.log(field.fieldInputType);
+        if (!isSubmitted) {
             if (field.fieldInputType === "gender") {
                 console.log("gender")
-                setForm(
-                    [...form,{fieldId : field.fieldId,
-                                    fieldValue : gender}]
-                )
+                setForm({
+                    ...form, // Spread the existing properties of the form object
+                    [field.fieldId]: gender // Add a new property using computed property names
+                });
             } else if (field.fieldInputType === "text"){
-                setForm(
-                    [...form,{fieldId : field.fieldId,
-                                    fieldValue : textValue}]
-                )
+                setForm({
+                    ...form, // Spread the existing properties of the form object
+                    [field.fieldId]: textValue // Add a new property using computed property names
+                });
             }else if (field.fieldInputType === "password"){
-                setForm(
-                    [...form,{fieldId : field.fieldId,
-                                    fieldValue : textValue}]
-                )
+                setForm({
+                    ...form, // Spread the existing properties of the form object
+                    [field.fieldId]: textValue // Add a new property using computed property names
+                });
             }else if (field.fieldInputType === "consent"){
-                setForm(
-                    [...form,{fieldId : field.fieldId,
-                                    fieldValue : consent}]
-                )
+                setForm({
+                    ...form, // Spread the existing properties of the form object
+                    [field.fieldId]: consent // Add a new property using computed property names
+                });
             }
+            console.log(form);
         }
     };
 
@@ -84,7 +85,10 @@ const FieldDisplayComponent = ({ field }) => {
                                 filedName={field.fieldName}
                                 type={field.fieldInputType}
                                 value={textValue}
-                                onChange={(e) => {setTextValue(e.target.value)}}
+                                onChange={(e) => {
+                                    setTextValue(e.target.value)
+                                    handleOnChange()
+                                }}
                                 disabled={!isSubmitted}
                             />
                         )}
