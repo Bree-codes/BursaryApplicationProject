@@ -79,3 +79,8 @@ export async function addPrivilegedUser(username, email, role){
 
     return await securedApi.post("/admin/create-higher-users", user);
 }
+
+export async function getQualifiedStudents(){
+    console.log("getting qualified students.")
+    return await securedApi.get("/get-qualified-students");
+}
