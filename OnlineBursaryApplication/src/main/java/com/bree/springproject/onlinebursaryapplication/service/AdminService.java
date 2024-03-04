@@ -45,6 +45,7 @@ public class AdminService {
 
     PasswordEncoder encoder;
 
+    @Autowired
     public AdminService(UserRegistrationRepository userRegistrationRepository, RegisterUserService registerUserService, CommunicationService communicationService, FormApprovalRepository formApprovalRepository, HandleChiefLogicService handleChiefLogicService, CreateFormService createFormService) {
         this.userRegistrationRepository = userRegistrationRepository;
         this.registerUserService = registerUserService;
