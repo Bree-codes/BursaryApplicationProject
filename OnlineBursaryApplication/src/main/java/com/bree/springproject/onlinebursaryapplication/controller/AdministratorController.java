@@ -20,16 +20,13 @@ public class AdministratorController {
     @Autowired
     private AdminService adminService;
 
-    @PostMapping("/create-higher-users/{adminId}")
+    @PostMapping("/create-higher-users")
     public ResponseEntity<ResponseModel> createPrivilegedUsers(
-            @PathVariable Long adminId,
-            @RequestBody PrivilegedUserModel privilegedUserModel
-            )
-    {
+            @RequestBody PrivilegedUserModel privilegedUserModel) {
 
         log.warn("Request to create a privileged user");
 
-        return adminService.createUser(adminId, privilegedUserModel);
+        return adminService.createUser(privilegedUserModel);
     }
 
     @GetMapping("/get-qualified-students")

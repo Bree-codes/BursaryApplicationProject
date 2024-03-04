@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.beans.Encoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,9 @@ public class AdminService {
     @Autowired
     private CreateFormService createFormService;
 
-    public ResponseEntity<ResponseModel> createUser(Long adminId, PrivilegedUserModel privilegedUserModel) {
+
+
+    public ResponseEntity<ResponseModel> createUser(PrivilegedUserModel privilegedUserModel) {
 
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
         String defaultPassword = privilegedUserModel.getRole().toString();
@@ -95,6 +98,8 @@ public class AdminService {
 
         log.info("request handled successfully");
         /*Performing the insertion*/
+
+        userRegistrationTable.getPassword();
         userRegistrationRepository.save(userRegistrationTable);
 
         /*Preparing the response to the performed process*/
