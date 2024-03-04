@@ -5,11 +5,14 @@ import ConsentInput from "../ConsentInput.jsx";
 import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const FieldDisplayComponent = ({ field }) => {
+const FieldDisplayComponent = ({ field ,form, setForm }) => {
     const [activeField, setActiveField] = useState(null);
-    const [form, setForm] = useState({});
-    const [gender, setGender] = useState("");
+    const [gender, setGender] = useState(field.fieldValue);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [textValue, setTextValue] = useState(field.fieldValue);
+    const [consent, setConsent] = useState(false);
+
+
 
     const handleFieldClick = (fieldId) => {
         if (isSubmitted) {
@@ -17,26 +20,35 @@ const FieldDisplayComponent = ({ field }) => {
         }
     };
 
-    const handleOnChange = (value) => {
-        if (isSubmitted) {
+    const handleOnChange = () => {
+        console.log(field.fieldInputType);
+        if (!isSubmitted) {
             if (field.fieldInputType === "gender") {
-                setGender(value);
-            } else {
-                setForm({ ...form, [field.fieldName]: value });
+                console.log("gender")
+                setForm({
+                    ...form, // Spread the existing properties of the form object
+                    [field.fieldId]: gender // Add a new property using computed property names
+                });
+            } else if (field.fieldInputType === "text"){
+                setForm({
+                    ...form, // Spread the existing properties of the form object
+                    [field.fieldId]: textValue // Add a new property using computed property names
+                });
+            }else if (field.fieldInputType === "password"){
+                setForm({
+                    ...form, // Spread the existing properties of the form object
+                    [field.fieldId]: textValue // Add a new property using computed property names
+                });
+            }else if (field.fieldInputType === "consent"){
+                setForm({
+                    ...form, // Spread the existing properties of the form object
+                    [field.fieldId]: consent // Add a new property using computed property names
+                });
             }
+            console.log(form);
         }
     };
 
-    const sendDataToBackend = () => {
-        axios.post('/your-backend-endpoint', form)
-            .then(response => {
-                console.log('Form data sent successfully:', response.data);
-                setIsSubmitted(true);
-            })
-            .catch(error => {
-                console.error('Error sending form data:', error);
-            });
-    };
 
     return (
         <>
@@ -45,38 +57,47 @@ const FieldDisplayComponent = ({ field }) => {
                     <>
                         {field.fieldInputType === "text" && (
                             <InputComponent
-                                fieldName={field.fieldName}
+                                filedName={field.fieldName}
                                 type={field.fieldInputType}
-                                value={field.fieldValue}
-                                onChange={handleOnChange}
+                                value={textValue}
+                                onChange={(e) => {
+                                    setTextValue(e.target.value);
+                                    handleOnChange();
+                                }}
                                 disabled={!isSubmitted}
                             />
                         )}
                         {field.fieldInputType === "gender" && (
                             <GenderInputComponent
-                                gender={field.fieldValue}
-                                setGender={handleOnChange}
+                                gender={gender}
+                                setGender={setGender}
+                                onChange={handleOnChange}
                                 disabled={!isSubmitted}
                             />
                         )}
-                        {field.fieldInputType === "consent" && <ConsentInput />}
+                        {field.fieldInputType === "consent" && <ConsentInput
+                        isChecked={consent}  setIsChecked={setConsent}  value={field.fieldName}
+                        onChange={handleOnChange}/>}
+
                         {field.fieldInputType === "password" && (
                             <InputComponent
-                                fieldName={field.fieldName}
+                                filedName={field.fieldName}
                                 type={field.fieldInputType}
-                                value={field.fieldValue}
-                                onChange={handleOnChange}
+                                value={textValue}
+                                onChange={(e) => {
+                                    setTextValue(e.target.value)
+                                    handleOnChange()
+                                }}
                                 disabled={!isSubmitted}
                             />
                         )}
                     </>
                 )}
             </div>
-            {!isSubmitted && (
-                <button onClick={sendDataToBackend}>Submit</button>
-            )}
         </>
     );
 };
 
 export default FieldDisplayComponent;
+
+

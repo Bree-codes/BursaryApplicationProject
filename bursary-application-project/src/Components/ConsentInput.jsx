@@ -1,13 +1,17 @@
 import {InputGroup, Form, Row, Col} from "react-bootstrap";
 
 // eslint-disable-next-line react/prop-types
-const  ConsentInput = ({isChecked, setIsChecked, value}) =>{
+const  ConsentInput = ({isChecked, setIsChecked, value, onChange}) =>{
     return(
         <InputGroup  className={"mb-2 p-2 justify-content-center container-fluid"}>
             <Row>
                 <Col md="auto">
                     <InputGroup.Checkbox onChange={
-                        (e) => setIsChecked(e.target.checked)}
+                        (e) => {
+                            setIsChecked(e.target.checked)
+                            onChange();
+                        }
+                    }
                                          aria-label="Checkbox for following text input"
                     checked={isChecked}/>
                 </Col>
