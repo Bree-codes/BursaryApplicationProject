@@ -19,10 +19,10 @@ const PageTemplateNavigationBar = ({action, handleApply, viewQualified}) =>{
                                         toUpperCase()+"'S  Dashboard "}
                     /></Navbar.Brand>
                     <Nav className="me-auto">
-                        <Button className={"fw-bolder p-2 m-2 "} onClick={handleApply} style={{
+                        {action && <Button className={"fw-bolder p-2 m-2 "} onClick={handleApply} style={{
                             backgroundColor: 'rgba(0,0,0,0.3)',
                             border:'none',
-                        }}>{action}</Button>
+                        }}>{action}</Button>}
                         {viewQualified && <>{viewQualified}</>}
                     </Nav>
                 </Container>
