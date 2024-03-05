@@ -16,6 +16,8 @@ const CreateFormSection = ({
                                section,
                                // eslint-disable-next-line react/prop-types
                                setSection,
+                                month,
+                                setMonth,
                                // eslint-disable-next-line react/prop-types
                                onAddForm,
                                // eslint-disable-next-line react/prop-types
@@ -44,6 +46,13 @@ const CreateFormSection = ({
                                            options={["password", "checkbox", "text", "file", "consent"]}
                                            value={fieldType}
                     fieldName={"Select Field Input Type : "}/>
+                </Col>
+                <Col md={"auto"} className={"m-auto"}>
+                    <InputComponent filedName={"Bursary Month : "}
+                                    type={"text"}
+                                    onChange={(e) => setMonth(e.target.value)}
+                                    placeHolder={"e.g August"}
+                                    value={month}/>
                 </Col>
             </Row>
             <Row>

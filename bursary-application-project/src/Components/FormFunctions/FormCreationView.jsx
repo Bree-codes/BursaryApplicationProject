@@ -6,9 +6,14 @@ const FormCreationView = () =>{
     const [fieldName, setFieldName] = useState("");
     const [fieldType, setFieldType] = useState("");
     const [section, setSection] = useState("");
+    const [month, setMonth] = useState("");
+    const [sectionField, setSectionField] = useState({null:null});
+
 
     const onAddForm = () =>{
-        console.log(fieldName);
+        setSectionField( fields =>({
+            ...fields, fieldName : fieldType
+        }))
     }
 
     const onRemoveForm = () =>{
@@ -24,6 +29,8 @@ const FormCreationView = () =>{
                                setFieldType={setFieldType}
                                section={section}
                                setSection={setSection}
+                               month={month}
+                               setMonth={setMonth}
                                onAddForm={onAddForm}
                                onRemoveForm={onRemoveForm}
             />
