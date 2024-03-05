@@ -38,7 +38,6 @@ const ViewerIndexPage = () => {
                             zIndex: 0,
                         }}>
                         {mainContent && <>{mainContent}</>}
-                        <Button style={{background:'lime', border:'none',}}>Submit Form</Button>
                     </Col>
                 </Row>
             </Container>

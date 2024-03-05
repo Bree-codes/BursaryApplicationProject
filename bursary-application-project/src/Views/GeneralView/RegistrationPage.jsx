@@ -3,6 +3,7 @@ import CreateAccountLayout from "../../Layouts/CreateAccountLayout.jsx";
 import { useState } from "react";
 import {login, register, updateJwt} from "../../Resources/ApiResources.js";
 import {useNavigate} from "react-router";
+import "./../../ComponetStyles/InputComponentStyles.css"
 
 // eslint-disable-next-line react/prop-types
 const RegistrationPage = ({setRenderApp}) => {
@@ -59,7 +60,7 @@ const RegistrationPage = ({setRenderApp}) => {
 
 
     return (
-        <Container>
+        <Container className={"steve"}>
             <CreateAccountLayout
                 userName={userName}
                 setUserName={setUserName}

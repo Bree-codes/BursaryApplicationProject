@@ -3,7 +3,7 @@ import axios from "axios";
 
 const opeApis= axios.create(
     {
-        baseURL:"http://192.168.198.194:8080/api/v0"
+        baseURL:"http://192.168.228.194:8080/api/v0"
     }
 )
 
@@ -47,7 +47,7 @@ export function updateJwt(token){
 
 const securedApi = axios.create(
     {
-        baseURL: "http://192.168.198.194:8080/api/v0",
+        baseURL: "http://192.168.228.194:8080/api/v0",
         header : {"Authorization":"Bearer "+localStorage.getItem('jwt')}
     }
 
@@ -82,4 +82,8 @@ export async function addPrivilegedUser(username, email, role){
 export async function getQualifiedStudents(){
     console.log("getting qualified students.")
     return await securedApi.get("admin/get-qualified-students");
+}
+
+export async function createForm(section,month,userId, formSection){
+    return await securedApi.post(`/create-form/${section}?month=${month}&userId=${userId}`, formSection);
 }

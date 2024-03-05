@@ -16,12 +16,19 @@ const CreateFormSection = ({
                                section,
                                // eslint-disable-next-line react/prop-types
                                setSection,
+                               // eslint-disable-next-line react/prop-types
                                 month,
+                               // eslint-disable-next-line react/prop-types
                                 setMonth,
                                // eslint-disable-next-line react/prop-types
                                onAddForm,
                                // eslint-disable-next-line react/prop-types
-                               onRemoveForm}) =>{
+                               onRemoveForm,
+                               // eslint-disable-next-line react/prop-types
+                               sectionField,
+                               // eslint-disable-next-line react/prop-types
+                               setModalMessage
+                                }) =>{
     return(
         <div className={"bg-dark p-4 "}>
             <Row >
@@ -35,7 +42,15 @@ const CreateFormSection = ({
                 <Col md={"auto"} className={"m-auto"}>
                      <InputComponent filedName={"Field Section : "}
                                     type={"text"}
-                                    onChange={(e) => setSection(e.target.value)}
+                                    onChange={(e) => {
+                                        if(sectionField === {})
+                                            setSection(e.target.value);
+                                        else {
+                                            setModalMessage("You Must Submit The " +
+                                                "Section Before Inserting A new One");
+                                            setSection(section);
+                                        }
+                                    }}
                                     placeHolder={"e.g Section A"}
                                     value={section}/>
                 </Col>
