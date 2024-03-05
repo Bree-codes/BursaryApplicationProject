@@ -3,7 +3,6 @@ import LoginPage from '../Views/GeneralView/LoginPage.jsx';
 import HomePageLayout from '../Layouts/HomePageLayout.jsx';
 import RegistrationPage from '../Views/GeneralView/RegistrationPage.jsx';
 import StudentView from '../Views/StudentView/StudentView.jsx';
-import AdminIndexPage from "../Views/AdminView/AdminIndexPage.jsx";
 import AdminsPageLayout from "../Layouts/AdminsPageLayout.jsx";
 import AddUserComponent from "../Components/AddUserComponent.jsx";
 import ViewQualifiedApplicants from "../Views/AdminView/ViewQualifiedApplicants.jsx";

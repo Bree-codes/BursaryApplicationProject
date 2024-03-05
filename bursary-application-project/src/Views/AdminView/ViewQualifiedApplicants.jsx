@@ -31,7 +31,6 @@ const ViewQualifiedApplicants = () =>{
 
     const viewQualified = () =>{
         console.log("moving to view resent qualified students");
-        setQualifiedUsers(qualifiedUsers)
         navigate("view");
     }
 
