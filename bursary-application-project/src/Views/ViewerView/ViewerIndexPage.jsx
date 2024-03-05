@@ -2,9 +2,10 @@ import {Col, Container, Row} from "react-bootstrap";
 import PageTemplateNavigationBar from "../../Components/FormFunctions/<PageTemplateNavigationBar.jsx";
 import MenuButton from "../../Components/MenuButton.jsx";
 import {useState} from "react";
+import CreateFormSection from "../../Components/FormFunctions/CreateFormSection.jsx";
 
 const ViewerIndexPage = () => {
-    const [mainContain, setMainConsent] = useState(null);
+    const [mainContent, setMainContent] = useState(null);
 
 
 
@@ -26,7 +27,7 @@ const ViewerIndexPage = () => {
                          }}>
                         <hr style={{color: 'white'}}/>
                         <MenuButton title={"Create Form"} onclick={() => {
-                            setMainConsent();
+                            setMainContent(<CreateFormSection />);
                         }}/>
                         <hr style={{color: 'white'}}/>
                     </Col>
@@ -36,7 +37,7 @@ const ViewerIndexPage = () => {
                         style={{
                             paddingTop: "4rem",
                             zIndex: 0,}}>
-
+                        {mainContent && <>{mainContent}</>}
                     </Col>
                 </Row>
             </Container>

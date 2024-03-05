@@ -25,7 +25,7 @@ const CreateFormSection = ({fieldName, setFieldName,fieldType, setFieldType, sec
             <Row>
                 <Col md={"auto"} className={"m-auto"}>
                     <ChoiceInputComponent  onChange={(e) => setFieldType(e.target.value)}
-                                           options={["text", "checkbox", "password", "file"]}
+                                           options={["password", "checkbox", "text", "file", "consent"]}
                                            value={fieldType}
                     fieldName={"Select Field Input Type : "}/>
                 </Col>

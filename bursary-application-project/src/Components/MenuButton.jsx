@@ -17,8 +17,7 @@ const MenuButton = ({title,onclick}) => {
                 }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                onClick={onclick}
-            >
+                onClick={onclick}>
                 {title}
             </Button>
         </div>
