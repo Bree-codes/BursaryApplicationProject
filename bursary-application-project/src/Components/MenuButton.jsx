@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 
-const MenuButton = () => {
+// eslint-disable-next-line react/prop-types
+const MenuButton = ({title,onclick}) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <div style={{width: "99%", margin: "10px auto"}}>
+        <div style={{width: "99%", margin: "2px auto"}}>
             <Button
-                className={"p-2 m-2 mt-3"}
+                className={"p-2"}
                 style={{
                     width: "100%",
                     background: isHovered ? "lime" : "transparent",
@@ -16,8 +17,9 @@ const MenuButton = () => {
                 }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
+                onClick={onclick}
             >
-                Create Form
+                {title}
             </Button>
         </div>
     );
