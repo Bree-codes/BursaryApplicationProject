@@ -87,7 +87,7 @@ const AddUserComponent = () =>{
                     />
                 </Col>
                 <Col md={"auto"} className={"m-1 p-2"}>
-                    <ChoiceInputComponent   options={["Chief", "Viewer"]}
+                    <ChoiceInputComponent   options={["chief", "viewer"]}
                                             onChange={(e) => setRole(e.target.value)}
                                             value={role}
                                             fieldName={"New User's Role"}
