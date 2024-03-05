@@ -1,8 +1,7 @@
 import CreateFormSection from "./CreateFormSection.jsx";
 import { useState } from "react";
-import { Button } from "react-bootstrap";
+import {Alert, Button, ModalBody} from "react-bootstrap";
 import { createForm } from "../../Resources/ApiResources.js";
-import Modal from "../Modal.jsx";
 
 const FormCreationView = () => {
     const [fieldName, setFieldName] = useState("");
@@ -46,7 +45,7 @@ const FormCreationView = () => {
 
     return (
         <>
-            {modalMessage && <Modal message={modalMessage} />}
+            {modalMessage && <Alert>{modalMessage}</Alert>}
             <CreateFormSection
                 fieldName={fieldName}
                 setFieldName={setFieldName}
@@ -59,6 +58,7 @@ const FormCreationView = () => {
                 onAddForm={onAddForm}
                 onRemoveForm={onRemoveForm}
                 sectionField={sectionField}
+                setModalMessage={setModalMessage}
             />
             <Button
                 style={{ background: "lime", border: "none" }}

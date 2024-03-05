@@ -28,7 +28,7 @@ const CreateFormSection = ({
                                // eslint-disable-next-line react/prop-types
                                sectionField,
                                // eslint-disable-next-line react/prop-types
-                               setModal
+                               setModalMessage
                                 }) =>{
     return(
         <div className={"bg-dark p-4 "}>
@@ -47,8 +47,8 @@ const CreateFormSection = ({
                                         if(sectionField === {})
                                             setSection(e.target.value);
                                         else {
-                                            setModal(<Modal message={"You Must Submit The " +
-                                                "Section Before Inserting A new One"}></Modal>);
+                                            setModalMessage("You Must Submit The " +
+                                                "Section Before Inserting A new One");
                                             setSection(section);
                                         }
                                     }}
