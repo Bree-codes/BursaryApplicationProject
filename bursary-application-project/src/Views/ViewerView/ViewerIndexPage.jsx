@@ -1,14 +1,15 @@
 import {Col, Container, Row} from "react-bootstrap";
-import PageTemplateNavigationBar from "../../Components/FormFunctions/<PageTemplateNavigationBar.jsx";
 import MenuButton from "../../Components/MenuButton.jsx";
 import {useState} from "react";
-import CreateFormSection from "../../Components/FormFunctions/CreateFormSection.jsx";
+import PageTemplateNavigationBar from "../../Components/FormFunctions/<PageTemplateNavigationBar.jsx";
+import FormCreationView from "../../Components/FormFunctions/FormCreationView.jsx";
 
 const ViewerIndexPage = () => {
-    const [mainContent, setMainContent] = useState(null);
+    const [mainContent, setMainContent] = useState( null);
 
-
-
+    const handleCreateForm = () =>{
+        setMainContent(<FormCreationView />);
+    }
 
 
     return (
@@ -26,9 +27,7 @@ const ViewerIndexPage = () => {
                              zIndex: 1,
                          }}>
                         <hr style={{color: 'white'}}/>
-                        <MenuButton title={"Create Form"} onclick={() => {
-                            setMainContent(<CreateFormSection />);
-                        }}/>
+                        <MenuButton title={"Create Form"} onclick={handleCreateForm}/>
                         <hr style={{color: 'white'}}/>
                     </Col>
                     <Col
@@ -36,7 +35,8 @@ const ViewerIndexPage = () => {
                         md={{ span: 9, offset: 3 }}
                         style={{
                             paddingTop: "4rem",
-                            zIndex: 0,}}>
+                            zIndex: 0,
+                        }}>
                         {mainContent && <>{mainContent}</>}
                     </Col>
                 </Row>

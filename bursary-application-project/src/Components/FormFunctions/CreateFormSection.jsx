@@ -2,8 +2,24 @@ import InputComponent from "../InputComponent.jsx";
 import ChoiceInputComponent from "../ChoiceInputComponent.jsx";
 import {Button, Col, Row} from "react-bootstrap";
 
-// eslint-disable-next-line react/prop-types
-const CreateFormSection = ({fieldName, setFieldName,fieldType, setFieldType, section, setSection, onAddForm, onRemoveForm}) =>{
+
+const CreateFormSection = ({
+                               // eslint-disable-next-line react/prop-types
+                               fieldName,
+                               // eslint-disable-next-line react/prop-types
+                               setFieldName,
+                               // eslint-disable-next-line react/prop-types
+                               fieldType,
+                               // eslint-disable-next-line react/prop-types
+                               setFieldType,
+                               // eslint-disable-next-line react/prop-types
+                               section,
+                               // eslint-disable-next-line react/prop-types
+                               setSection,
+                               // eslint-disable-next-line react/prop-types
+                               onAddForm,
+                               // eslint-disable-next-line react/prop-types
+                               onRemoveForm}) =>{
     return(
         <div className={"bg-dark p-4 "}>
             <Row >
