@@ -83,3 +83,7 @@ export async function getQualifiedStudents(){
     console.log("getting qualified students.")
     return await securedApi.get("admin/get-qualified-students");
 }
+
+export async function createForm(section,month,userId, formSection){
+    return await securedApi.post(`/create-form/${section}?month=${month}&userId=${userId}`, formSection);
+}
