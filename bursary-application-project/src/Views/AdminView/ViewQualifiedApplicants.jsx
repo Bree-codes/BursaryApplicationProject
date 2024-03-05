@@ -14,13 +14,9 @@ const ViewQualifiedApplicants = () =>{
         getQualifiedStudents().then(
             res =>{
                 setQualifiedUsers(res.data);
-                if(qualifiedUsers === {}){
-                    setBursaryTitle("No Qualified Applicants Yet")
-                }else
-                {
-                    const number = (qualifiedUsers.key.length);
-                    setBursaryTitle(number+" Student(s) Qualified");
-                }
+
+                const number = Object.keys(qualifiedUsers).length;
+                setBursaryTitle(number+" Student(s) Qualified");
 
             }).catch(
                 error =>{
@@ -28,7 +24,7 @@ const ViewQualifiedApplicants = () =>{
                 }
         );
 
-    }, []);
+    }, [qualifiedUsers]);
 
 
 
