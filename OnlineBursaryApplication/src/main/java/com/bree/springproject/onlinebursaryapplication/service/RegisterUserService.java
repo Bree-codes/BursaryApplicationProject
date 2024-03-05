@@ -6,8 +6,10 @@ import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.WeakPas
 import com.bree.springproject.onlinebursaryapplication.CustomeExceptions.UserDoesNotExistException;
 import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.models.AuthenticationResponseModel;
+import com.bree.springproject.onlinebursaryapplication.models.Role;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
 import com.bree.springproject.onlinebursaryapplication.userDTO.RegisterUserDTO;
+import jakarta.annotation.PostConstruct;
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -53,6 +55,20 @@ public class RegisterUserService {
         this.communicationService = communicationService;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @PostConstruct
+    public void init(){
+        UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
+        if(userRegistrationRepository.findByUsername("Admin") == null) {
+            userRegistrationTable.setUsername("Admin");
+            userRegistrationTable.setRole(Role.admin);
+            userRegistrationTable.setStatus(true);
+            userRegistrationTable.setPassword(passwordEncoder.encode("admin"));
+            userRegistrationTable.setEmail("admin@gmail.com");
+            userRegistrationTable.setPhoneNumber("00_00_00_00_00");
+            userRegistrationRepository.save(userRegistrationTable);
+        }
     }
 
     public ResponseEntity<AuthenticationResponseModel>

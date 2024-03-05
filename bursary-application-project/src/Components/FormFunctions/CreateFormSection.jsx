@@ -1,7 +1,6 @@
 import InputComponent from "../InputComponent.jsx";
 import ChoiceInputComponent from "../ChoiceInputComponent.jsx";
 import {Button, Col, Row} from "react-bootstrap";
-import Modal from "../Modal.jsx";
 
 
 const CreateFormSection = ({
