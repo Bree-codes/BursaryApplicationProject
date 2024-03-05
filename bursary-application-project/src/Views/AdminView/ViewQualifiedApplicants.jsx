@@ -3,13 +3,14 @@ import {useEffect, useState} from "react";
 import {getQualifiedStudents} from "../../Resources/ApiResources.js";
 import image9 from './../../Images/image9.jpg';
 import image10 from './../../Images/image10.jpg';
+import {useNavigate} from "react-router";
 
 const ViewQualifiedApplicants = () =>{
 
     const [qualifiedUsers, setQualifiedUsers] = useState({});
     const [bursaryTitle, setBursaryTitle] = useState(null);
     const [error, setError] = useState(null);
-
+    const navigate = useNavigate();
     useEffect(() => {
         getQualifiedStudents().then(
             res =>{
@@ -25,6 +26,11 @@ const ViewQualifiedApplicants = () =>{
         );
 
     }, [qualifiedUsers]);
+
+    const viewQualified = () =>{
+        console.log("moving to view resent qualified students");
+        navigate("")
+    }
 
 
 
@@ -44,7 +50,7 @@ const ViewQualifiedApplicants = () =>{
                                 Get The Names Of Qualified Students In The Resent Bursary
                             </div>}
                         </Card.Text>
-                        <Button variant="primary">View Qualified</Button>
+                        <Button variant="primary" onClick={}>View Qualified</Button>
                     </Card.Body>
                 </Card>
                 <Card style={{width: '18rem', background:"gold"}} className={"shadow z-3 "}>
