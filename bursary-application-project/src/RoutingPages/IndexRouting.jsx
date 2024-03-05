@@ -7,6 +7,7 @@ import AdminsPageLayout from "../Layouts/AdminsPageLayout.jsx";
 import AddUserComponent from "../Components/AddUserComponent.jsx";
 import ViewQualifiedApplicants from "../Views/AdminView/ViewQualifiedApplicants.jsx";
 import ViewQualifiedUsers from "../Components/ViewQualifiedUsers.jsx";
+import ViewerIndexPage from "../Views/ViewerView/ViewerIndexPage.jsx";
 
 // eslint-disable-next-line react/prop-types
 const IndexRouting = () => {
@@ -26,6 +27,7 @@ const IndexRouting = () => {
                     <Route path={"admin/add-user"} element={<AddUserComponent />} />
                     <Route path={"admin/qualified"} element={<ViewQualifiedApplicants />}/>
                     <Route path={"admin/qualified/view"} element={<ViewQualifiedUsers />} />
+                    <Route path={"viewer/home"} element={<ViewerIndexPage />} />
                 </Route>
             </Routes>
         </Router>

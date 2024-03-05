@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { Container } from "react-bootstrap";
 import { getApplicationForm } from "../Resources/ApiResources.js";
 import PageTemplateNavigationBar from "../Components/FormFunctions/<PageTemplateNavigationBar.jsx";

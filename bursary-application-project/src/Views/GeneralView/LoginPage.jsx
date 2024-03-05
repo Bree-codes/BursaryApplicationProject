@@ -32,6 +32,9 @@ const LoginPage = () => {
                     case "admin":
                         navigate("/admin");
                         break;
+                    case "viewer":
+                        navigate("/viewer/home");
+                        break;
                     default:
                         console.error("Unknown role:", res.data.role);
                 }

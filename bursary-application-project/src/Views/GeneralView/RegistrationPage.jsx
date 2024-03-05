@@ -32,9 +32,6 @@ const RegistrationPage = ({setRenderApp}) => {
                     case "user":
                         navigate("/applicant");
                         break;
-                    case "admin":
-                        navigate("/admin");
-                        break;
                     default:
                         console.error("Unknown role:", res.data.role);
                 }
