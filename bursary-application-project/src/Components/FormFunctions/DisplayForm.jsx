@@ -4,9 +4,6 @@ import GenderInputComponent from "../GenderInputComponent.jsx";
 
 
 const DisplayForm = () =>{
-
-
-
     return (
         <div>
             {theObjectFromTheBackend.form.map((section, index) => (
@@ -17,7 +14,7 @@ const DisplayForm = () =>{
                         fieldName !== 'section' && (
                             <div key={fieldIndex}>
                                 {section[fieldName] === 'text' && (
-                                    <InputComponent filedName={fieldName} type="text" fi/>
+                                    <InputComponent filedName={fieldName} type="text" />
                                 )}
                                 {section[fieldName] === 'password' && (
                                     <InputComponent filedName={fieldName} type="password" />
@@ -28,6 +25,7 @@ const DisplayForm = () =>{
                                 {section[fieldName] === 'gender' && (
                                     <GenderInputComponent />
                                 )}
+
                             </div>
                         )
                     ))}

@@ -18,10 +18,7 @@ export async function register(username, email,phoneNumber, password)  {
         userPassword : password
     }
 
-    const response =
-        (await opeApis.post("/users/register", registrationModel));
-
-    return response;
+    return (await opeApis.post("/users/register", registrationModel));
 }
 
 
@@ -66,6 +63,8 @@ export async function store(form){
     const userId = localStorage.getItem('id');
     const fieldIdAndValue = form;
 
+    //getting the saved for
+    console.log("getting saved form")
     return await securedApi.post("/student/save-form/"+userId, fieldIdAndValue);
 }
 
@@ -74,7 +73,7 @@ export async function addPrivilegedUser(username, email, role){
     const user = {
         username:username,
         phoneNumberOrEmail:email,
-        role:1
+        role:role
     }
 
     return await securedApi.post("/admin/create-higher-users", user);

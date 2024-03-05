@@ -1,7 +1,8 @@
 import {Container} from "react-bootstrap";
 import CreateAccountLayout from "../../Layouts/CreateAccountLayout.jsx";
 import { useState } from "react";
-import {register, updateJwt} from "../../Resources/ApiResources.js";
+import {login, register, updateJwt} from "../../Resources/ApiResources.js";
+import {useNavigate} from "react-router";
 
 // eslint-disable-next-line react/prop-types
 const RegistrationPage = ({setRenderApp}) => {
@@ -10,6 +11,7 @@ const RegistrationPage = ({setRenderApp}) => {
     const [userPhoneNumber, setUserPhoneNumber] = useState("");
     const [userPassword, setUserPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const navigate = useNavigate();
 
     //method to handle the registration
     const handleRegister = () => {
@@ -17,7 +19,22 @@ const RegistrationPage = ({setRenderApp}) => {
             .then(res => {
                 // Handle successful registration
                 updateJwt(res.data.token);
-                setRenderApp(res.data.role);
+                login(userName,userPassword).then( res => {
+                    /* Storing data to the browser's storage. */
+                    localStorage.setItem('jwt', res.data.token);
+                    localStorage.setItem('username', res.data.username);
+                    localStorage.setItem('id', res.data.id);
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('role', res.data.role);
+                });
+                // Navigate based on the role after successful login
+                switch (res.data.role) {
+                    case "user":
+                        navigate("/applicant");
+                        break;
+                    default:
+                        console.error("Unknown role:", res.data.role);
+                }
             })
             .catch(error => {
                 // Handle registration error

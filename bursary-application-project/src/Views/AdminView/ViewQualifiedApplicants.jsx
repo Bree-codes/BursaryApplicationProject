@@ -3,24 +3,23 @@ import {useEffect, useState} from "react";
 import {getQualifiedStudents} from "../../Resources/ApiResources.js";
 import image9 from './../../Images/image9.jpg';
 import image10 from './../../Images/image10.jpg';
+import {useNavigate} from "react-router";
+
+
 
 const ViewQualifiedApplicants = () =>{
 
     const [qualifiedUsers, setQualifiedUsers] = useState({});
     const [bursaryTitle, setBursaryTitle] = useState(null);
     const [error, setError] = useState(null);
-
+    const navigate = useNavigate();
     useEffect(() => {
         getQualifiedStudents().then(
             res =>{
                 setQualifiedUsers(res.data);
-                if(qualifiedUsers === {}){
-                    setBursaryTitle("No Qualified Applicants Yet")
-                }else
-                {
-                    const number = (qualifiedUsers.key.length);
-                    setBursaryTitle(number+" Student(s) Qualified");
-                }
+
+                const number = Object.keys(qualifiedUsers).length;
+                setBursaryTitle(number+" Student(s) Qualified");
 
             }).catch(
                 error =>{
@@ -28,8 +27,12 @@ const ViewQualifiedApplicants = () =>{
                 }
         );
 
-    }, []);
+    }, [qualifiedUsers]);
 
+    const viewQualified = () =>{
+        console.log("moving to view resent qualified students");
+        navigate("view");
+    }
 
 
     return (
@@ -48,7 +51,7 @@ const ViewQualifiedApplicants = () =>{
                                 Get The Names Of Qualified Students In The Resent Bursary
                             </div>}
                         </Card.Text>
-                        <Button variant="primary">View Qualified</Button>
+                        <Button variant="primary" onClick={viewQualified}>View Qualified</Button>
                     </Card.Body>
                 </Card>
                 <Card style={{width: '18rem', background:"gold"}} className={"shadow z-3 "}>

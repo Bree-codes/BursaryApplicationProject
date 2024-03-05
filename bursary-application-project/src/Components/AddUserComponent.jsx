@@ -1,4 +1,4 @@
-import {Alert, Button, Col, Container, Row, Stack} from "react-bootstrap";
+import {Alert, Button, Col,Stack} from "react-bootstrap";
 import InputComponent from "./InputComponent.jsx";
 import {useState} from "react";
 import ChoiceInputComponent from "./ChoiceInputComponent.jsx";
@@ -87,7 +87,7 @@ const AddUserComponent = () =>{
                     />
                 </Col>
                 <Col md={"auto"} className={"m-1 p-2"}>
-                    <ChoiceInputComponent   options={["Chief", "Viewer"]}
+                    <ChoiceInputComponent   options={["chief", "viewer"]}
                                             onChange={(e) => setRole(e.target.value)}
                                             value={role}
                                             fieldName={"New User's Role"}

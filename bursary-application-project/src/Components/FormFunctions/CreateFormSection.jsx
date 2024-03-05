@@ -2,8 +2,26 @@ import InputComponent from "../InputComponent.jsx";
 import ChoiceInputComponent from "../ChoiceInputComponent.jsx";
 import {Button, Col, Row} from "react-bootstrap";
 
-// eslint-disable-next-line react/prop-types
-const CreateFormSection = ({fieldName, setFieldName,fieldType, setFieldType, section, setSection, onAddForm, onRemoveForm}) =>{
+
+const CreateFormSection = ({
+                               // eslint-disable-next-line react/prop-types
+                               fieldName,
+                               // eslint-disable-next-line react/prop-types
+                               setFieldName,
+                               // eslint-disable-next-line react/prop-types
+                               fieldType,
+                               // eslint-disable-next-line react/prop-types
+                               setFieldType,
+                               // eslint-disable-next-line react/prop-types
+                               section,
+                               // eslint-disable-next-line react/prop-types
+                               setSection,
+                                month,
+                                setMonth,
+                               // eslint-disable-next-line react/prop-types
+                               onAddForm,
+                               // eslint-disable-next-line react/prop-types
+                               onRemoveForm}) =>{
     return(
         <div className={"bg-dark p-4 "}>
             <Row >
@@ -25,9 +43,16 @@ const CreateFormSection = ({fieldName, setFieldName,fieldType, setFieldType, sec
             <Row>
                 <Col md={"auto"} className={"m-auto"}>
                     <ChoiceInputComponent  onChange={(e) => setFieldType(e.target.value)}
-                                           options={["text", "checkbox", "password", "file"]}
+                                           options={["password", "checkbox", "text", "file", "consent"]}
                                            value={fieldType}
                     fieldName={"Select Field Input Type : "}/>
+                </Col>
+                <Col md={"auto"} className={"m-auto"}>
+                    <InputComponent filedName={"Bursary Month : "}
+                                    type={"text"}
+                                    onChange={(e) => setMonth(e.target.value)}
+                                    placeHolder={"e.g August"}
+                                    value={month}/>
                 </Col>
             </Row>
             <Row>
