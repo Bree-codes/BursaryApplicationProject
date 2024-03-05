@@ -1,6 +1,7 @@
 import CreateFormSection from "./CreateFormSection.jsx";
 import {useState} from "react";
 import {Button} from "react-bootstrap";
+import {createForm} from "../../Resources/ApiResources.js";
 
 const FormCreationView = () =>{
 
@@ -24,7 +25,7 @@ const FormCreationView = () =>{
 
     const onSubmitForm = () =>{
         console.log("sending data to the backend");
-
+        createForm(section,month,localStorage.getItem('id'),sectionField).then()
 
     }
 
