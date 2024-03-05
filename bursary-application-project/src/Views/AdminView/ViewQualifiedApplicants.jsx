@@ -5,6 +5,8 @@ import image9 from './../../Images/image9.jpg';
 import image10 from './../../Images/image10.jpg';
 import {useNavigate} from "react-router";
 
+
+
 const ViewQualifiedApplicants = () =>{
 
     const [qualifiedUsers, setQualifiedUsers] = useState({});
@@ -29,9 +31,9 @@ const ViewQualifiedApplicants = () =>{
 
     const viewQualified = () =>{
         console.log("moving to view resent qualified students");
-        navigate("")
+        setQualifiedUsers(qualifiedUsers)
+        navigate("view");
     }
-
 
 
     return (
@@ -50,7 +52,7 @@ const ViewQualifiedApplicants = () =>{
                                 Get The Names Of Qualified Students In The Resent Bursary
                             </div>}
                         </Card.Text>
-                        <Button variant="primary" onClick={}>View Qualified</Button>
+                        <Button variant="primary" onClick={viewQualified}>View Qualified</Button>
                     </Card.Body>
                 </Card>
                 <Card style={{width: '18rem', background:"gold"}} className={"shadow z-3 "}>

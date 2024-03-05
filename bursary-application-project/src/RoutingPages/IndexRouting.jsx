@@ -32,6 +32,5 @@ const IndexRouting = () => {
         </Router>
     );
 };
-
 export default IndexRouting;
 
