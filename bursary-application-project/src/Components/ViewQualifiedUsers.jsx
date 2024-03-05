@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Alert, Col, Container, Row} from "react-bootstrap";
+import {Alert, Col, Container, Row, Stack} from "react-bootstrap";
 import {getQualifiedStudents} from "../Resources/ApiResources.js";
 
 // eslint-disable-next-line react/prop-types
@@ -18,18 +18,20 @@ const ViewQualifiedUsers = () => {
                 setError(error.response.data.message)
             }
         );
-
     }, [qualifiedUsers]);
 
 
     return (
-        <Container fluid={"md"} style={{ background: "wheat" }} className={"d-flex"}>
+        <Container fluid style={{ background: "wheat" }} className={"d-flex"}>
+            <Stack direction={"vertical"} className={"m-2"}>
             {qualifiedUsers ? Object.entries(qualifiedUsers).map(([name, phoneNumber], index) => (
-                <Row key={index}>
-                    <Col>{name}</Col>
-                    <Col>{phoneNumber}</Col>
-                </Row>
+                // eslint-disable-next-line react/jsx-key
+                    <Row key={index}>
+                        <Col className={"p-3 m-2 "}>{name}</Col>
+                        <Col className={"p-3 p-2"}>{phoneNumber}</Col>
+                    </Row>
             )) : <Alert className={"alert-block"}>{error}</Alert>}
+            </Stack>
         </Container>
     );
 };
