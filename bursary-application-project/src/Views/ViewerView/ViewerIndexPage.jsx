@@ -1,7 +1,7 @@
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import MenuButton from "../../Components/MenuButton.jsx";
 import {useState} from "react";
-import PageTemplateNavigationBar from "../../Components/FormFunctions/<PageTemplateNavigationBar.jsx";
+import PageTemplateNavigationBar from "../../Components/FormFunctions/PageTemplateNavigationBar.jsx";
 import FormCreationView from "../../Components/FormFunctions/FormCreationView.jsx";
 
 const ViewerIndexPage = () => {
@@ -38,6 +38,7 @@ const ViewerIndexPage = () => {
                             zIndex: 0,
                         }}>
                         {mainContent && <>{mainContent}</>}
+                        <Button style={{background:'lime', border:'none',}}>Submit Form</Button>
                     </Col>
                 </Row>
             </Container>

@@ -1,5 +1,6 @@
 import CreateFormSection from "./CreateFormSection.jsx";
 import {useState} from "react";
+import {Button} from "react-bootstrap";
 
 const FormCreationView = () =>{
 
@@ -7,13 +8,14 @@ const FormCreationView = () =>{
     const [fieldType, setFieldType] = useState("");
     const [section, setSection] = useState("");
     const [month, setMonth] = useState("");
-    const [sectionField, setSectionField] = useState({null:null});
+    const [sectionField, setSectionField] = useState({});
 
 
     const onAddForm = () =>{
         setSectionField( fields =>({
-            ...fields, fieldName : fieldType
+            ...fields, [fieldName] : fieldType
         }))
+        console.log(sectionField);
     }
 
     const onRemoveForm = () =>{

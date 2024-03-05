@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import PageTemplateNavigationBar from "../Components/FormFunctions/<PageTemplateNavigationBar.jsx";
+import PageTemplateNavigationBar from "../Components/FormFunctions/PageTemplateNavigationBar.jsx";
 import {Col, Container, Stack} from "react-bootstrap";
 import AddUserComponent from "../Components/AddUserComponent.jsx";
 import UserCreationNotes from "../Components/UserCreationNotes.jsx";
