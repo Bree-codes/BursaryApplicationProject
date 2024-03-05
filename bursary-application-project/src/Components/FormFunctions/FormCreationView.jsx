@@ -22,6 +22,12 @@ const FormCreationView = () =>{
 
     }
 
+    const onSubmitForm = () =>{
+        console.log("sending data to the backend");
+
+
+    }
+
 
     return(
         <>
@@ -34,8 +40,10 @@ const FormCreationView = () =>{
                                month={month}
                                setMonth={setMonth}
                                onAddForm={onAddForm}
-                               onRemoveForm={onRemoveForm}
-            />
+                               onRemoveForm={onRemoveForm}/>
+            <Button style={{background:'lime', border:'none',}}
+                    onClick={onSubmitForm}>Submit Form</Button>
+
         </>
     );
 }

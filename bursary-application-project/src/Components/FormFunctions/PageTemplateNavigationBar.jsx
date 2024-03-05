@@ -4,8 +4,6 @@ import OffCanvas from "../OffCanvas.jsx";
 
 // eslint-disable-next-line react/prop-types
 const PageTemplateNavigationBar = ({action, handleApply, viewQualified}) =>{
-
-
     return(
         <>
             <Navbar fixed="top" style={{
