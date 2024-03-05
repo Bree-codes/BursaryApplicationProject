@@ -1,0 +1,11 @@
+{
+  "name": "bursaryapplicationproject",
+  "version": "1.0.0",
+  "description": "FUNCTIONALITIES OF THE ONLINE BURSARY APPLICATION SYSTEM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
