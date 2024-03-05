@@ -19,11 +19,11 @@ const FormCreationView = () =>{
     return(
         <>
             <CreateFormSection fieldName={fieldName}
-                               setFieldName={setFieldName()}
+                               setFieldName={setFieldName}
                                fieldType={fieldType}
-                               setFieldType={setFieldType()}
+                               setFieldType={setFieldType}
                                section={section}
-                               setSection={setSection()}
+                               setSection={setSection}
                                onAddForm={onAddForm}
                                onRemoveForm={onRemoveForm}
             />
