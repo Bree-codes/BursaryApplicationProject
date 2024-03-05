@@ -1,4 +1,4 @@
-import {Alert, Button, Col, Container, Row, Stack} from "react-bootstrap";
+import {Alert, Button, Col,Stack} from "react-bootstrap";
 import InputComponent from "./InputComponent.jsx";
 import {useState} from "react";
 import ChoiceInputComponent from "./ChoiceInputComponent.jsx";
