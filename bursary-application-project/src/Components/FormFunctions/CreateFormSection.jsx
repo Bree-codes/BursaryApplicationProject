@@ -1,6 +1,7 @@
 import InputComponent from "../InputComponent.jsx";
 import ChoiceInputComponent from "../ChoiceInputComponent.jsx";
 import {Button, Col, Row} from "react-bootstrap";
+import Modal from "../Modal.jsx";
 
 
 const CreateFormSection = ({
@@ -16,12 +17,19 @@ const CreateFormSection = ({
                                section,
                                // eslint-disable-next-line react/prop-types
                                setSection,
+                               // eslint-disable-next-line react/prop-types
                                 month,
+                               // eslint-disable-next-line react/prop-types
                                 setMonth,
                                // eslint-disable-next-line react/prop-types
                                onAddForm,
                                // eslint-disable-next-line react/prop-types
-                               onRemoveForm}) =>{
+                               onRemoveForm,
+                               // eslint-disable-next-line react/prop-types
+                               sectionField,
+                               // eslint-disable-next-line react/prop-types
+                               setModal
+                                }) =>{
     return(
         <div className={"bg-dark p-4 "}>
             <Row >
@@ -35,7 +43,15 @@ const CreateFormSection = ({
                 <Col md={"auto"} className={"m-auto"}>
                      <InputComponent filedName={"Field Section : "}
                                     type={"text"}
-                                    onChange={(e) => setSection(e.target.value)}
+                                    onChange={(e) => {
+                                        if(sectionField === {})
+                                            setSection(e.target.value);
+                                        else {
+                                            setModal(<Modal message={"You Must Submit The " +
+                                                "Section Before Inserting A new One"}></Modal>);
+                                            setSection(section);
+                                        }
+                                    }}
                                     placeHolder={"e.g Section A"}
                                     value={section}/>
                 </Col>

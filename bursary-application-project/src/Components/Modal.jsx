@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './Modal.css'; // Import CSS file for modal styles
+import { useState, useEffect } from 'react';
+import './../ComponetStyles/Modal.css'; // Import CSS file for modal styles
 
+// eslint-disable-next-line react/prop-types
 const Modal = ({ message }) => {
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(true);
 
     useEffect(() => {
-        // Show modal when component mounts
-        setShowModal(true);
-
         // Set timer to close modal after 40 seconds
         const timer = setTimeout(() => {
             setShowModal(false);
@@ -20,8 +18,7 @@ const Modal = ({ message }) => {
     return (
         <div className={`modal ${showModal ? 'show' : ''}`}>
             <div className="modal-content">
-                <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-                <p>{message}</p>
+                {message}
             </div>
         </div>
     );
