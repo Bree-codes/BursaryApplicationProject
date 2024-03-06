@@ -87,3 +87,8 @@ export async function getQualifiedStudents(){
 export async function createForm(section,month,userId, formSection){
     return await securedApi.post(`/create-form/${section}?month=${month}&userId=${userId}`, formSection);
 }
+
+export async function getForm(){
+    console.log("Getting the empty form");
+    return await securedApi.get("admin/student/get-form");
+}
