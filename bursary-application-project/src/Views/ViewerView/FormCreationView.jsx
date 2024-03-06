@@ -12,6 +12,7 @@ const FormCreationView = () => {
     const [sectionField, setSectionField] = useState({});
     const [modalMessage, setModalMessage] = useState("");
     const [viewForm, setViewForm] = useState(null)
+    const [show, setshow] = useState(null);
 
     const onAddForm = () => {
         console.log(fieldName, fieldType)
@@ -42,7 +43,7 @@ const FormCreationView = () => {
     //this method will handle the removal of unwanted fields.
     const onRemoveForm = () => {
         if(fieldName !== "") {
-            if(delete sectionField[fieldName]) {
+            if(delete sectionField[fieldName] && delete viewForm[fieldName]) {
                 setModalMessage("Field Removal Successful.");
                 setFieldName("");
                 return;
@@ -77,6 +78,18 @@ const FormCreationView = () => {
     }, [modalMessage]);
 
 
+    useEffect(() => {
+        if (viewForm) {
+            setshow(viewForm.map((input) => {
+                return (
+                    <>
+                        <Display input={input} />
+                    </>
+                );
+            }));
+        }
+    }, [viewForm]);
+
 
 
     return (
@@ -104,13 +117,7 @@ const FormCreationView = () => {
             </Button>
             <hr style={{color:'black', zIndex:'3'}}/>
 
-            {viewForm && viewForm.map((input) =>{
-                return(
-                    <>
-                        <Display input={input} />
-                    </>
-                )
-            })}
+            {viewForm && show}
         </>
     );
 };
