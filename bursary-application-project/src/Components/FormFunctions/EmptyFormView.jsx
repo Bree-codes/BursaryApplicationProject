@@ -1,6 +1,7 @@
 import {getForm} from "../../Resources/ApiResources.js";
 import {useEffect, useState} from "react";
 import {Alert, Container} from "react-bootstrap";
+import InputComponent from "../InputComponent.jsx";
 
 const EmptyFormView = () =>{
     const [form, setForm] = useState(null);
@@ -12,7 +13,9 @@ const EmptyFormView = () =>{
         getForm().then((res) =>{
             if(res.data.length !== 0){
                 setForm(res.data);
+                console.log(res.data)
                 setBursaryMonth(res.data[0][0].bursaryMonth);
+                console.log(res.data[0][0].bursaryMonth)
                 return;
             }
             setError("There Is Not Form Available");
@@ -23,25 +26,35 @@ const EmptyFormView = () =>{
 
 
     useEffect(() => {
-        form.map((field) =>{
-            return(
-                <>
-                <h3>{field[0].section}</h3>
+        if (form) {
+            form.map((field, index) => {
+                return(
+                    <div key={index}>
+                        <h3>{field[0].section}</h3>
+                        {field.map((input) =>{
+                            console.log(input.fieldInputType);
+                            return(
+                                <div key={input.fieldId}>
+                                    {input.fieldInputType === "text" &&
+                                        <InputComponent
 
-                </>
-            );
-        })
-    }, []);
 
-
-
+                                        />}
+                                </div>
+                            )
+                        })}
+                    </div>
+                )
+            });
+        }
+    }, [form]);
 
 
     return(
         <>
             {error && <Alert>{error}</Alert>}
-            <Container fluid={"xl"} className={"align-content-center justify-content-center"}>
-                <h2>Hello </h2>
+            <Container className={"align-content-center justify-content-center"}>
+                <h2> CDF Bursary {bursaryMonth && bursaryMonth} - {bursaryMonth && new Date().getFullYear()}</h2>
             </Container>
         </>
     );
