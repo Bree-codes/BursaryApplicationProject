@@ -2,6 +2,7 @@ import CreateFormSection from "../../Components/FormFunctions/CreateFormSection.
 import {useEffect, useState} from "react";
 import {Alert, Button} from "react-bootstrap";
 import { createForm } from "../../Resources/ApiResources.js";
+import Display from "../../Components/FormFunctions/Display.jsx";
 
 const FormCreationView = () => {
     const [fieldName, setFieldName] = useState("");
@@ -10,6 +11,7 @@ const FormCreationView = () => {
     const [month, setMonth] = useState("");
     const [sectionField, setSectionField] = useState({});
     const [modalMessage, setModalMessage] = useState("");
+    const [viewForm, setViewForm] = useState(null)
 
     const onAddForm = () => {
         console.log(fieldName, fieldType)
@@ -17,11 +19,21 @@ const FormCreationView = () => {
             setModalMessage("The FieldType,fieldName,Section or the month field should not be empty");
             return;
         }
+
+        console.log(sectionField);
+        // Add the new field to viewForm as an array of objects
+        const newField = { fieldName, fieldInputType: fieldType };
+        if (viewForm) {
+            setViewForm([...viewForm, newField]);
+        } else {
+            setViewForm([newField]);
+        }
+
         setSectionField((fields) => ({
             ...fields,
             [fieldName]: fieldType
         }));
-        console.log(sectionField);
+
         setFieldName("");
         setFieldType("");
     };
@@ -85,12 +97,20 @@ const FormCreationView = () => {
                 setModalMessage={setModalMessage}
             />
             <Button
-                style={{ background: "lime", border: "none" }}
+                style={{ background: "lime", border: "none",zIndex:'3' }}
                 onClick={onSubmitForm}
             >
                 Submit Form
             </Button>
-            <></>
+            <hr style={{color:'black', zIndex:'3'}}/>
+
+            {viewForm && viewForm.map((input) =>{
+                return(
+                    <>
+                        <Display input={input} />
+                    </>
+                )
+            })}
         </>
     );
 };
