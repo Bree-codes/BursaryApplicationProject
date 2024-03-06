@@ -29,7 +29,7 @@ const IndexRouting = () => {
                     <Route path={"admin/qualified"} element={<ViewQualifiedApplicants />}/>
                     <Route path={"admin/qualified/view"} element={<ViewQualifiedUsers />} />
                     <Route path={"viewer/home"} element={<ViewerIndexPage />} />
-                    <Route path={"form"} element={< EmptyFormView />} />
+                    <Route path={"viewer/home/view-form"} element={< EmptyFormView />} />
                 </Route>
             </Routes>
         </Router>
