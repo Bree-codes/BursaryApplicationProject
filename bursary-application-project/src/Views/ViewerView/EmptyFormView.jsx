@@ -1,9 +1,7 @@
 import {getForm} from "../../Resources/ApiResources.js";
 import {useEffect, useState} from "react";
 import {Alert, Container} from "react-bootstrap";
-import InputComponent from "../../Components/InputComponent.jsx";
-import ConsentInput from "../../Components/ConsentInput.jsx";
-import GenderInputComponent from "../../Components/GenderInputComponent.jsx";
+import Display from "../../Components/FormFunctions/Display.jsx";
 
 const EmptyFormView = () =>{
     const [form, setForm] = useState(null);
@@ -37,30 +35,10 @@ const EmptyFormView = () =>{
                         {field.map((input) =>{
                             console.log(input.fieldInputType);
                             return(
-                                <div key={input.fieldId}>
-                                    {input.fieldInputType === "text" &&
-                                        <InputComponent
-                                            filedName={input.fieldName}
-                                            type={input.fieldInputType}
-                                        />}
-                                    {input.fieldInputType === "checkbox" &&
-                                        <ConsentInput
-                                        />}
-                                    {input.fieldInputType === "file" &&
-                                        <InputComponent
-                                            filedName={input.fieldName}
-                                            type={input.fieldInputType}
-                                        />}
-                                    {input.fieldInputType === "gender" &&
-                                        <GenderInputComponent
-                                        />}
-                                    {input.fieldInputType === "password" &&
-                                        <InputComponent
-                                            filedName={input.fieldName}
-                                            type={input.fieldInputType}
-                                        />}
-                                </div>
-                            )
+                                <>
+                                    <Display input={input}/>
+                                </>
+                            );
                         })}
                     </div>
                 )

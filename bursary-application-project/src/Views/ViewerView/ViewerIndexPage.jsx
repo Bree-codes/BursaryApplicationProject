@@ -2,7 +2,7 @@ import { Col, Container, Row} from "react-bootstrap";
 import MenuButton from "../../Components/MenuButton.jsx";
 import {useState} from "react";
 import PageTemplateNavigationBar from "../../Components/FormFunctions/PageTemplateNavigationBar.jsx";
-import FormCreationView from "../../Components/FormFunctions/FormCreationView.jsx";
+import FormCreationView from "./FormCreationView.jsx";
 import {useNavigate} from "react-router";
 
 const ViewerIndexPage = () => {

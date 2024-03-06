@@ -1,4 +1,4 @@
-import CreateFormSection from "./CreateFormSection.jsx";
+import CreateFormSection from "../../Components/FormFunctions/CreateFormSection.jsx";
 import {useEffect, useState} from "react";
 import {Alert, Button} from "react-bootstrap";
 import { createForm } from "../../Resources/ApiResources.js";
@@ -65,6 +65,8 @@ const FormCreationView = () => {
     }, [modalMessage]);
 
 
+
+
     return (
         <>
             {modalMessage && <Alert>{modalMessage}</Alert>}
@@ -88,6 +90,7 @@ const FormCreationView = () => {
             >
                 Submit Form
             </Button>
+            <></>
         </>
     );
 };
