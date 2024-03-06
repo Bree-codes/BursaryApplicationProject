@@ -10,11 +10,11 @@ const GenderInputComponent = ({gender, setGender, onChange}) =>{
             <ChoiceInputComponent options={genderOptions} value={gender}
                                   onChange={(e) => {
                                       setGender(e.target.value);
-                                      onChange();
+                                      onChange(onChange);
                                   }
             }
                                   fieldName={fieldName}/>
-    )
+    );
 }
 
 export default GenderInputComponent;

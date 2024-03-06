@@ -2,11 +2,14 @@ import {getForm} from "../../Resources/ApiResources.js";
 import {useEffect, useState} from "react";
 import {Alert, Container} from "react-bootstrap";
 import InputComponent from "../InputComponent.jsx";
+import ConsentInput from "../ConsentInput.jsx";
+import GenderInputComponent from "../GenderInputComponent.jsx";
 
 const EmptyFormView = () =>{
     const [form, setForm] = useState(null);
     const [error, setError] = useState("");
     const [bursaryMonth, setBursaryMonth] = useState("");
+    const [view, setView] = useState(null);
 
     useEffect(() => {
 
@@ -27,7 +30,7 @@ const EmptyFormView = () =>{
 
     useEffect(() => {
         if (form) {
-            form.map((field, index) => {
+            setView(form.map((field, index) => {
                 return(
                     <div key={index}>
                         <h3>{field[0].section}</h3>
@@ -37,15 +40,31 @@ const EmptyFormView = () =>{
                                 <div key={input.fieldId}>
                                     {input.fieldInputType === "text" &&
                                         <InputComponent
-
-
+                                            filedName={input.fieldName}
+                                            type={input.fieldInputType}
+                                        />}
+                                    {input.fieldInputType === "checkbox" &&
+                                        <ConsentInput
+                                        />}
+                                    {input.fieldInputType === "file" &&
+                                        <InputComponent
+                                            filedName={input.fieldName}
+                                            type={input.fieldInputType}
+                                        />}
+                                    {input.fieldInputType === "gender" &&
+                                        <GenderInputComponent
+                                        />}
+                                    {input.fieldInputType === "password" &&
+                                        <InputComponent
+                                            filedName={input.fieldName}
+                                            type={input.fieldInputType}
                                         />}
                                 </div>
                             )
                         })}
                     </div>
                 )
-            });
+            }));
         }
     }, [form]);
 
@@ -55,6 +74,7 @@ const EmptyFormView = () =>{
             {error && <Alert>{error}</Alert>}
             <Container className={"align-content-center justify-content-center"}>
                 <h2> CDF Bursary {bursaryMonth && bursaryMonth} - {bursaryMonth && new Date().getFullYear()}</h2>
+                {view && view}
             </Container>
         </>
     );
