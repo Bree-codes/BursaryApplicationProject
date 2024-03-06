@@ -1,6 +1,6 @@
 # BursaryApplicationProject
 
-FUNCTIONALITIES OF THE ONLINE BURSARY APPLICATION SYSTEM
+FUNCTIONALITIES OF THE ONLINE BURSARY APPLICATION SYSTEM.
 
 1.User Authentication and Authorization:
         User registration and login
