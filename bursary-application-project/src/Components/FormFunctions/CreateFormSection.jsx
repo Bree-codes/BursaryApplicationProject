@@ -43,9 +43,10 @@ const CreateFormSection = ({
                      <InputComponent filedName={"Field Section : "}
                                     type={"text"}
                                     onChange={(e) => {
-                                        if(sectionField === {})
+                                        if(Object.keys(sectionField).length === 0)
                                             setSection(e.target.value);
                                         else {
+                                            console.log(sectionField);
                                             setModalMessage("You Must Submit The " +
                                                 "Section Before Inserting A new One");
                                             setSection(section);
@@ -58,7 +59,7 @@ const CreateFormSection = ({
             <Row>
                 <Col md={"auto"} className={"m-auto"}>
                     <ChoiceInputComponent  onChange={(e) => setFieldType(e.target.value)}
-                                           options={["password", "checkbox", "text", "file", "consent"]}
+                                           options={["password", "checkbox", "text", "file", "consent", "gender"]}
                                            value={fieldType}
                     fieldName={"Select Field Input Type : "}/>
                 </Col>

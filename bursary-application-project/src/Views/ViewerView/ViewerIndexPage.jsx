@@ -1,14 +1,18 @@
-import {Button, Col, Container, Row} from "react-bootstrap";
+import { Col, Container, Row} from "react-bootstrap";
 import MenuButton from "../../Components/MenuButton.jsx";
 import {useState} from "react";
 import PageTemplateNavigationBar from "../../Components/FormFunctions/PageTemplateNavigationBar.jsx";
-import FormCreationView from "../../Components/FormFunctions/FormCreationView.jsx";
+import FormCreationView from "./FormCreationView.jsx";
+import {useNavigate} from "react-router";
 
 const ViewerIndexPage = () => {
     const [mainContent, setMainContent] = useState( null);
-
+    const navigate = useNavigate();
     const handleCreateForm = () =>{
         setMainContent(<FormCreationView />);
+    }
+    const handleViewResentForm = () =>{
+        navigate("view-form")
     }
 
 
@@ -28,6 +32,8 @@ const ViewerIndexPage = () => {
                          }}>
                         <hr style={{color: 'white'}}/>
                         <MenuButton title={"Create Form"} onclick={handleCreateForm}/>
+                        <hr style={{color: 'white'}}/>
+                        <MenuButton title={"View Resent Form"} onclick={handleViewResentForm}/>
                         <hr style={{color: 'white'}}/>
                     </Col>
                     <Col
