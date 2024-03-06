@@ -1,6 +1,6 @@
 import CreateFormSection from "./CreateFormSection.jsx";
-import { useState } from "react";
-import {Alert, Button, ModalBody} from "react-bootstrap";
+import {useEffect, useState} from "react";
+import {Alert, Button} from "react-bootstrap";
 import { createForm } from "../../Resources/ApiResources.js";
 
 const FormCreationView = () => {
@@ -12,8 +12,9 @@ const FormCreationView = () => {
     const [modalMessage, setModalMessage] = useState("");
 
     const onAddForm = () => {
-        if (fieldType === "" || fieldName === "") {
-            setModalMessage("The FieldType or The fieldName should not be empty");
+        console.log(fieldName, fieldType)
+        if (fieldType === "" || fieldName === "" || section === "" || month === "") {
+            setModalMessage("The FieldType,fieldName,Section or the month field should not be empty");
             return;
         }
         setSectionField((fields) => ({
@@ -25,8 +26,19 @@ const FormCreationView = () => {
         setFieldType("");
     };
 
+
+    //this method will handle the removal of unwanted fields.
     const onRemoveForm = () => {
-        // Implement removal logic if needed
+        if(fieldName !== "") {
+            if(delete sectionField[fieldName]) {
+                setModalMessage("Field Removal Successful.");
+                setFieldName("");
+                return;
+            }
+            setModalMessage("Field Not Found");
+            return;
+        }
+        setModalMessage("Please Enter The FieldName Of The Field To Remove");
     };
 
     const onSubmitForm = () => {
@@ -42,6 +54,16 @@ const FormCreationView = () => {
                 setModalMessage(error.response.data.message);
             });
     };
+
+    useEffect(() => {
+        if (modalMessage) {
+            const timer = setTimeout(() => {
+                setModalMessage(null);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [modalMessage]);
+
 
     return (
         <>
