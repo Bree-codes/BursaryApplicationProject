@@ -1,9 +1,9 @@
 import {getForm} from "../../Resources/ApiResources.js";
 import {useEffect, useState} from "react";
 import {Alert, Container} from "react-bootstrap";
-import InputComponent from "../InputComponent.jsx";
-import ConsentInput from "../ConsentInput.jsx";
-import GenderInputComponent from "../GenderInputComponent.jsx";
+import InputComponent from "../../Components/InputComponent.jsx";
+import ConsentInput from "../../Components/ConsentInput.jsx";
+import GenderInputComponent from "../../Components/GenderInputComponent.jsx";
 
 const EmptyFormView = () =>{
     const [form, setForm] = useState(null);

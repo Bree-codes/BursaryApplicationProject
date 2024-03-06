@@ -8,7 +8,7 @@ import AddUserComponent from "../Components/AddUserComponent.jsx";
 import ViewQualifiedApplicants from "../Views/AdminView/ViewQualifiedApplicants.jsx";
 import ViewQualifiedUsers from "../Components/ViewQualifiedUsers.jsx";
 import ViewerIndexPage from "../Views/ViewerView/ViewerIndexPage.jsx";
-import EmptyFormView from "../Components/FormFunctions/EmptyFormView.jsx";
+import EmptyFormView from "../Views/ViewerView/EmptyFormView.jsx";
 
 // eslint-disable-next-line react/prop-types
 const IndexRouting = () => {
