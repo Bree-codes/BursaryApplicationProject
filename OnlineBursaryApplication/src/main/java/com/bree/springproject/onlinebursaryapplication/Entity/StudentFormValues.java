@@ -11,7 +11,7 @@ import java.util.List;
 public class StudentFormValues {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long valueId;
 
     @NotNull

@@ -14,6 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v0/admin/student")
 @Slf4j
+@CrossOrigin("http://localhost:5173/")
 public class BursaryFormCreationController {
 
 

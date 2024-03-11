@@ -18,6 +18,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 @RequestMapping("/api/v0/student")
+@CrossOrigin("http://localhost:5173/")
 public class StudentRequestsController {
 
     @Autowired
@@ -40,7 +41,7 @@ public class StudentRequestsController {
     }
 
     @PostMapping("/save-form/{userId}")
-    public ResponseEntity<String> storeFormFields(
+    public ResponseEntity<String>   storeFormFields(
             @PathVariable Long userId,
             @RequestBody Map<Long, String> fieldIdAndValue
     )

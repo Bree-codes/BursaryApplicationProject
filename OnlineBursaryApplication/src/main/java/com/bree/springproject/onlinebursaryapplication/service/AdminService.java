@@ -12,36 +12,48 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.beans.Encoder;
+import java.util.*;
 
 @Service
 @Slf4j
 public class AdminService {
 
-    @Autowired
-    private UserRegistrationRepository userRegistrationRepository;
+
+    private final UserRegistrationRepository userRegistrationRepository;
+
+    private final RegisterUserService registerUserService;
+
+
+    private final CommunicationService communicationService;
+
+
+    private final FormApprovalRepository formApprovalRepository;
+
+
+    private final HandleChiefLogicService handleChiefLogicService;
+
+
+    private final CreateFormService createFormService;
+
+
+    private final PasswordEncoder encoder;
 
     @Autowired
-    private RegisterUserService registerUserService;
+    public AdminService(UserRegistrationRepository userRegistrationRepository, RegisterUserService registerUserService, CommunicationService communicationService, FormApprovalRepository formApprovalRepository, HandleChiefLogicService handleChiefLogicService, CreateFormService createFormService, PasswordEncoder encoder) {
+        this.userRegistrationRepository = userRegistrationRepository;
+        this.registerUserService = registerUserService;
+        this.communicationService = communicationService;
+        this.formApprovalRepository = formApprovalRepository;
+        this.handleChiefLogicService = handleChiefLogicService;
+        this.createFormService = createFormService;
+        this.encoder = encoder;
+    }
 
-    @Autowired
-    private CommunicationService communicationService;
-
-    @Autowired
-    private FormApprovalRepository formApprovalRepository;
-
-    @Autowired
-    private HandleChiefLogicService handleChiefLogicService;
-
-    @Autowired
-    private CreateFormService createFormService;
-
-    public ResponseEntity<ResponseModel> createUser(Long adminId, PrivilegedUserModel privilegedUserModel) {
+    public ResponseEntity<ResponseModel> createUser(PrivilegedUserModel privilegedUserModel) {
 
         UserRegistrationTable userRegistrationTable = new UserRegistrationTable();
         String defaultPassword = privilegedUserModel.getRole().toString();
@@ -68,11 +80,13 @@ public class AdminService {
         }
         else {
             userRegistrationTable.setEmail(privilegedUserModel.getPhoneNumberOrEmail());
-            userRegistrationTable.setPhoneNumber("0123456789");
 
-            /*The phone number is a non-null field, so we are setting the random number as the default phone number to
+            /*The phone number is a non-null field, so we are setting the
+            random number as the default phone number to
             * be updated later by the created user.*/
-            userRegistrationTable.setPhoneNumber("0123456789");
+            Random random = new Random();
+            userRegistrationTable.setPhoneNumber(
+                    String.valueOf(random.ints(1,9)));
             userRegistrationTable.setEmail(privilegedUserModel.getPhoneNumberOrEmail());
 
             /*Here we are emailing the new user, the request to log in with default credentials
@@ -95,6 +109,8 @@ public class AdminService {
 
         log.info("request handled successfully");
         /*Performing the insertion*/
+
+        userRegistrationTable.setPassword(encoder.encode(userRegistrationTable.getPassword()));
         userRegistrationRepository.save(userRegistrationTable);
 
         /*Preparing the response to the performed process*/
@@ -139,6 +155,7 @@ public class AdminService {
 
     public ResponseEntity<Map<String, String>> getQualifiedApplicantsByYearAndMonth(
             String bursaryYear, String bursaryMonth) {
+
         //creating the map to be return to teh admin
         Map<String, String> approvedStudent = new HashMap<>();
 

@@ -94,13 +94,13 @@ public class RegisterUserService {
             throw new UserExistException("The Phone Number is Already Taken.");
         }
 
-        log.info("Checking password strength");
+        /*log.info("Checking password strength");
         //check if the password is strong enough.
         if(!checkPasswordStrength(registerUserDTO.getUserPassword()))
         {
             log.error("Weak password entered");
             throw new WeakPasswordException("The Password Entered Does Not Meet The Required Criteria");
-        }
+        }*/
 
         /*If the user has both emails and phone number entered, we prefer using email verification
         * to verify their account to reduce on the cost.
@@ -149,6 +149,7 @@ public class RegisterUserService {
         authenticationResponseModel.setDate(new Date());
         authenticationResponseModel.setHttpStatus(HttpStatus.CREATED);
         authenticationResponseModel.setMessage("User created successfully");
+        authenticationResponseModel.setRole(userRegistrationTable.getRole());
 
         log.info("New User Added successfully");
         return new ResponseEntity<>(authenticationResponseModel, HttpStatus.CREATED);

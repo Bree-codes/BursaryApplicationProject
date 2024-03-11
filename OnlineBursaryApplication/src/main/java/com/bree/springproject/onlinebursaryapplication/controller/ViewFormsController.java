@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v0/views/")
 @Slf4j
+@CrossOrigin("http://localhost:5173/")
 public class ViewFormsController {
 
     ViewLogicService viewLogicService;

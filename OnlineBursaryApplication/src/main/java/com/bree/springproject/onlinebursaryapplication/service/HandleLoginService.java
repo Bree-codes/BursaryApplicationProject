@@ -1,5 +1,6 @@
 package com.bree.springproject.onlinebursaryapplication.service;
 
+import com.bree.springproject.onlinebursaryapplication.Entity.UserRegistrationTable;
 import com.bree.springproject.onlinebursaryapplication.models.AuthenticationResponseModel;
 import com.bree.springproject.onlinebursaryapplication.models.LoginModel;
 import com.bree.springproject.onlinebursaryapplication.repository.UserRegistrationRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -40,9 +42,10 @@ public class HandleLoginService {
         );
 
         log.info("Assigning a jwt token to user.");
-        String token = jwtService.generateToken(
-                userRegistrationRepository.findByUsername(loginModel.getUsername())
-        );
+
+        UserRegistrationTable userDetails = userRegistrationRepository.findByUsername(loginModel.getUsername());
+        String token = jwtService.generateToken(userDetails);
+
 
         log.info("preparing user response");
         AuthenticationResponseModel authenticationResponseModel =
@@ -52,6 +55,9 @@ public class HandleLoginService {
         authenticationResponseModel.setMessage("Login Successful");
         authenticationResponseModel.setHttpStatus(HttpStatus.OK);
         authenticationResponseModel.setToken(token);
+        authenticationResponseModel.setRole(userDetails.getRole());
+        authenticationResponseModel.setId(userDetails.getUserId());
+        authenticationResponseModel.setUsername(userDetails.getUsername());
 
         return authenticationResponseModel;
     }

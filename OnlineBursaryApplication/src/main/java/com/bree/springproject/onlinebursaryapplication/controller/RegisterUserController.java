@@ -18,6 +18,7 @@ import java.net.UnknownHostException;
 @Slf4j
 @RequestMapping("/api/v0/users")
 @Setter
+@CrossOrigin("http://localhost:5173/")
 public class RegisterUserController {
 
     @Autowired

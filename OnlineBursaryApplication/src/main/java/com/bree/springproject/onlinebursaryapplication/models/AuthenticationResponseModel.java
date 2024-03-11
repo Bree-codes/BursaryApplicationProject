@@ -19,4 +19,10 @@ public class AuthenticationResponseModel {
     private Date date;
 
     private String token;
+
+    private Role role;
+
+    private String username;
+
+    private Long id;
 }
